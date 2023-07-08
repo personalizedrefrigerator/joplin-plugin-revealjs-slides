@@ -5,6 +5,99 @@ A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
 
 <img width="600" src="./screenshots/screenshot-light.png" alt=""/>
 
+## Example presentation
+
+<details><summary>Example presentation</summary>
+
+````markdown
+
+# `joplin-plugin-revealjs-slides`
+
+---
+
+- Separate slides with `---`s (if you're using the rich text editor, press the "horizontal line" button).
+- The rest of this example presentation will assume you're using the markdown editor.
+
+---
+
+This plugin uses [reveal.js](https://revealjs.com/) internally. [Read about writing reveal.js presentations here](https://revealjs.com/vertical-slides/).
+
+---
+
+## A note on markdown rendering
+
+`joplin-plugin-revealjs-slides` uses Joplin's markdown renderer internally *not* `reveal.js`'s markdown renderer.
+
+<!-- Read about fragments here: https://revealjs.com/fragments/ -->
+<div class="fragment fade-up">
+
+Thus, some of [reveal.js's markdown features are not supported](https://revealjs.com/markdown/).
+
+</div>
+<div class="fragment fade-up">
+
+However, this also means that many of Joplin's built-in features are supported. (For example, slideshows can be customized with [userstyle.css](https://discourse.joplinapp.org/t/introduction-to-customising-joplin-userchrome-css-userstyle-css/21370)).
+
+</div>
+
+---
+
+[Note links can also be included](:/9aeb224225314a1b9d7ee977ffeb3078) (though note that they may not work perfectly!)
+
+Slides can be linked to like this: [link to slide 3](#3).
+
+---
+
+# $\KaTeX$ is supported.
+
+```js
+// highlight.js is supported
+function foo() {
+	alert('test');
+}
+```
+
+---
+
+**Mermaid** is also supported
+
+```mermaid
+graph TD;
+    Mermaid-->Also;
+    A-->B;
+    Also-->Works;
+    B-->Works;
+```
+
+````
+
+---
+
+# Keyboard shortcuts
+
+<section>
+
+Press `f` to enter fullscreen and `esc` to exit fullscreen.
+
+</section>
+<section>
+
+Press `p` to print the slideshow.
+
+</section>
+<section>
+
+Press `q` or navigate to the last slide to show the `Exit` button.
+
+</section>
+<section>
+
+Press `?` to see a list of additional shortcuts.
+
+</section>
+
+</details>
+
 ## Installing
 Search for "reveal.js" under the plugins tab in Joplin's settings.
 ![screenshot shows "reveal.js" in the search bar of the "plugins" tab of Joplin's settings.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/5f1a0c20-3d72-47a5-b214-18861cb6f493)
