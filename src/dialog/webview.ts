@@ -9,7 +9,7 @@ import 'reveal.js/dist/theme/black.css';
 import 'katex/dist/katex.min.css';
 
 // Allows syntax highlighting in code blocks
-import 'reveal.js/plugin/highlight/monokai.css';
+import 'reveal.js/plugin/highlight/zenburn.css';
 
 type WebViewAPI = {
 	postMessage(message: WebViewMessage): Promise<WebViewMessageResponse>;
