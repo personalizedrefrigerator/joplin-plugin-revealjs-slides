@@ -14,7 +14,7 @@ of the source of KaTeX source.
 	--r-background-color: var(--joplin-background-color);
 	--r-main-color: var(--joplin-color);
 	--r-heading-color: var(--joplin-color);
-	--r-link-color: #42affa;
+	--r-link-color: var(--joplin-url-color);
 	--r-link-color-dark: #068de9;
 	--r-link-color-hover: #8dcffc;
 	--r-selection-background-color: rgba(66, 175, 250, 0.75);
