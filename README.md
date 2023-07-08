@@ -15,7 +15,7 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 ## Notes
  * **Avoid running a presentation with untrusted markdown input.**
      * While it _should_ be safe to do so, it is very possible that a vulnerability exists.
-     * `reveal.js` has features like  [`iframe` backgrounds](https://revealjs.com/backgrounds/#iframe-backgrounds) that could pose a security risk, even though [this plugin attempts to mitigate this by disabling JavaScript in iframe backgrounds](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/blob/main/src/dialog/webview.ts#L8).
+     * `reveal.js` has features like  [`iframe` backgrounds](https://revealjs.com/backgrounds/#iframe-backgrounds) that could pose a security risk (even though, in the `iframe` case, [this plugin attempts to mitigate this by disabling JavaScript in iframe backgrounds](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/blob/main/src/dialog/webview.ts#L8)).
  * A keyboard shortcut can be associated with starting the slideshow. To do this, open Joplin's settings, click "Keyboard shortcuts", and search for "slideshow". Next, click in the "keyboard shortcut" column. ![screenshot showing "start slideshow" in the list of keyboard shortcuts](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/3f20972a-aff7-43d8-82f3-77a1f87c76aa).
  * Press `?` while in presentation mode to see a list of slideshow shortcuts. ![screenshot: A list of shortcuts, including space: to next slide, shift+space: to previous slide, p: print.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/19f8ff5d-dd4c-4038-ae9a-5d1f7b46d02c)
 
