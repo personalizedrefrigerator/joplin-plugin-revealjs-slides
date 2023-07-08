@@ -1,3 +1,7 @@
+# 0.2.0
+ - Show the exit presentation mode button when pressing `ESC` (instead of showing the slide overview).
+ - Make jump-to-slide links one-indexed instead of zero-indexed.
+
 # 0.1.2
  - Fix regression from 0.1.1: Joplin CSS wasn't loading
  - Sandbox any `iframe`s created by `reveal.js`
