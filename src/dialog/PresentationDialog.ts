@@ -95,7 +95,7 @@ export default class PresentationDialog {
 
 	public showExitButton() {
 		this.setDialogButtons([{
-			id: 'cancel',
+			id: 'ok',
 			title: localization.exit,
 		}]);
 	}
@@ -131,6 +131,8 @@ export default class PresentationDialog {
 					this.showExitButton();
 				} else if (message.type === 'hideCloseBtn') {
 					this.hideExitButton();
+				} else if (message.type === 'toggleCloseBtn') {
+					this.toggleExitButton();
 				} else if (message.type === 'openLink') {
 					console.log('RevealJS slides: Opening item', message.href);
 

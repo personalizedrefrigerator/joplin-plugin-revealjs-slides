@@ -154,6 +154,12 @@ const hideCloseButton = () => {
 	});
 };
 
+const toggleCloseButton = () => {
+	webviewApi.postMessage({
+		type: 'toggleCloseBtn',
+	});
+};
+
 // Load initial data
 const loadedMessage: InitialDataRequest = {
 	type: 'getInitialData',
@@ -173,7 +179,17 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 			key: 'q',
 			description: localization.showExitButton
 		}, () => {
-			showCloseButton();
+			toggleCloseButton();
+		});
+
+		// Remap ESC
+		deck.removeKeyBinding(27);
+		deck.addKeyBinding({
+			keyCode: 27,
+			key: 'ESC',
+			description: localization.showExitButton
+		}, () => {
+			toggleCloseButton();
 		});
 
 		deck.addKeyBinding({

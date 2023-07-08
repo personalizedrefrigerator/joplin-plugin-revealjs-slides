@@ -7,6 +7,10 @@ export interface HideCloseButtonRequest {
 	type: 'hideCloseBtn',
 }
 
+export interface ToggleCloseButtonRequest {
+	type: 'toggleCloseBtn',
+}
+
 export interface InitialDataRequest {
 	type: 'getInitialData',
 }
@@ -17,7 +21,7 @@ export interface OpenLinkRequest {
 }
 
 export type WebViewMessage =
-	ShowCloseButtonRequest | HideCloseButtonRequest | InitialDataRequest | OpenLinkRequest;
+	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest;
 
 
 export interface InitialDataResponse {
