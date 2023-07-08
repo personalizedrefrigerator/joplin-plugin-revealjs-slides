@@ -163,7 +163,10 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 		const revealElements = initializeRevealElements(result.initialData ?? 'no initial data');
 		document.body.appendChild(revealElements);
 		
-		const deck = new Reveal({ });
+		const deck = new Reveal({
+			// Make [first slide](#1) link to the first slide
+			hashOneBasedIndex: true,
+		});
 
 		deck.addKeyBinding({
 			keyCode: 81,
