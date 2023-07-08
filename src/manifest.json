@@ -6,8 +6,8 @@
 	"name": "RevealJS Integration",
 	"description": "Turn notes into slideshows with reveal.js!",
 	"author": "Henry Heino",
-	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-draw",
-	"repository_url": "https://github.com/personalizedrefrigerator/joplin-draw",
-	"keywords": [ "slides" ],
+	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/",
+	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/",
+	"keywords": [ "slides", "revealjs", "presentation", "slidedeck" ],
 	"categories": [ "integrations" ]
 }

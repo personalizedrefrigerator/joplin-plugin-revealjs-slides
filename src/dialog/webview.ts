@@ -79,9 +79,17 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 		deck.addKeyBinding({
 			keyCode: 81,
 			key: 'q',
-			description: 'Show exit button'
+			description: localization.showExitButton
 		}, () => {
 			showCloseButton();
+		});
+
+		deck.addKeyBinding({
+			keyCode: 80,
+			key: 'p',
+			description: localization.print
+		}, () => {
+			window.print();
 		});
 
 		deck.on('slidechanged', () => {

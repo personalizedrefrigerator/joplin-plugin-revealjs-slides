@@ -3,12 +3,16 @@ interface AppLocalization {
 	startSlideshow: string;
 	exit: string;
 	endOfDeck: string;
+	showExitButton: string;
+	print: string;
 }
 
 const defaultStrings: AppLocalization = {
 	startSlideshow: 'Start slideshow',
 	exit: 'Exit',
 	endOfDeck: 'End of deck',
+	showExitButton: 'Show exit button',
+	print: 'Print',
 };
 
 const localizations: Record<string, AppLocalization> = {
@@ -16,6 +20,7 @@ const localizations: Record<string, AppLocalization> = {
 	es: {
 		...defaultStrings,
 		exit: 'Cerrar',
+		print: 'Imprimir',
 	}
 };
 
