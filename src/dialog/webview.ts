@@ -48,6 +48,9 @@ const rewriteLinks = (container: HTMLElement) => {
 		if (href && (!href.startsWith('#') || isResourceLink)) {
 			link.removeAttribute('href');
 			link.removeAttribute('onclick');
+			
+			// Ensure that the link can still be focused, even though we removed its href
+			link.setAttribute('tabindex', '0');
 
 			let targetHref = href;
 

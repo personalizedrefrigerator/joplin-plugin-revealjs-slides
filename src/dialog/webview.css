@@ -5,13 +5,13 @@ the rendered slides.
 .joplin-source, for example, prefixes math elements and contains a representation
 of the source of KaTeX source.
 */
-.joplin-source, .jsdraw--editButton {
+.joplin-source, .jsdraw--editButton, button.mermaid-export-graph {
 	/* !important: Some elements (e.g. <pre>s) have display: block set by other CSS. */
 	display: none !important;
 }
 
-button.mermaid-export-graph {
-	display: none;
+a {
+	cursor: pointer;
 }
 
 :root body {
