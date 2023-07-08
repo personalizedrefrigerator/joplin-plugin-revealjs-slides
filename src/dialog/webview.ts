@@ -10,6 +10,10 @@ Document.prototype.createElement = function(name: string) {
 	return origCreateElement.call(this, name);
 };
 
+// Also prevent reveal.js from opening popup windows.
+Window.prototype.open = () => null;
+window.open = () => null;
+
 import localization from '../localization';
 import { InitialDataRequest, WebViewMessage, WebViewMessageResponse } from '../types';
 
