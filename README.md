@@ -3,11 +3,10 @@
 
 A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
 
-<img width="600" src="./screenshots/editor-lightdark-fullscreen.png"/>
+<img width="600" src="./screenshots/screenshot-light.png" alt=""/>
 
 ## Installing
 Search for "reveal.js" under the plugins tab in Joplin's settings.
-![screenshot of the search bar and results in the plugins tab. Freehand Drawing // create and edit drawings with js-draw is the only visible result.](https://user-images.githubusercontent.com/46334387/188908688-1500567d-f9a4-49b5-9dc1-8b5a00210c97.png)
 
 # Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
