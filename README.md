@@ -10,7 +10,8 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 
 # Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
- * At present, the plugin's icon in the rich text editor is a gear: ![screenshot](https://user-images.githubusercontent.com/46334387/220479210-5f54bef6-a690-4ae1-9d7c-2d675c8f76ea.png). [See the upstream bug report](https://github.com/laurent22/joplin/issues/6876)
+ * At present, the plugin's icon in the rich text editor is a gear: ![screenshot](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/da0b8cef-eb32-4550-8d3c-7f9a0f445230)
+. [See the upstream bug report](https://github.com/laurent22/joplin/issues/6876)
 
 
 # Development
