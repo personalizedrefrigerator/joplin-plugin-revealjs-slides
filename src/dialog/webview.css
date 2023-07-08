@@ -10,6 +10,10 @@ of the source of KaTeX source.
 	display: none !important;
 }
 
+button.mermaid-export-graph {
+	display: none;
+}
+
 :root body {
 	--r-background-color: var(--joplin-background-color);
 	--r-main-color: var(--joplin-color);
