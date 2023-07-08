@@ -23,19 +23,48 @@ type WebViewAPI = {
 }
 declare const webviewApi: WebViewAPI;
 
+// Returns children that are not comments and are not space-only text nodes.
+const getNonEmptyChildren = (parent: HTMLElement) => {
+	return [ ...parent.childNodes ]
+		.filter(node => {
+			const isComment = node.nodeName === '#comment';
+			const isText = node.nodeName === '#text';
+			return !isComment && (!isText || node.nodeValue?.trim() !== '');
+		});
+};
+
 // Convert content between <hr/> elements into <section> elements.
 const hrToSections = (container: HTMLElement) => {
-	const slides = [];
+	// If the container has <section>s and not <hr/>s, do nothing.
+	if (container.querySelector(':scope > section') && !container.querySelector(':scope > hr')) {
+		return;
+	}
+
+	const slides: ChildNode[] = [];
 	let currentSide = document.createElement('section');
+
+	const finalizeSlide = () => {
+		const children = getNonEmptyChildren(currentSide);
+
+		// Avoid having a single <section/> within a <section/>
+		if (children.length === 1 && children[0].nodeName === 'SECTION') {
+			currentSide = children[0] as HTMLElement;
+			console.log('RevealJS integration: Section contains only a single section: replacing with only child');
+		}
+
+		slides.push(currentSide);
+		currentSide = document.createElement('section');
+	};
+
 	for (const node of container.childNodes) {
 		if (node.nodeName === 'HR') {
-			slides.push(currentSide);
-			currentSide = document.createElement('section');
+			finalizeSlide();
 		} else {
 			currentSide.appendChild(node.cloneNode(true));
 		}
 	}
-	slides.push(currentSide);
+	finalizeSlide();
+
 	container.replaceChildren(...slides);
 };
 
