@@ -1,4 +1,4 @@
-![image](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/eca7290b-aec6-4b9d-9448-b5aadf90d89b)# `joplin-plugin-revealjs-slides`
+# `joplin-plugin-revealjs-slides`
 [On GitHub](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides)
 
 A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
