@@ -11,8 +11,13 @@ export interface InitialDataRequest {
 	type: 'getInitialData',
 }
 
+export interface OpenLinkRequest {
+	type: 'openLink',
+	href: string,
+}
+
 export type WebViewMessage =
-	ShowCloseButtonRequest | HideCloseButtonRequest | InitialDataRequest;
+	ShowCloseButtonRequest | HideCloseButtonRequest | InitialDataRequest | OpenLinkRequest;
 
 
 export interface InitialDataResponse {

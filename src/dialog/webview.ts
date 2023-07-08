@@ -11,6 +11,13 @@ import 'katex/dist/katex.min.css';
 // Allows syntax highlighting in code blocks
 import 'reveal.js/plugin/highlight/zenburn.css';
 
+// Prevent navigation away from the current window (e.g. by improperly sanitized links).
+window.onbeforeunload = () => {
+	console.log('RevealJS integration: Security: Preventing navigation away from window.')
+	window.close();
+	showCloseButton();
+};
+
 type WebViewAPI = {
 	postMessage(message: WebViewMessage): Promise<WebViewMessageResponse>;
 }
@@ -32,6 +39,33 @@ const hrToSections = (container: HTMLElement) => {
 	container.replaceChildren(...slides);
 };
 
+const rewriteLinks = (container: HTMLElement) => {
+	const links: NodeListOf<HTMLElement> = container.querySelectorAll('*[href]');
+	for (const link of links) {
+		const href = link.getAttribute('href');
+		const isResourceLink = link.hasAttribute('data-resource-id');
+
+		if (href && (!href.startsWith('#') || isResourceLink)) {
+			link.removeAttribute('href');
+			link.removeAttribute('onclick');
+
+			let targetHref = href;
+
+			// Handle resource links
+			if (isResourceLink) {
+				targetHref = ':/' + link.getAttribute('data-resource-id');
+			}
+
+			link.onclick = () => {
+				webviewApi.postMessage({
+					type: 'openLink',
+					href: targetHref,
+				});
+			};
+		}
+	}
+};
+
 const initializeRevealElements = (presentationHTML: string) => {
 	const revealContainer = document.createElement('div');
 	revealContainer.classList.add('reveal');
@@ -44,6 +78,7 @@ const initializeRevealElements = (presentationHTML: string) => {
 	// Convert <hr/> elements into <section> elements so users can separate
 	// slides with "---"s in markdown
 	hrToSections(slidesContainer);
+	rewriteLinks(slidesContainer);
 
 	// Add an additional, empty slide
 	const lastSlide = document.createElement('section');

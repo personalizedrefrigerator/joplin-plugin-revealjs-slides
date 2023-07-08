@@ -131,6 +131,15 @@ export default class PresentationDialog {
 					this.showExitButton();
 				} else if (message.type === 'hideCloseBtn') {
 					this.hideExitButton();
+				} else if (message.type === 'openLink') {
+					console.log('RevealJS slides: Opening item', message.href);
+
+					// Resource?
+					if (message.href.startsWith(':/')) {
+						this.showExitButton();
+					}
+					
+					joplin.commands.execute('openItem', message.href);
 				}
 
 				return null;
