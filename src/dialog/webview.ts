@@ -1,3 +1,15 @@
+
+// Sandbox all iframes created by reveal.js.
+const origCreateElement = Document.prototype.createElement;
+Document.prototype.createElement = function(name: string) {
+	if (name.toLowerCase() === 'iframe') {
+		const iframe = origCreateElement.call(this, 'iframe');
+		iframe.setAttribute('sandbox', '');
+		return iframe;
+	}
+	return origCreateElement.call(this, name);
+};
+
 import localization from '../localization';
 import { InitialDataRequest, WebViewMessage, WebViewMessageResponse } from '../types';
 
@@ -11,7 +23,8 @@ import 'katex/dist/katex.min.css';
 // Allows syntax highlighting in code blocks
 import 'reveal.js/plugin/highlight/zenburn.css';
 
-// Prevent navigation away from the current window (e.g. by improperly sanitized links).
+// Prevent navigation away from the current window (e.g. by improperly sanitized links) or by
+// some unknown reveal.js functionality.
 window.onbeforeunload = () => {
 	console.log('RevealJS integration: Security: Preventing navigation away from window.')
 	window.close();
