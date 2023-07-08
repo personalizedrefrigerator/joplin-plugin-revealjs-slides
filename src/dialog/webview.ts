@@ -42,6 +42,11 @@ const hrToSections = (container: HTMLElement) => {
 const rewriteLinks = (container: HTMLElement) => {
 	const links: NodeListOf<HTMLElement> = container.querySelectorAll('*[href]');
 	for (const link of links) {
+		// Allow stylesheet links
+		if (link.tagName === 'LINK' && link.getAttribute('rel') === 'stylesheet') {
+			continue;
+		}
+
 		const href = link.getAttribute('href');
 		const isResourceLink = link.hasAttribute('data-resource-id');
 
