@@ -1,5 +1,5 @@
 import joplin from 'api';
-import { ContentScriptType, ToolbarButtonLocation } from 'api/types';
+import { ContentScriptType, MenuItemLocation, ToolbarButtonLocation } from 'api/types';
 import localization from './localization';
 import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
@@ -45,6 +45,13 @@ joplin.plugins.register({
 			label: localization.startSlideshow,
 			iconName: 'fas fa-play',
 			execute: async () => {
+				// If a slideshow is already running,
+				if (presentationDialog.isVisible()) {
+					// toggle whether the "exit" button is visible.
+					presentationDialog.toggleExitButton();
+					return;
+				}
+	
 				// Force a re-render by switching to the plain text editor
 				startSlideshow();
 			},
@@ -53,6 +60,10 @@ joplin.plugins.register({
 		await joplin.views.toolbarButtons.create(
 			toolbuttonCommand, toolbuttonCommand, ToolbarButtonLocation.EditorToolbar
 		);
+
+		// Also add to the View menu so that users can associate a keybinding with it.
+		const startPresentationButtonId = `${pluginPrefix}startPresentation`;
+		await joplin.views.menuItems.create(startPresentationButtonId, toolbuttonCommand, MenuItemLocation.View);
 
 		const markdownItContentScriptId = `${pluginPrefix}markdownItPlugin`;
 		await joplin.contentScripts.register(

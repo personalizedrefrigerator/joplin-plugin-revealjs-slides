@@ -12,6 +12,8 @@ export default class PresentationDialog {
 	private handle: string;
 	private canFullscreen: boolean = true;
 	private isFullscreen: boolean = false;
+	private currentButtons: ButtonSpec[] = [];
+	private visible: boolean = false;
 
 	/** @returns a reference to the singleton instance of the dialog. */
 	public static async getInstance(): Promise<PresentationDialog> {
@@ -43,6 +45,10 @@ export default class PresentationDialog {
 
 		await dialogs.setFitToContent(this.handle, false);
 		await this.setFullscreen(false);
+	}
+
+	public isVisible() {
+		return this.visible;
 	}
 
 	/**
@@ -80,12 +86,34 @@ export default class PresentationDialog {
 	 * are visible.
 	 */
 	private async setDialogButtons(buttons: ButtonSpec[]) {
+		this.currentButtons = buttons;
+
 		// No buttons? Allow fullscreen.
 		await this.setFullscreen(buttons.length === 0);
 		await dialogs.setButtons(this.handle, buttons);
 	}
 
+	public showExitButton() {
+		this.setDialogButtons([{
+			id: 'cancel',
+			title: localization.exit,
+		}]);
+	}
+
+	public hideExitButton() {
+		this.setDialogButtons([]);
+	}
+
+	public toggleExitButton() {
+		if (this.currentButtons.length > 0) {
+			this.hideExitButton();
+		} else {
+			this.showExitButton();
+		}
+	}
+
 	public async present(markdownData: string): Promise<void> {
+		this.visible = true;
 		await this.initializeDialog();
 
 		const result = new Promise<void>((resolve, _reject) => {
@@ -100,18 +128,16 @@ export default class PresentationDialog {
 						initialData: markdownData,
 					};
 				} else if (message.type === 'showCloseBtn') {
-					this.setDialogButtons([{
-						id: 'cancel',
-						title: localization.exit,
-					}]);
+					this.showExitButton();
 				} else if (message.type === 'hideCloseBtn') {
-					this.setDialogButtons([]);
+					this.hideExitButton();
 				}
 
 				return null;
 			});
 
 			dialogs.open(this.handle).then((_result: DialogResult) => {
+				this.visible = false;
 				resolve();
 			});
 		});
