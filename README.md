@@ -7,6 +7,8 @@ A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
 
 ## Installing
 Search for "reveal.js" under the plugins tab in Joplin's settings.
+![screenshot shows "reveal.js" in the search bar of the "plugins" tab of Joplin's settings.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/5f1a0c20-3d72-47a5-b214-18861cb6f493)
+
 
 # Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
