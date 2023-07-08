@@ -10,7 +10,15 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 ![screenshot shows "reveal.js" in the search bar of the "plugins" tab of Joplin's settings.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/5f1a0c20-3d72-47a5-b214-18861cb6f493)
 
 
-# Known issues
+
+
+## Notes
+ * A keyboard shortcut can be associated with starting the slideshow. To do this, open Joplin's settings, click "Keyboard shortcuts", and search for "slideshow". Next, click in the "keyboard shortcut" column. ![screenshot showing "start slideshow" in the list of keyboard shortcuts](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/3f20972a-aff7-43d8-82f3-77a1f87c76aa).
+ * Press `?` while in presentation mode to see a list of slideshow shortcuts. ![screenshot: A list of shortcuts, including space: to next slide, shift+space: to previous slide, p: print.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/19f8ff5d-dd4c-4038-ae9a-5d1f7b46d02c)
+
+
+
+## Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
  * At present, the plugin's icon in the rich text editor is a gear: ![screenshot](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/da0b8cef-eb32-4550-8d3c-7f9a0f445230)
 . [See the upstream bug report](https://github.com/laurent22/joplin/issues/6876)
