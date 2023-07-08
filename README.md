@@ -1,23 +1,17 @@
-# `joplin-plugin-freehand-drawing`
-[On GitHub](https://github.com/personalizedrefrigerator/joplin-plugin-freehand-drawing) | [On the Joplin Forum](https://discourse.joplinapp.org/t/plugin-js-draw-integration/27114) | [Online Demo](https://personalizedrefrigerator.github.io/js-draw/example/index.html)
+# `joplin-plugin-revealjs-slides`
+[On GitHub](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides)
 
-A Joplin plugin for creating and editing freehand drawings using [js-draw](https://github.com/personalizedrefrigerator/js-draw).
+A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
 
 <img width="600" src="./screenshots/editor-lightdark-fullscreen.png"/>
 
 ## Installing
-Search for "freehand drawing" under the plugins tab in Joplin's settings:
+Search for "reveal.js" under the plugins tab in Joplin's settings.
 ![screenshot of the search bar and results in the plugins tab. Freehand Drawing // create and edit drawings with js-draw is the only visible result.](https://user-images.githubusercontent.com/46334387/188908688-1500567d-f9a4-49b5-9dc1-8b5a00210c97.png)
 
-After installation, an "insert drawing" button should appear in the toolbar:
-![A pen icon labeled "insert drawing" is shown in the markdown toolbar, just to the right of the "insert date" button.](https://user-images.githubusercontent.com/46334387/188909272-603d2556-d5ab-4b8a-86fa-d90b5bafd379.png)
-
-Existing drawings can be edited by hovering over the drawing in the markdown preview pane, then clicking "edit".
-![screenshot of a drawing in the preview pane and an edit button, beneath the cursor. The edit button is at the bottom-right of the drawing.](https://user-images.githubusercontent.com/46334387/188909876-1b7c41d5-8fd9-4a15-86d9-a91504ddf5c1.png)
-
-# Notes
- * This plugin uses [js-draw](https://github.com/personalizedrefrigerator/js-draw) to edit/create freehand drawings. Bugs related to `js-draw` can be reported using its [issue tracker](https://github.com/personalizedrefrigerator/js-draw/issues).
- * At present, the plugin's icon in the rich text editor is a gear: ![image](https://user-images.githubusercontent.com/46334387/220479210-5f54bef6-a690-4ae1-9d7c-2d675c8f76ea.png). [See the upstream bug report](https://github.com/laurent22/joplin/issues/6876)
+# Known issues
+ * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
+ * At present, the plugin's icon in the rich text editor is a gear: ![screenshot](https://user-images.githubusercontent.com/46334387/220479210-5f54bef6-a690-4ae1-9d7c-2d675c8f76ea.png). [See the upstream bug report](https://github.com/laurent22/joplin/issues/6876)
 
 
 # Development

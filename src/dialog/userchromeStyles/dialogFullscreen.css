@@ -1,6 +1,6 @@
 
 /* Makes the main drawing dialog take up the entire screen */
-iframe[id$="js-draw-jop-freehand-drawing-jsdraw-plugin-jsDrawDialog"] {
+iframe[id$="revealjs-slides-plugin-revealJSDialog"] {
     position: absolute;
     top: 0;
     left: 0;

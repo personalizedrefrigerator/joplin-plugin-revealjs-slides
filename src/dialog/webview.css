@@ -1,39 +1,22 @@
 
-.imageEditorContainer {
-	height: 100vh;
-	width: 100vw;
+/*
+Hide elements added by Joplin or other plugins that shouldn't be visible within
+the rendered slides.
+.joplin-source, for example, prefixes math elements and contains a representation
+of the source of KaTeX source.
+*/
+.joplin-source, .jsdraw--editButton {
+	/* !important: Some elements (e.g. <pre>s) have display: block set by other CSS. */
+	display: none !important;
 }
 
-body, :root {
-	padding: 0;
-	margin: 0;
-	font-size: 11pt;
-}
-
-.exitOptionsDialog {
-	width: 100vw;
-	height: 100vh;
-	font-size: 2em;
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-}
-
-.exitOptionsDialog button {
-	font-size: 2em;
-}
-
-.exitOptionsDialog input[type="radio"] {
-	min-width: 20px;
-}
-
-:root .imageEditorContainer {
-	--primary-background-color: var(--joplin-background-color);
-	--primary-background-color-transparent: var(--joplin-background-color-transparent);
-	--secondary-background-color: var(--joplin-background-color2);
-	--primary-foreground-color: var(--joplin-color);
-	--secondary-foreground-color: var(--joplin-color2);
-	--primary-shadow-color: var(--joplin-background-color2);
+:root body {
+	--r-background-color: var(--joplin-background-color);
+	--r-main-color: var(--joplin-color);
+	--r-heading-color: var(--joplin-color);
+	--r-link-color: #42affa;
+	--r-link-color-dark: #068de9;
+	--r-link-color-hover: #8dcffc;
+	--r-selection-background-color: rgba(66, 175, 250, 0.75);
+	--r-selection-color: #fff;
 }

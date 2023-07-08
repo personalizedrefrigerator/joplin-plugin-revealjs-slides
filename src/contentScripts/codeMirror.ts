@@ -3,7 +3,7 @@ import CodeMirror = require("codemirror");
 export default (_context: { contentScriptId: string }) => {
 	return {
 		plugin: (codeMirror: typeof CodeMirror, _options: any) => {
-			codeMirror.defineExtension('js-draw--isCodeMirrorActive', () => {
+			codeMirror.defineExtension('revealJSIntegration--isCodeMirrorActive', () => {
 				return 'active';
 			});
 
@@ -11,7 +11,8 @@ export default (_context: { contentScriptId: string }) => {
 			// text.
 			// This is useful for inserting text in one editor mode, then deleting that text
 			// to sync the cursor position.
-			codeMirror.defineExtension('js-draw--cmSelectAndDelete', function(target: string) {
+			// TODO: Currently unused.
+			codeMirror.defineExtension('revealJSIntegration--cmSelectAndDelete', function(target: string) {
 				const searchCursor = this.getSearchCursor(target, 0, {
 					multiline: 'disable'
 				});

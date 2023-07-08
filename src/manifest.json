@@ -1,19 +1,13 @@
 {
 	"manifest_version": 1,
-	"id": "io.github.personalizedrefrigerator.js-draw",
+	"id": "io.github.personalizedrefrigerator.revealjs-integration",
 	"app_min_version": "2.8",
-	"version": "1.12.1",
-	"name": "Freehand Drawing",
-	"description": "Create and edit drawings with js-draw.",
+	"version": "0.0.1",
+	"name": "RevealJS Integration",
+	"description": "Turn notes into slideshows with reveal.js!",
 	"author": "Henry Heino",
 	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-draw",
 	"repository_url": "https://github.com/personalizedrefrigerator/joplin-draw",
-	"keywords": [ "drawing", "freehand-drawing", "freehand", "handwriting" ],
-	"categories": [ "editor" ],
-	"screenshots": [
-		{ "src": "../screenshots/editor-lightdark-fullscreen.png" },
-		{ "src": "../screenshots/editorview-light-1.png" },
-		{ "src": "../screenshots/editorview-light-2.png" },
-		{ "src": "../screenshots/editorview-dark.png" }
-	]
+	"keywords": [ "slides" ],
+	"categories": [ "integrations" ]
 }

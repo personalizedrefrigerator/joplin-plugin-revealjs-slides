@@ -1,6 +1,6 @@
 {
-  "name": "joplin-plugin-freehand-drawing",
-  "version": "1.12.1",
+  "name": "joplin-plugin-revealjs-slides",
+  "version": "0.0.1",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && webpack --env joplin-plugin-config=createArchive",
     "prepare": "yarn dist",
@@ -18,7 +18,9 @@
     "@types/fs-extra": "^11.0.1",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^20.3.2",
+    "@types/reveal.js": "^4.4.2",
     "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "6.8.1",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.0",
     "on-build-webpack": "^0.1.0",
@@ -30,6 +32,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "js-draw": "^0.25.1"
+    "katex": "^0.16.8",
+    "reveal.js": "^4.5.0"
   }
 }

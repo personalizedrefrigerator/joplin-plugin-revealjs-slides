@@ -161,7 +161,7 @@ const baseConfig = {
 				test: /\.tsx?$/,
 				use: 'ts-loader',
 				exclude: /node_modules/,
-			},
+			}
 		],
 	},
 };
@@ -203,12 +203,22 @@ const pluginConfig = Object.assign({}, baseConfig, {
 });
 
 const extraScriptConfig = Object.assign({}, baseConfig, {
+	target: 'web',
 	resolve: {
 		alias: {
 			api: path.resolve(__dirname, 'api'),
 		},
 		fallback: moduleFallback,
 		extensions: ['.js', '.tsx', '.ts', '.json'],
+	},
+	module: {
+		rules: [
+			...baseConfig.module.rules,
+			{
+				test: /\.css/,
+				use: ['style-loader', 'css-loader'],
+			}
+		],
 	},
 });
 

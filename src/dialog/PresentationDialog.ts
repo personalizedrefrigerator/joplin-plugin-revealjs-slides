@@ -1,6 +1,5 @@
 import joplin from 'api';
 import { ButtonSpec, DialogResult } from 'api/types';
-import { autosave, clearAutosave } from '../autosave';
 import { pluginPrefix } from '../constants';
 import localization from '../localization';
 import { WebViewMessage, WebViewMessageResponse } from '../types';
@@ -8,23 +7,22 @@ import { WebViewMessage, WebViewMessageResponse } from '../types';
 const dialogs = joplin.views.dialogs;
 export type SaveOptionType = 'saveAsCopy' | 'overwrite';
 
-export default class DrawingDialog {
-	private static instance: DrawingDialog;
+export default class PresentationDialog {
+	private static instance: PresentationDialog;
 	private handle: string;
 	private canFullscreen: boolean = true;
 	private isFullscreen: boolean = false;
-	private autosaveInterval: number = 120 * 1000; // ms
 
-	/** @returns a reference to the singleton instance of the DrawingDialog. */
-	public static async getInstance(): Promise<DrawingDialog> {
-		if (!DrawingDialog.instance) {
-			DrawingDialog.instance = new DrawingDialog();
+	/** @returns a reference to the singleton instance of the dialog. */
+	public static async getInstance(): Promise<PresentationDialog> {
+		if (!PresentationDialog.instance) {
+			PresentationDialog.instance = new PresentationDialog();
 
-			DrawingDialog.instance.handle = await dialogs.create(`${pluginPrefix}jsDrawDialog`);
-			await DrawingDialog.instance.initializeDialog();
+			PresentationDialog.instance.handle = await dialogs.create(`${pluginPrefix}revealJSDialog`);
+			await PresentationDialog.instance.initializeDialog();
 		}
 
-		return DrawingDialog.instance;
+		return PresentationDialog.instance;
 	}
 
 	private constructor() {
@@ -45,11 +43,6 @@ export default class DrawingDialog {
 
 		await dialogs.setFitToContent(this.handle, false);
 		await this.setFullscreen(false);
-	}
-
-	/** Sets the autosave interval in milliseconds. */
-	public async setAutosaveInterval(interval: number) {
-		this.autosaveInterval = interval;
 	}
 
 	/**
@@ -92,58 +85,34 @@ export default class DrawingDialog {
 		await dialogs.setButtons(this.handle, buttons);
 	}
 
-	/**
-	 * Displays a dialog that allows the user to insert a drawing.
-	 * 
-	 * @returns the saved drawing or `null` if the action was canceled by the user.
-	 */
-	public async promptForDrawing(initialData?: string): Promise<[string, SaveOptionType] | null> {
+	public async present(markdownData: string): Promise<void> {
 		await this.initializeDialog();
 
-		const result = new Promise<[string, SaveOptionType] | null>((resolve, reject) => {
-			let saveData: string | null = null;
+		const result = new Promise<void>((resolve, _reject) => {
 			joplin.views.panels.onMessage(this.handle, (message: WebViewMessage): WebViewMessageResponse => {
-				if (message.type === 'saveSVG') {
-					saveData = message.data;
-
-					this.setDialogButtons([{
-						id: 'ok',
-					}]);
-				} else if (message.type === 'getInitialData') {
+				if (message.type === 'getInitialData') {
 					// The drawing dialog has loaded -- we don't need the exit button.
 					this.setDialogButtons([]);
 
 					return {
 						type: 'initialDataResponse',
 
-						autosaveIntervalMS: this.autosaveInterval,
-						initialData,
+						initialData: markdownData,
 					};
-				} else if (message.type === 'showCloseUnsavedBtn') {
+				} else if (message.type === 'showCloseBtn') {
 					this.setDialogButtons([{
 						id: 'cancel',
-						title: localization.discardChanges,
+						title: localization.exit,
 					}]);
-				} else if (message.type === 'hideCloseUnsavedBtn') {
+				} else if (message.type === 'hideCloseBtn') {
 					this.setDialogButtons([]);
-				} else if (message.type === 'autosave') {
-					void clearAutosave().then(() => {
-						void autosave(message.data);
-					});
 				}
 
 				return null;
 			});
 
-			dialogs.open(this.handle).then((result: DialogResult) => {
-				if (saveData && result.id === 'ok') {
-					const saveOption: SaveOptionType = result.formData?.saveOptions?.saveOption ?? 'saveAsCopy';
-					resolve([saveData, saveOption]);
-				} else if (result.id === 'cancel') {
-					resolve(null);
-				} else {
-					reject(`Unknown button ID ${result.id}`);
-				}
+			dialogs.open(this.handle).then((_result: DialogResult) => {
+				resolve();
 			});
 		});
 		return await result;
