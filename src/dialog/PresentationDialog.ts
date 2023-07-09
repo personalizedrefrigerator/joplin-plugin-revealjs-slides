@@ -95,7 +95,7 @@ export default class PresentationDialog {
 
 	public showExitButton() {
 		this.setDialogButtons([{
-			id: 'ok',
+			id: 'cancel',
 			title: localization.exit,
 		}]);
 	}

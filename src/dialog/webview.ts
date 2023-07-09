@@ -189,7 +189,7 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 			key: 'ESC',
 			description: localization.showExitButton
 		}, () => {
-			toggleCloseButton();
+			showCloseButton();
 		});
 
 		deck.addKeyBinding({
