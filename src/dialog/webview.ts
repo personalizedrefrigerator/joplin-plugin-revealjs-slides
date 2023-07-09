@@ -18,6 +18,7 @@ import localization from '../localization';
 import { InitialDataRequest, WebViewMessage, WebViewMessageResponse } from '../types';
 
 import Reveal from 'reveal.js';
+const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
 
@@ -172,6 +173,7 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 		const deck = new Reveal({
 			// Make [first slide](#1) link to the first slide
 			hashOneBasedIndex: true,
+			plugins: [ RevealSearch ],
 		});
 
 		deck.addKeyBinding({
