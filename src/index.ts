@@ -3,8 +3,6 @@ import { ContentScriptType, MenuItemLocation, ToolbarButtonLocation } from 'api/
 import localization from './localization';
 import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
-import waitFor from './util/waitFor';
-
 
 // Returns true if the CodeMirror editor is active.
 const isMarkdownEditor = async () => {
@@ -18,6 +16,26 @@ joplin.plugins.register({
 		const presentationDialog = await PresentationDialog.getInstance();
 		const toolbuttonCommand = `${pluginPrefix}insertDrawing`;
 
+		let onNextRender: (()=>void)|null = null;
+		const awaitNextRender = (timeout: number) => {
+			return new Promise<void>((resolve, _reject) => {
+				const prevOnNextRender = onNextRender;
+
+				onNextRender = () => {
+					if (prevOnNextRender) {
+						prevOnNextRender();
+					}
+
+					resolve();
+				};
+
+				setTimeout(() => {
+					onNextRender = prevOnNextRender;
+					resolve();
+				}, timeout);
+			});
+		};
+
 		let renderedContent = '';
 		const startSlideshow = async () => {
 			const wasMarkdownEditor = await isMarkdownEditor();
@@ -26,10 +44,12 @@ joplin.plugins.register({
 			// the image data. See https://github.com/laurent22/joplin/issues/7547.
 			if (!wasMarkdownEditor) {
 				// Switch to the markdown editor.
-				await joplin.commands.execute('toggleEditors');
+				await Promise.all([
+					joplin.commands.execute('toggleEditors'),
 
-				// Delay: Ensure we're really in the CodeMirror editor.
-				await waitFor(100);
+					// ...and wait for the content to be re-rendered.
+					awaitNextRender(1000),
+				]);
 			}
 
 			presentationDialog.present(renderedContent);
@@ -73,6 +93,14 @@ joplin.plugins.register({
 		);
 		await joplin.contentScripts.onMessage(markdownItContentScriptId, async (renderedHTML: string) => {
 			renderedContent = renderedHTML;
+			onNextRender?.();
+			onNextRender = null;
 		});
+		const codeMirrorContentScriptId = `${pluginPrefix}codeMirrorContentScriptId`;
+		await joplin.contentScripts.register(
+			ContentScriptType.CodeMirrorPlugin,
+			codeMirrorContentScriptId,
+			'./contentScripts/codeMirror.js'
+		);
 	},
 });
