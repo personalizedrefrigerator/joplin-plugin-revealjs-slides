@@ -1,3 +1,8 @@
+# 0.3.0
+ - Add the search plugin.
+ - Map `ESC` > `ESC` to closing the slide deck.
+ - Bug fix: Don't switch to the rich text editor from the markdown editor before opening the presentation.
+
 # 0.2.0
  - Show the exit presentation mode button when pressing `ESC` (instead of showing the slide overview).
  - Make jump-to-slide links one-indexed instead of zero-indexed.
