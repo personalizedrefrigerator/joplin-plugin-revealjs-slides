@@ -10,15 +10,88 @@ Document.prototype.createElement = function(name: string) {
 	return origCreateElement.call(this, name);
 };
 
-// Also prevent reveal.js from opening popup windows.
-Window.prototype.open = () => null;
-window.open = () => null;
+// Override most window creation. Wrap the content of windows that are created in
+// a sandboxed iframe.
+(() => {
+	const originalWindowOpen = window.open;
+	const newWindowOpen = (url: string|URL|undefined) => {
+		// Try to limit what is allowed to open new windows
+		if (url !== 'about:blank') {
+			return null;
+		}
+
+		const win = originalWindowOpen('about:blank', '_blank', 'popup');
+		if (!win?.document) {
+			return null;
+		}
+
+		win.document.open();
+		win.document.write(`
+			<!DOCTYPE html>
+			<html>
+			<body>
+			</body>
+			</html>
+		`);
+		win.document.close();
+
+		const iframe = win.document.createElement('iframe');
+		iframe.src = 'about:blank';
+
+		// Disallow everything except scripts.
+		// Note that allow-same-origin is required to use document.write.
+		// More on the iframe sandbox attribute: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
+		iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts');
+
+		// Only allow resources from about:blank
+		iframe.setAttribute('csp', 'default-src \'about:blank\'');
+
+		iframe.style.position = 'fixed';
+		iframe.style.width = '100vw';
+		iframe.style.height = '100vh';
+		iframe.style.top = '0';
+		iframe.style.left = '0';
+		win.document.body.appendChild(iframe);
+
+		const iframeWindow = iframe.contentWindow!;
+
+		iframeWindow.onerror = (err) => {
+			iframeWindow.document.body.appendChild(document.createTextNode('ERR' +err));
+		};
+		iframeWindow.onunhandledrejection = (err) => {
+			iframeWindow.document.body.appendChild(document.createTextNode('ERR2' +err));
+		};
+
+		// The speaker-view window checks whether the new window has the same origin
+		// as its opener before running. However, the new window will be running in
+		// an iframe.
+		// Mock opener.location.origin.
+		iframeWindow.opener = {
+			location: {
+				origin: iframe.contentWindow?.origin + '',
+			},
+
+			// Also override postMessage, as it is used to communicate with
+			// the speaker-view plugin.
+			postMessage: (message: string) => {
+				const targetOrigin = window.location.origin;
+				window.postMessage(message, targetOrigin);
+			},
+		};
+
+		return iframeWindow;
+	};
+
+	Window.prototype.open = newWindowOpen;
+	window.open = newWindowOpen;
+})();
 
 import localization from '../localization';
 import { InitialDataRequest, WebViewMessage, WebViewMessageResponse } from '../types';
 
 import Reveal from 'reveal.js';
 const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
+const RevealSlideNotes = require('reveal.js/plugin/notes/notes.esm.js').default;
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
 
@@ -161,6 +234,51 @@ const toggleCloseButton = () => {
 	});
 };
 
+const initializeDeck = async () => {
+	const deck = new Reveal({
+		// Make [first slide](#1) link to the first slide
+		hashOneBasedIndex: true,
+		plugins: [ RevealSearch, RevealSlideNotes ],
+		showNotes: true,
+	});
+
+	deck.addKeyBinding({
+		keyCode: 81,
+		key: 'q',
+		description: localization.showExitButton
+	}, () => {
+		toggleCloseButton();
+	});
+
+	// Remap ESC
+	deck.removeKeyBinding(27);
+	deck.addKeyBinding({
+		keyCode: 27,
+		key: 'ESC',
+		description: localization.showExitButton
+	}, () => {
+		showCloseButton();
+	});
+
+	deck.addKeyBinding({
+		keyCode: 80,
+		key: 'p',
+		description: localization.print
+	}, () => {
+		window.print();
+	});
+
+	deck.on('slidechanged', () => {
+		if (deck.isLastSlide()) {
+			showCloseButton();
+		} else {
+			hideCloseButton();
+		}
+	});
+
+	await deck.initialize();
+};
+
 // Load initial data
 const loadedMessage: InitialDataRequest = {
 	type: 'getInitialData',
@@ -173,47 +291,7 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 		if (result.settings.scrollsOverflow) {
 			document.body.classList.add('allowSlidesOverflow');
 		}
-		
-		const deck = new Reveal({
-			// Make [first slide](#1) link to the first slide
-			hashOneBasedIndex: true,
-			plugins: [ RevealSearch ],
-		});
 
-		deck.addKeyBinding({
-			keyCode: 81,
-			key: 'q',
-			description: localization.showExitButton
-		}, () => {
-			toggleCloseButton();
-		});
-
-		// Remap ESC
-		deck.removeKeyBinding(27);
-		deck.addKeyBinding({
-			keyCode: 27,
-			key: 'ESC',
-			description: localization.showExitButton
-		}, () => {
-			showCloseButton();
-		});
-
-		deck.addKeyBinding({
-			keyCode: 80,
-			key: 'p',
-			description: localization.print
-		}, () => {
-			window.print();
-		});
-
-		deck.on('slidechanged', () => {
-			if (deck.isLastSlide()) {
-				showCloseButton();
-			} else {
-				hideCloseButton();
-			}
-		});
-
-		deck.initialize();
+		void initializeDeck();
 	}
 });
