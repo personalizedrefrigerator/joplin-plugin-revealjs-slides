@@ -17,6 +17,7 @@ export default class PresentationDialog {
 
 	private presentationSettings: PresentationSettings = {
 		scrollsOverflow: true,
+		showSpeakerNotes: false,
 	};
 
 	/** @returns a reference to the singleton instance of the dialog. */
@@ -73,6 +74,10 @@ export default class PresentationDialog {
 	 */
 	public setScrollsOverflow(scrollsOverflow: boolean) {
 		this.presentationSettings.scrollsOverflow = scrollsOverflow;
+	}
+
+	public setShowSpeakerNotes(showSpeakerNotes: boolean) {
+		this.presentationSettings.showSpeakerNotes = showSpeakerNotes;
 	}
 
 	/** Set whether this drawing dialog takes up the entire Joplin window. */

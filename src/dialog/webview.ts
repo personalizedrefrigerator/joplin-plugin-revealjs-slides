@@ -15,7 +15,7 @@ Window.prototype.open = () => null;
 window.open = () => null;
 
 import localization from '../localization';
-import { InitialDataRequest, WebViewMessage, WebViewMessageResponse } from '../types';
+import { InitialDataRequest, PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../types';
 
 import Reveal from 'reveal.js';
 const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
@@ -161,6 +161,52 @@ const toggleCloseButton = () => {
 	});
 };
 
+const initializeDeck = (settings: PresentationSettings) => {
+	const deck = new Reveal({
+		// Make [first slide](#1) link to the first slide
+		hashOneBasedIndex: true,
+		plugins: [ RevealSearch ],
+
+		showNotes: settings.showSpeakerNotes,
+	});
+
+	deck.addKeyBinding({
+		keyCode: 81,
+		key: 'q',
+		description: localization.showExitButton
+	}, () => {
+		toggleCloseButton();
+	});
+
+	// Remap ESC
+	deck.removeKeyBinding(27);
+	deck.addKeyBinding({
+		keyCode: 27,
+		key: 'ESC',
+		description: localization.showExitButton
+	}, () => {
+		showCloseButton();
+	});
+
+	deck.addKeyBinding({
+		keyCode: 80,
+		key: 'p',
+		description: localization.print
+	}, () => {
+		window.print();
+	});
+
+	deck.on('slidechanged', () => {
+		if (deck.isLastSlide()) {
+			showCloseButton();
+		} else {
+			hideCloseButton();
+		}
+	});
+
+	void deck.initialize();
+};
+
 // Load initial data
 const loadedMessage: InitialDataRequest = {
 	type: 'getInitialData',
@@ -173,47 +219,7 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 		if (result.settings.scrollsOverflow) {
 			document.body.classList.add('allowSlidesOverflow');
 		}
-		
-		const deck = new Reveal({
-			// Make [first slide](#1) link to the first slide
-			hashOneBasedIndex: true,
-			plugins: [ RevealSearch ],
-		});
 
-		deck.addKeyBinding({
-			keyCode: 81,
-			key: 'q',
-			description: localization.showExitButton
-		}, () => {
-			toggleCloseButton();
-		});
-
-		// Remap ESC
-		deck.removeKeyBinding(27);
-		deck.addKeyBinding({
-			keyCode: 27,
-			key: 'ESC',
-			description: localization.showExitButton
-		}, () => {
-			showCloseButton();
-		});
-
-		deck.addKeyBinding({
-			keyCode: 80,
-			key: 'p',
-			description: localization.print
-		}, () => {
-			window.print();
-		});
-
-		deck.on('slidechanged', () => {
-			if (deck.isLastSlide()) {
-				showCloseButton();
-			} else {
-				hideCloseButton();
-			}
-		});
-
-		deck.initialize();
+		void initializeDeck(result.settings);
 	}
 });

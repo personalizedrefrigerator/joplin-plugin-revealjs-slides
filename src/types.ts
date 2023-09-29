@@ -26,6 +26,7 @@ export type WebViewMessage =
 
 export interface PresentationSettings {
 	scrollsOverflow: boolean;
+	showSpeakerNotes: boolean;
 }
 	
 export interface InitialDataResponse {

@@ -16,10 +16,14 @@ const isMarkdownEditor = async () => {
 const registerAndApplySettings = async (presentationDialog: PresentationDialog) => {
 	// Joplin adds a prefix to the setting in settings.json for us.
 	const showSlidesOverflowKey = 'show-slides-overflow-y';
+	const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
 
 	const applySettings = async () => {
 		const scrollsOverflow = await joplin.settings.value(showSlidesOverflowKey);
 		presentationDialog.setScrollsOverflow(scrollsOverflow);
+
+		const showSpeakerNotes = await joplin.settings.value(showSpeakerNotesKey);
+		presentationDialog.setShowSpeakerNotes(showSpeakerNotes)
 	};
 
 	const sectionName = 'revealjs-integration';
@@ -33,12 +37,21 @@ const registerAndApplySettings = async (presentationDialog: PresentationDialog) 
 	await joplin.settings.registerSettings({
 		[showSlidesOverflowKey]: {
 			public: true,
-			section: 'revealjs-integration',
+			section: sectionName,
 
 			label: localization.showSlidesOverflowSetting,
 
 			type: SettingItemType.Bool,
 			value: true,
+		},
+		[showSpeakerNotesKey]: {
+			public: true,
+			section: sectionName,
+
+			label: localization.showSpeakerNotesSetting,
+
+			type: SettingItemType.Bool,
+			value: false,
 		},
 	});
 
