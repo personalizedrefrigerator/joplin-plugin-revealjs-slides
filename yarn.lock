@@ -174,10 +174,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.2.tgz#fa6a90f2600e052a03c18b8cb3fd83dd4e599898"
   integrity sha512-vOBLVQeCQfIcF/2Y7eKFTqrMnizK5lRNQ7ykML/5RuwVXVWxYkgwS7xbt4B6fKCUPgbSL5FSsjHQpaGQP/dQmw==
 
-"@types/reveal.js@^4.4.2":
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/@types/reveal.js/-/reveal.js-4.4.2.tgz#bc6248b6236ee7af7ef108eb5d8c947772a04ea9"
-  integrity sha512-z+lVPEWGPFrPv3S9Mx2qLKXA4zT+Mo3GxvW68OR7lbUcCmqjn4vjaQJ2qCW+xNkBUgfR8d3fzLWHmu1PIfRiIA==
+"@types/reveal.js@^4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@types/reveal.js/-/reveal.js-4.4.3.tgz#2f2b0f20c63f364a4688513eb9f489b94ded0ac3"
+  integrity sha512-nI4Kp7x5uNn5op2IHNM0L1dLONejRuph2Rcn6KVk3jF1NOLpxW8xZciXX0V0sBkVAlWTn6JmW88EaeFkkWDYig==
 
 "@types/tern@*":
   version "0.23.4"
@@ -1172,10 +1172,10 @@ reusify@^1.0.4:
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-reveal.js@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-4.5.0.tgz#fc04329aee58dd88862bf1f8e8f85f7993287763"
-  integrity sha512-Lx1hUWhJR7Y7ScQNyGt7TFzxeviDAswK2B0cn9RwbPZogTMRgS8+FTr+/12KNHOegjvWKH0H0EGwBARNDPTgWQ==
+reveal.js@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-4.6.1.tgz#5eda9769e30df922a7cd0f2a2f52bb197c07a124"
+  integrity sha512-1CW0auaXNPmwmvQ7TwpszwVxMi2Xr5cTS3J3EBC/HHgbPF32Dn7aiu/LKWDOGjMbaDwKQiGmfqcoGQ74HUHCMw==
 
 run-parallel@^1.1.9:
   version "1.2.0"
