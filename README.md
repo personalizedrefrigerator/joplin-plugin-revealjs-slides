@@ -71,6 +71,21 @@ graph TD;
     B-->Works;
 ```
 
+---
+
+**Speaker notes** can be created using an
+```
+<aside class="notes">
+    Notes!
+</aside>
+```
+
+A setting exists to show speaker notes (when available).
+
+<aside class="notes">
+    Notes!
+</aside>
+
 ````
 
 ---
