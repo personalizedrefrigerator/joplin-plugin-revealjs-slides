@@ -5,6 +5,8 @@ interface AppLocalization {
 	endOfDeck: string;
 	showExitButton: string;
 	print: string;
+	settingsPaneDescription: string;
+	showSlidesOverflowSetting: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -13,6 +15,8 @@ const defaultStrings: AppLocalization = {
 	endOfDeck: 'End of deck',
 	showExitButton: 'Show exit button',
 	print: 'Print',
+	settingsPaneDescription: 'Settings for RevealJS Integration',
+	showSlidesOverflowSetting: 'Allow scrolling large slides',
 };
 
 const localizations: Record<string, AppLocalization> = {

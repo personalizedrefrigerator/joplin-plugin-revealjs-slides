@@ -28,3 +28,13 @@ a {
 .katex {
 	text-transform: none;
 }
+
+body.allowSlidesOverflow .slides > section {
+	overflow-y: auto;
+
+	/* Seems to be necessary to prevent scrollbars on slides with fragments.
+	   Note that this is likely required due to reveal.js manually setting the
+	   height of slides. */
+	padding-bottom: 25px;
+	max-height: 100%;
+}

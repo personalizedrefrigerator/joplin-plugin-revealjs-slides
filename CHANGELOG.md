@@ -1,3 +1,7 @@
+# 0.4.0
+ - Upgrades to reveal.js 4.6.1
+ - 
+
 # 0.3.0
  - Add the search plugin.
  - Map `ESC` > `ESC` to closing the slide deck.

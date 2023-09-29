@@ -2,7 +2,7 @@ import joplin from 'api';
 import { ButtonSpec, DialogResult } from 'api/types';
 import { pluginPrefix } from '../constants';
 import localization from '../localization';
-import { WebViewMessage, WebViewMessageResponse } from '../types';
+import { PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../types';
 
 const dialogs = joplin.views.dialogs;
 export type SaveOptionType = 'saveAsCopy' | 'overwrite';
@@ -14,6 +14,10 @@ export default class PresentationDialog {
 	private isFullscreen: boolean = false;
 	private currentButtons: ButtonSpec[] = [];
 	private visible: boolean = false;
+
+	private presentationSettings: PresentationSettings = {
+		scrollsOverflow: true,
+	};
 
 	/** @returns a reference to the singleton instance of the dialog. */
 	public static async getInstance(): Promise<PresentationDialog> {
@@ -55,12 +59,20 @@ export default class PresentationDialog {
 	 * Sets whether this dialog is automatically set to fullscreen mode when the
 	 * editor is visible.
 	 */
-	public async setCanFullscreen(canFullscreen: boolean) {
+	public setCanFullscreen(canFullscreen: boolean) {
 		this.canFullscreen = canFullscreen;
 
 		if (!canFullscreen) {
 			this.setFullscreen(false);
 		}
+	}
+
+	/**
+	 * Sets whether slides bigger than the screen are scrolled or clipped.
+	 * Because clipping is the reveal.js default, an option is provided.
+	 */
+	public setScrollsOverflow(scrollsOverflow: boolean) {
+		this.presentationSettings.scrollsOverflow = scrollsOverflow;
 	}
 
 	/** Set whether this drawing dialog takes up the entire Joplin window. */
@@ -125,6 +137,7 @@ export default class PresentationDialog {
 					return {
 						type: 'initialDataResponse',
 
+						settings: this.presentationSettings,
 						initialData: markdownData,
 					};
 				} else if (message.type === 'showCloseBtn') {

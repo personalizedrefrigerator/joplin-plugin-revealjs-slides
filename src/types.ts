@@ -24,9 +24,14 @@ export type WebViewMessage =
 	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest;
 
 
+export interface PresentationSettings {
+	scrollsOverflow: boolean;
+}
+	
 export interface InitialDataResponse {
 	type: 'initialDataResponse';
 
+	settings: PresentationSettings;
 	initialData: string|undefined;
 }
 

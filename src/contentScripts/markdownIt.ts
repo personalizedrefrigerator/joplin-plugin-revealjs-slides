@@ -21,7 +21,13 @@ export default (context: { contentScriptId: string }) => {
 						}
 
 						html += renderedMd.innerHTML;
-						webviewApi.postMessage('${context.contentScriptId}', html);
+
+						try {
+							webviewApi.postMessage('${context.contentScriptId}', html);
+						} catch(e) {
+							// Do nothing, webviewApi is unavailable in the rich text editor
+							// (so avoid logging).
+						}
 					}
 				`;
 				result += `<style onload="${postRenderedMd}"></style>`;

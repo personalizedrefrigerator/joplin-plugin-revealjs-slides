@@ -169,6 +169,10 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 	if (result?.type === 'initialDataResponse') {
 		const revealElements = initializeRevealElements(result.initialData ?? 'no initial data');
 		document.body.appendChild(revealElements);
+
+		if (result.settings.scrollsOverflow) {
+			document.body.classList.add('allowSlidesOverflow');
+		}
 		
 		const deck = new Reveal({
 			// Make [first slide](#1) link to the first slide

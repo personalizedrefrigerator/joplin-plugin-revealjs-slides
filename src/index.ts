@@ -1,5 +1,5 @@
 import joplin from 'api';
-import { ContentScriptType, MenuItemLocation, ToolbarButtonLocation } from 'api/types';
+import { ContentScriptType, MenuItemLocation, SettingItemType, ToolbarButtonLocation } from 'api/types';
 import localization from './localization';
 import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
@@ -11,10 +11,50 @@ const isMarkdownEditor = async () => {
 	}) === 'active';
 };
 
+
+// Based on code in my other plugin: joplin-plugin-freehand-drawing
+const registerAndApplySettings = async (presentationDialog: PresentationDialog) => {
+	// Joplin adds a prefix to the setting in settings.json for us.
+	const showSlidesOverflowKey = 'show-slides-overflow-y';
+
+	const applySettings = async () => {
+		const scrollsOverflow = await joplin.settings.value(showSlidesOverflowKey);
+		presentationDialog.setScrollsOverflow(scrollsOverflow);
+	};
+
+	const sectionName = 'revealjs-integration';
+	await joplin.settings.registerSection(sectionName, {
+		label: 'RevealJS Integration',
+		iconName: 'fas fa-play',
+		description: localization.settingsPaneDescription,
+	});
+
+	// Editor fullscreen setting
+	await joplin.settings.registerSettings({
+		[showSlidesOverflowKey]: {
+			public: true,
+			section: 'revealjs-integration',
+
+			label: localization.showSlidesOverflowSetting,
+
+			type: SettingItemType.Bool,
+			value: true,
+		},
+	});
+
+	await joplin.settings.onChange(_event => {
+		void applySettings();
+	});
+
+	await applySettings();
+}
+
 joplin.plugins.register({
 	onStart: async function() {
 		const presentationDialog = await PresentationDialog.getInstance();
 		const toolbuttonCommand = `${pluginPrefix}insertDrawing`;
+
+		void registerAndApplySettings(presentationDialog);
 
 		let onNextRender: (()=>void)|null = null;
 		const awaitNextRender = (timeout: number) => {
