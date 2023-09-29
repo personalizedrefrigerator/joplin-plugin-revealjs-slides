@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256mm"
+   height="256mm"
+   viewBox="0 0 256 256"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09, custom)"
+   sodipodi:docname="joplin-plugin-revealjs-slides"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="0.55751776"
+     inkscape:cx="565.90126"
+     inkscape:cy="447.51938"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2242" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter16157"
+       x="-0.043845969"
+       y="-0.065768951"
+       width="1.0876919"
+       height="1.1315379">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="4.0603195"
+         id="feGaussianBlur16159" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter16324"
+       x="-0.095166538"
+       y="-1.1419985"
+       width="1.1903331"
+       height="3.2839969">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="7.553844"
+         id="feGaussianBlur16326" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g16168"
+       transform="matrix(0.99147257,0,0,1.2142972,6.3746559,-25.325192)">
+      <rect
+         style="fill:#387170;fill-opacity:1;stroke-width:0.264583;filter:url(#filter16157)"
+         id="rect16155"
+         width="222.25"
+         height="148.16667"
+         x="15.875"
+         y="48.683357"
+         ry="10.583334" />
+      <rect
+         style="fill:#282a36;fill-opacity:1;stroke-width:0.264583"
+         id="rect2609"
+         width="222.25"
+         height="148.16667"
+         x="15.875"
+         y="48.683357"
+         ry="10.583334" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         id="rect13131"
+         width="201.08333"
+         height="121.70833"
+         x="26.458332"
+         y="68.791664"
+         ry="10.583334" />
+      <path
+         style="fill:#cccccc;fill-opacity:1;stroke-width:0.0801065"
+         d="M 206.375,154.78125 V 158.75 l 10.58333,10.58333 -10.58333,10.58334 v 3.96875 l 15.875,-14.55209 z"
+         id="path11973"
+         sodipodi:nodetypes="ccccccc" />
+      <circle
+         style="fill:#008000;fill-opacity:1;stroke-width:0.264583"
+         id="path12189"
+         cx="27.78125"
+         cy="59.53125"
+         r="3.96875" />
+      <circle
+         style="fill:#808000;fill-opacity:1;stroke-width:0.264583"
+         id="path12191"
+         cx="38.364582"
+         cy="59.53125"
+         r="3.96875" />
+      <circle
+         style="fill:#de1e1e;fill-opacity:1;stroke-width:0.264583"
+         id="path12193"
+         cx="48.947918"
+         cy="59.53125"
+         r="3.96875" />
+    </g>
+    <ellipse
+       style="mix-blend-mode:normal;fill:#0000ff;fill-opacity:0.218933;stroke:none;stroke-width:3;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter16324)"
+       id="path16270"
+       cx="105.83334"
+       cy="235.47917"
+       rx="95.25"
+       ry="7.9375" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3;stroke-dasharray:none;stroke-opacity:1"
+       x="42.333332"
+       y="105.83333"
+       id="text16382"><tspan
+         sodipodi:role="line"
+         id="tspan16380"
+         style="stroke-width:3"
+         x="42.333332"
+         y="105.83333" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:34.4842px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.93251;stroke-dasharray:none;stroke-opacity:1"
+       x="35.667038"
+       y="88.271423"
+       id="text16767"
+       transform="scale(0.97750415,1.0230136)"><tspan
+         sodipodi:role="line"
+         id="tspan16765"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34.4842px;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';stroke-width:2.93251"
+         x="35.667038"
+         y="88.271423">joplin-plugin</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34.4842px;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';stroke-width:2.93251"
+         x="35.667038"
+         y="132.54105"
+         id="tspan16823">-revealjs-slides</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.2777px;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';fill:#000000;fill-opacity:1;stroke:none;stroke-width:3;stroke-dasharray:none;stroke-opacity:1"
+       x="58.208332"
+       y="127"
+       id="text16821"><tspan
+         sodipodi:role="line"
+         id="tspan16819"
+         style="stroke-width:3"
+         x="58.208332"
+         y="127" /></text>
+  </g>
+</svg>

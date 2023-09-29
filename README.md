@@ -3,7 +3,8 @@
 
 A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
 
-<img width="600" src="./screenshots/screenshot-light.png" alt=""/>
+<img width="600" src="./images/screenshot-light.png" alt="Screenshot: A Joplin plugin window showing a slideshow. The current slide states that KaTeX, highlight.js, and Mermaid are supported."/>
+
 
 ## Example presentation
 
@@ -77,22 +78,22 @@ graph TD;
 
 <section>
 
-Press `f` to enter fullscreen and `esc` to exit fullscreen.
+Press <kbd>f</kbd> to enter fullscreen and <kbd>esc</kbd> to exit fullscreen.
 
 </section>
 <section>
 
-Press `p` to print the slideshow.
+Press <kbd>p</kbd> to print the slideshow.
 
 </section>
 <section>
 
-Press `q` or navigate to the last slide to show the `Exit` button.
+Press <kbd>q</kbd> or navigate to the last slide to show the `Exit` button.
 
 </section>
 <section>
 
-Press `?` to see a list of additional shortcuts.
+Press <kbd>?</kbd> to see a list of additional shortcuts.
 
 </section>
 
@@ -115,9 +116,9 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 
 ## Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
- * At present, the plugin's icon in the rich text editor is a gear: ![screenshot](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/da0b8cef-eb32-4550-8d3c-7f9a0f445230)
-. [See the upstream bug report](https://github.com/laurent22/joplin/issues/6876)
 
+
+<details><summary>Development</summary>
 
 # Development
 ## Building the plugin
@@ -135,3 +136,5 @@ To update the plugin framework, run `npm run update`.
 In general this command tries to do the right thing - in particular it's going to merge the changes in package.json and .gitignore instead of overwriting. It will also leave "/src" as well as README.md untouched.
 
 The file that may cause problem is "webpack.config.js" because it's going to be overwritten. For that reason, if you want to change it, consider creating a separate JavaScript file and include it in webpack.config.js. That way, when you update, you only have to restore the line that include your file.
+
+</details>
