@@ -1,6 +1,6 @@
 # 0.4.0
- - Upgrades to reveal.js 4.6.1
- - 
+ - Upgrades to [reveal.js 4.6.1](https://github.com/hakimel/reveal.js/releases/tag/4.6.1)
+ - Adds an option to [scroll overly-large slides](https://discourse.joplinapp.org/t/advanced-slides-plugin/31210/10)
 
 # 0.3.0
  - Add the search plugin.

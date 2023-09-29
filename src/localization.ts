@@ -18,9 +18,11 @@ const defaultStrings: AppLocalization = {
 	showExitButton: 'Show exit button',
 	print: 'Print',
 
-	settingsPaneDescription: 'Settings for RevealJS Integration',
+	settingsPaneDescription: 'Settings for RevealJS Integration. ' +
+		'If a presentation is ongoing, it may need to be closed and re-opened ' +
+		'for these settings to take effect.',
 	showSlidesOverflowSetting: 'Allow scrolling large slides',
-	showSpeakerNotesSetting: 'Show speaker notes',
+	showSpeakerNotesSetting: 'Show speaker notes (if any)',
 };
 
 const localizations: Record<string, AppLocalization> = {

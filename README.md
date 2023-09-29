@@ -52,7 +52,8 @@ Slides can be linked to like this: [link to slide 3](#3).
 # $\KaTeX$ is supported.
 
 ```js
-// highlight.js is supported
+// highlight.js is supported (through Joplin's
+// markdown renderer).
 function foo() {
 	alert('test');
 }
