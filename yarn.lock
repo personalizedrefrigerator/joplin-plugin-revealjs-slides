@@ -174,10 +174,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.2.tgz#fa6a90f2600e052a03c18b8cb3fd83dd4e599898"
   integrity sha512-vOBLVQeCQfIcF/2Y7eKFTqrMnizK5lRNQ7ykML/5RuwVXVWxYkgwS7xbt4B6fKCUPgbSL5FSsjHQpaGQP/dQmw==
 
-"@types/reveal.js@^4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@types/reveal.js/-/reveal.js-4.4.3.tgz#2f2b0f20c63f364a4688513eb9f489b94ded0ac3"
-  integrity sha512-nI4Kp7x5uNn5op2IHNM0L1dLONejRuph2Rcn6KVk3jF1NOLpxW8xZciXX0V0sBkVAlWTn6JmW88EaeFkkWDYig==
+"@types/reveal.js@^4.4.8":
+  version "4.4.8"
+  resolved "https://registry.yarnpkg.com/@types/reveal.js/-/reveal.js-4.4.8.tgz#44e4ecbf3c1586ca538f3b7cf05cdb2b1afab687"
+  integrity sha512-ADWVEgRLNVRE+J5yGjFDogsAaeVz+FKRVgvpLk1tgNewocXQd6wuKSknfamCVgZyUY9/IgOlkNKh9a2iIaconA==
 
 "@types/tern@*":
   version "0.23.4"
