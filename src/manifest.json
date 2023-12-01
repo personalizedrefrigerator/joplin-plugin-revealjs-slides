@@ -12,15 +12,15 @@
 	"categories": [ "integrations" ],
 	"screenshots": [
 		{
-			"src": "../images/screenshot-light.png",
+			"src": "images/screenshot-light.png",
 			"label": "Screenshot: A Joplin plugin window showing a slideshow. The current slide states that KaTeX, highlight.js, and Mermaid are supported."
 		},
 		{
-			"src": "../images/screenshot-dark.png",
+			"src": "images/screenshot-dark.png",
 			"label": "Screenshot: A Joplin plugin window showing a slideshow in dark mode. States that slides are separated by ---s."
 		}
 	],
 	"icons": {
-		"256": "../images/icon-256.png"
+		"256": "images/icon-256.png"
 	}
 }

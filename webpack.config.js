@@ -6,9 +6,12 @@
 // update, you can easily restore the functionality you've added.
 // -----------------------------------------------------------------------------
 
+/* eslint-disable no-console */
+
 const path = require('path');
 const crypto = require('crypto');
 const fs = require('fs-extra');
+const chalk = require('chalk');
 const CopyPlugin = require('copy-webpack-plugin');
 const tar = require('tar');
 const glob = require('glob');
@@ -21,9 +24,7 @@ const distDir = path.resolve(rootDir, 'dist');
 const srcDir = path.resolve(rootDir, 'src');
 const publishDir = path.resolve(rootDir, 'publish');
 
-const userConfig = Object.assign({}, {
-	extraScripts: [],
-}, fs.pathExistsSync(userConfigPath) ? require(userConfigFilename) : {});
+const userConfig = { extraScripts: [], ...(fs.pathExistsSync(userConfigPath) ? require(userConfigFilename) : {}) };
 
 const manifestPath = `${srcDir}/manifest.json`;
 const packageJsonPath = `${rootDir}/package.json`;
@@ -35,26 +36,30 @@ const pluginInfoFilePath = path.resolve(publishDir, `${manifest.id}.json`);
 
 const { builtinModules } = require('node:module');
 
-// Webpack5 doesn't polyfill by default. Plugins are likely to expect
-// the os- and path- modules. Setting these to false prevents Webpack from
-// warning us that they should be polyfilled.
+// Webpack5 doesn't polyfill by default and displays a warning when attempting to require() built-in
+// node modules. Set these to false to prevent Webpack from warning about not polyfilling these modules.
+// We don't need to polyfill because the plugins run in Electron's Node environment.
 const moduleFallback = {};
 for (const moduleName of builtinModules) {
 	moduleFallback[moduleName] = false;
 }
 
+const getPackageJson = () => {
+	return JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+};
+
 function validatePackageJson() {
-	const content = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+	const content = getPackageJson();
 	if (!content.name || content.name.indexOf('joplin-plugin-') !== 0) {
-		console.warn(`WARNING: To publish the plugin, the package name should start with "joplin-plugin-" (found "${content.name}") in ${packageJsonPath}`);
+		console.warn(chalk.yellow(`WARNING: To publish the plugin, the package name should start with "joplin-plugin-" (found "${content.name}") in ${packageJsonPath}`));
 	}
 
 	if (!content.keywords || content.keywords.indexOf('joplin-plugin') < 0) {
-		console.warn(`WARNING: To publish the plugin, the package keywords should include "joplin-plugin" (found "${JSON.stringify(content.keywords)}") in ${packageJsonPath}`);
+		console.warn(chalk.yellow(`WARNING: To publish the plugin, the package keywords should include "joplin-plugin" (found "${JSON.stringify(content.keywords)}") in ${packageJsonPath}`));
 	}
 
 	if (content.scripts && content.scripts.postinstall) {
-		console.warn(`WARNING: package.json contains a "postinstall" script. It is recommended to use a "prepare" script instead so that it is executed before publish. In ${packageJsonPath}`);
+		console.warn(chalk.yellow(`WARNING: package.json contains a "postinstall" script. It is recommended to use a "prepare" script instead so that it is executed before publish. In ${packageJsonPath}`));
 	}
 }
 
@@ -71,8 +76,8 @@ function currentGitInfo() {
 		return `${branch}:${commit}`;
 	} catch (error) {
 		const messages = error.message ? error.message.split('\n') : [''];
-		console.info('Could not get git commit (not a git repo?):', messages[0].trim());
-		console.info('Git information will not be stored in plugin info file');
+		console.info(chalk.cyan('Could not get git commit (not a git repo?):', messages[0].trim()));
+		console.info(chalk.cyan('Git information will not be stored in plugin info file'));
 		return '';
 	}
 }
@@ -80,27 +85,28 @@ function currentGitInfo() {
 function validateCategories(categories) {
 	if (!categories) return null;
 	if ((categories.length !== new Set(categories).size)) throw new Error('Repeated categories are not allowed');
+	// eslint-disable-next-line github/array-foreach -- Old code before rule was applied
 	categories.forEach(category => {
-		if (!allPossibleCategories.includes(category)) throw new Error(`${category} is not a valid category. Please make sure that the category name is lowercase. Valid Categories are: \n${allPossibleCategories}\n`);
+		if (!allPossibleCategories.map(category => { return category.name; }).includes(category)) throw new Error(`${category} is not a valid category. Please make sure that the category name is lowercase. Valid categories are: \n${allPossibleCategories.map(category => { return category.name; })}\n`);
 	});
 }
 
 function validateScreenshots(screenshots) {
 	if (!screenshots) return null;
-	screenshots.forEach(screenshot => {
+	for (const screenshot of screenshots) {
 		if (!screenshot.src) throw new Error('You must specify a src for each screenshot');
 
 		const screenshotType = screenshot.src.split('.').pop();
 		if (!allPossibleScreenshotsType.includes(screenshotType)) throw new Error(`${screenshotType} is not a valid screenshot type. Valid types are: \n${allPossibleScreenshotsType}\n`);
 
-		const screenshotPath = path.resolve(srcDir, screenshot.src);
+		let screenshotPath = path.resolve(rootDir, screenshot.src);
+
 		// Max file size is 1MB
 		const fileMaxSize = 1024;
 		const fileSize = fs.statSync(screenshotPath).size / 1024;
 		if (fileSize > fileMaxSize) throw new Error(`Max screenshot file size is ${fileMaxSize}KB. ${screenshotPath} is ${fileSize}KB`);
-	});
+	}
 }
-
 
 function readManifest(manifestPath) {
 	const content = fs.readFileSync(manifestPath, 'utf8');
@@ -112,7 +118,7 @@ function readManifest(manifestPath) {
 }
 
 function createPluginArchive(sourceDir, destPath) {
-	const distFiles = glob.sync(`${sourceDir}/**/*`, { nodir: true })
+	const distFiles = glob.sync(`${sourceDir}/**/*`, { nodir: true, windowsPathsNoEscape: true })
 		.map(f => f.substr(sourceDir.length + 1));
 
 	if (!distFiles.length) throw new Error('Plugin archive was not created because the "dist" directory is empty');
@@ -126,18 +132,22 @@ function createPluginArchive(sourceDir, destPath) {
 			cwd: sourceDir,
 			sync: true,
 		},
-		distFiles
+		distFiles,
 	);
 
-	console.info(`Plugin archive has been created in ${destPath}`);
+	console.info(chalk.cyan(`Plugin archive has been created in ${destPath}`));
 }
+
+const writeManifest = (manifestPath, content) => {
+	fs.writeFileSync(manifestPath, JSON.stringify(content, null, '\t'), 'utf8');
+};
 
 function createPluginInfo(manifestPath, destPath, jplFilePath) {
 	const contentText = fs.readFileSync(manifestPath, 'utf8');
 	const content = JSON.parse(contentText);
 	content._publish_hash = `sha256:${fileSha256(jplFilePath)}`;
 	content._publish_commit = currentGitInfo();
-	fs.writeFileSync(destPath, JSON.stringify(content, null, '\t'), 'utf8');
+	writeManifest(destPath, content);
 }
 
 function onBuildCompleted() {
@@ -147,7 +157,7 @@ function onBuildCompleted() {
 		createPluginInfo(manifestPath, pluginInfoFilePath, pluginArchiveFilePath);
 		validatePackageJson();
 	} catch (error) {
-		console.error(error.message);
+		console.error(chalk.red(error.message));
 	}
 }
 
@@ -161,13 +171,16 @@ const baseConfig = {
 				test: /\.tsx?$/,
 				use: 'ts-loader',
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.css/,
+				use: ['style-loader', 'css-loader'],
 			}
 		],
 	},
 };
 
-const pluginConfig = Object.assign({}, baseConfig, {
-	entry: './src/index.ts',
+const pluginConfig = { ...baseConfig, entry: './src/index.ts',
 	resolve: {
 		alias: {
 			api: path.resolve(__dirname, 'api'),
@@ -199,10 +212,9 @@ const pluginConfig = Object.assign({}, baseConfig, {
 				},
 			],
 		}),
-	],
-});
+	] };
 
-const extraScriptConfig = Object.assign({}, baseConfig, {
+const extraScriptConfig = { ...baseConfig, 
 	target: 'web',
 	resolve: {
 		alias: {
@@ -211,16 +223,7 @@ const extraScriptConfig = Object.assign({}, baseConfig, {
 		fallback: moduleFallback,
 		extensions: ['.js', '.tsx', '.ts', '.json'],
 	},
-	module: {
-		rules: [
-			...baseConfig.module.rules,
-			{
-				test: /\.css/,
-				use: ['style-loader', 'css-loader'],
-			}
-		],
-	},
-});
+};
 
 const createArchiveConfig = {
 	stats: 'errors-only',
@@ -268,14 +271,38 @@ function buildExtraScriptConfigs(userConfig) {
 
 	for (const scriptName of userConfig.extraScripts) {
 		const scriptPaths = resolveExtraScriptPath(scriptName);
-		output.push(Object.assign({}, extraScriptConfig, {
-			entry: scriptPaths.entry,
-			output: scriptPaths.output,
-		}));
+		output.push({ ...extraScriptConfig, entry: scriptPaths.entry,
+			output: scriptPaths.output });
 	}
 
 	return output;
 }
+
+const increaseVersion = version => {
+	try {
+		const s = version.split('.');
+		const d = Number(s[s.length - 1]) + 1;
+		s[s.length - 1] = `${d}`;
+		return s.join('.');
+	} catch (error) {
+		error.message = `Could not parse version number: ${version}: ${error.message}`;
+		throw error;
+	}
+};
+
+const updateVersion = () => {
+	const packageJson = getPackageJson();
+	packageJson.version = increaseVersion(packageJson.version);
+	fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
+
+	const manifest = readManifest(manifestPath);
+	manifest.version = increaseVersion(manifest.version);
+	writeManifest(manifestPath, manifest);
+
+	if (packageJson.version !== manifest.version) {
+		console.warn(chalk.yellow(`Version numbers have been updated but they do not match: package.json (${packageJson.version}), manifest.json (${manifest.version}). Set them to the required values to get them in sync.`));
+	}
+};
 
 function main(environ) {
 	const configName = environ['joplin-plugin-config'];
@@ -311,6 +338,11 @@ function main(environ) {
 		fs.removeSync(distDir);
 		fs.removeSync(publishDir);
 		fs.mkdirpSync(publishDir);
+	}
+
+	if (configName === 'updateVersion') {
+		updateVersion();
+		return [];
 	}
 
 	return configs[configName];
