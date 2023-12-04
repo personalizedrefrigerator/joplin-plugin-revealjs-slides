@@ -101,8 +101,7 @@ joplin.plugins.register({
 		const startSlideshow = async () => {
 			const wasMarkdownEditor = await isMarkdownEditor();
 
-			// MCE or Joplin has a bug where inserting markdown code for an SVG image removes
-			// the image data. See https://github.com/laurent22/joplin/issues/7547.
+			// We need to switch to the markdown editor to trigger a re-render
 			if (!wasMarkdownEditor) {
 				// Switch to the markdown editor.
 				await Promise.all([
