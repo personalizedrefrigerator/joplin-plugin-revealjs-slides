@@ -1,7 +1,7 @@
 # `joplin-plugin-revealjs-slides`
 [On GitHub](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides)
 
-A Joplin plugin for presenting notes using [reveal.js](https://revealjs.com/).
+A Joplin plugin for presenting notes. Internally, this uses the [reveal.js](https://revealjs.com/) library.
 
 <img width="600" src="./images/screenshot-light.png" alt="Screenshot: A Joplin plugin window showing a slideshow. The current slide states that KaTeX, highlight.js, and Mermaid are supported."/>
 
@@ -132,6 +132,11 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 
 ## Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
+ * Does not support HTML notes
+
+## Disclaimer
+
+The developer of this plugin is not affiliated with `reveal.js`.
 
 
 <details><summary>Development</summary>
