@@ -28,6 +28,8 @@ import 'katex/dist/katex.min.css';
 // Allows syntax highlighting in code blocks
 import 'reveal.js/plugin/highlight/zenburn.css';
 
+import showOpenSourceLicenses from './licenses/showOpenSourceLicenses';
+
 // Prevent navigation away from the current window (e.g. by improperly sanitized links) or by
 // some unknown reveal.js functionality.
 window.onbeforeunload = () => {
@@ -194,6 +196,14 @@ const initializeDeck = (settings: PresentationSettings) => {
 		description: localization.print
 	}, () => {
 		window.print();
+	});
+
+	deck.addKeyBinding({
+		keyCode: 73,
+		key: 'i',
+		description: 'OpenSource licenses'
+	}, () => {
+		showOpenSourceLicenses();
 	});
 
 	deck.on('slidechanged', () => {

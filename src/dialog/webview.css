@@ -43,3 +43,49 @@ body.allowSlidesOverflow .slides > section {
 	background-color: var(--joplin-background-color2);
 	color: var(--joplin-color2);
 }
+
+@keyframes fade-in {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+.license-text-dialog {
+	border-radius: 4px;
+	border: none;
+	box-shadow: 0px 1px 4px rgba(100, 100, 100, 0.5);
+
+	color: var(--joplin-color3);
+	background-color: var(--joplin-background-color3);
+
+	opacity: 1;
+	animation: 0.4s ease fade-in;
+
+	transition: 0.3s ease opacity;
+}
+
+.license-text-dialog.hiding {
+	opacity: 0;
+}
+
+.license-text-dialog::backdrop {
+	backdrop-filter: blur(12px);
+	transition: 0.3s ease backdrop-filter;
+}
+
+.license-text-dialog.hiding::backdrop {
+	backdrop-filter: blur(0px);
+}
+
+.license-text-dialog > .license {
+	white-space: pre-wrap;
+	font-family: monospace;
+	max-height: 400px;
+	max-width: 500px;
+	overflow-y: auto;
+}
+
+.license-text-dialog > .close {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
