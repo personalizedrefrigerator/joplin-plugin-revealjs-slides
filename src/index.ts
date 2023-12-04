@@ -17,6 +17,7 @@ const registerAndApplySettings = async (presentationDialog: PresentationDialog) 
 	// Joplin adds a prefix to the setting in settings.json for us.
 	const showSlidesOverflowKey = 'show-slides-overflow-y';
 	const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
+	const hideToolbarButton = 'hide-toolbar-button';
 
 	const applySettings = async () => {
 		const scrollsOverflow = await joplin.settings.value(showSlidesOverflowKey);
@@ -53,6 +54,13 @@ const registerAndApplySettings = async (presentationDialog: PresentationDialog) 
 			type: SettingItemType.Bool,
 			value: false,
 		},
+		[hideToolbarButton]: {
+			public: true,
+			section: sectionName,
+			label: localization.hideToolbarButtonSetting,
+			type: SettingItemType.Bool,
+			value: false,
+		},
 	});
 
 	await joplin.settings.onChange(_event => {
@@ -65,9 +73,9 @@ const registerAndApplySettings = async (presentationDialog: PresentationDialog) 
 joplin.plugins.register({
 	onStart: async function() {
 		const presentationDialog = await PresentationDialog.getInstance();
-		const toolbuttonCommand = `${pluginPrefix}insertDrawing`;
+		const toolbuttonCommand = `${pluginPrefix}start-slideshow`;
 
-		void registerAndApplySettings(presentationDialog);
+		await registerAndApplySettings(presentationDialog);
 
 		let onNextRender: (()=>void)|null = null;
 		const awaitNextRender = (timeout: number) => {
@@ -130,9 +138,11 @@ joplin.plugins.register({
 			},
 		});
 
-		await joplin.views.toolbarButtons.create(
-			toolbuttonCommand, toolbuttonCommand, ToolbarButtonLocation.EditorToolbar
-		);
+		if (!(await joplin.settings.value('hide-toolbar-button'))) {
+			await joplin.views.toolbarButtons.create(
+				toolbuttonCommand, toolbuttonCommand, ToolbarButtonLocation.EditorToolbar,
+			);
+		}
 
 		// Also add to the View menu so that users can associate a keybinding with it.
 		const startPresentationButtonId = `${pluginPrefix}startPresentation`;

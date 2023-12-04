@@ -5,9 +5,11 @@ interface AppLocalization {
 	endOfDeck: string;
 	showExitButton: string;
 	print: string;
+	close: string;
 
 	settingsPaneDescription: string;
 	showSlidesOverflowSetting: string;
+	hideToolbarButtonSetting: string;
 	showSpeakerNotesSetting: string;
 }
 
@@ -17,10 +19,12 @@ const defaultStrings: AppLocalization = {
 	endOfDeck: 'End of deck',
 	showExitButton: 'Show exit button',
 	print: 'Print',
+	close: 'Close',
 
 	settingsPaneDescription: 'Settings for RevealJS Integration. ' +
 		'If a presentation is ongoing, it may need to be closed and re-opened ' +
 		'for these settings to take effect.',
+	hideToolbarButtonSetting: 'Hide slideshow button in editor toolbar (requires restart)',
 	showSlidesOverflowSetting: 'Allow scrolling large slides',
 	showSpeakerNotesSetting: 'Show speaker notes (if any)',
 };
@@ -29,9 +33,10 @@ const localizations: Record<string, AppLocalization> = {
 	en: defaultStrings,
 	es: {
 		...defaultStrings,
-		exit: 'Cerrar',
+		close: 'Cerrar',
+		exit: 'Salir',
 		print: 'Imprimir',
-	}
+	},
 };
 
 let localization: AppLocalization|undefined;
