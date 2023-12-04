@@ -1,3 +1,10 @@
+
+# 0.5.0
+ - Upgrades to [reveal.js 5.0.2](https://github.com/hakimel/reveal.js/releases/tag/5.0.2)
+ - Allows removing the "play" button from Joplin's toolbar.
+ - Include licenses
+ - Internal: Update plugin API
+
 # 0.4.0
  - Upgrades to [reveal.js 4.6.1](https://github.com/hakimel/reveal.js/releases/tag/4.6.1)
  - Adds an option to [scroll overly-large slides](https://discourse.joplinapp.org/t/advanced-slides-plugin/31210/10)
