@@ -86,8 +86,6 @@ A setting exists to show speaker notes (when available).
     Notes!
 </aside>
 
-````
-
 ---
 
 # Keyboard shortcuts
@@ -113,6 +111,8 @@ Press <kbd>?</kbd> to see a list of additional shortcuts.
 
 </section>
 
+````
+
 </details>
 
 ## Installing
@@ -120,6 +120,12 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 ![screenshot shows "reveal.js" in the search bar of the "plugins" tab of Joplin's settings.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/5f1a0c20-3d72-47a5-b214-18861cb6f493)
 
 
+## Keyboard shortcuts
+
+- Press <kbd>f</kbd> to enter fullscreen and <kbd>esc</kbd> to exit fullscreen.
+- Press <kbd>p</kbd> to print the slideshow.
+- Press <kbd>q</kbd> or navigate to the last slide to show the `Exit` button.
+- Press <kbd>?</kbd> to see a list of additional shortcuts.
 
 
 ## Notes
