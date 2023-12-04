@@ -11,16 +11,28 @@ export default (context: { contentScriptId: string }) => {
 
 				// Append content that sends the rendered markdown to the plugin's content script.
 				const postRenderedMd = `
-					const renderedMd = document.querySelector('#rendered-md');
 					const assetsContainer = document.querySelector('#joplin-container-pluginAssetsContainer');
-					if (renderedMd) {
+
+					/*
+					 In some cases (e.g. HTML notes, renderedMD is undefined). Sections need to be in the root element,
+					 so try to return the content element.
+					*/
+					const mainHtmlElement =
+						document.querySelector('#rendered-md')
+						?? document.querySelector('#joplin-container-content')
+						?? document.body;
+
+					if (mainHtmlElement) {
 						let html = '';
-						/* Include plugin assets & custom stylesheets, if available. */
-						if (assetsContainer) {
-							html += assetsContainer.outerHTML;
+
+						if (mainHtmlElement !== document.body) {
+							/* Include plugin assets & custom stylesheets, if available. */
+							if (assetsContainer) {
+								html += assetsContainer.outerHTML;
+							}
 						}
 
-						html += renderedMd.innerHTML;
+						html += mainHtmlElement.innerHTML;
 
 						try {
 							webviewApi.postMessage('${context.contentScriptId}', html);
