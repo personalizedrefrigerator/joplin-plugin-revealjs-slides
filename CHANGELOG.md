@@ -1,4 +1,7 @@
 
+# 0.6.0
+ - Support highlighting code blocks with `reveal.js`'s highlight plugin. This adds support for line numbers and animated code block transitions.
+
 # 0.5.0
  - Upgrades to [reveal.js 5.0.2](https://github.com/hakimel/reveal.js/releases/tag/5.0.2)
  - Allows removing the "play" button from Joplin's toolbar.
