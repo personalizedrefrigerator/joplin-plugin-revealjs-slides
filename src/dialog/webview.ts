@@ -19,6 +19,7 @@ import { InitialDataRequest, PresentationSettings, WebViewMessage, WebViewMessag
 
 import Reveal from 'reveal.js';
 const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
+const RevealHighlight = require('reveal.js/plugin/highlight/highlight.esm.js').default;
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
 
@@ -145,6 +146,58 @@ const initializeRevealElements = (presentationHTML: string) => {
 	return revealContainer;
 };
 
+const initializeCodeHighlighting = async (deckContent: HTMLElement) => {
+	// Manually highlight code blocks that haven't been rendered by Joplin.
+	// See https://revealjs.com/code/#manual-highlighting
+
+	// Note: We need to highlight by calling methods of RevealHighlight manually
+	// because some changes are made to *all* `pre code` elements if the plugin is loaded
+	// as expected.
+	const highlightPlugin = RevealHighlight();
+
+	const highlightableElements
+		= deckContent.querySelectorAll<HTMLElement>('pre.jop-noMdConv:not(.hljs) > code.jop-noMdConv');
+
+	for (const elem of highlightableElements) {
+		const pre = elem.parentElement;
+
+		// Only highlight if the element has specific attributes (don't highlight all
+		// pre > codes)
+		const needsHighlightAttrs = [
+			'data-line-numbers',
+			'data-ln-start-from',
+			'data-trim',
+			'data-noescape',
+			'data-highlight',
+			'data-rjs-highlight',
+		];
+
+		const needsHighlight = needsHighlightAttrs.some(attr => elem.hasAttribute(attr));
+
+		if (pre && needsHighlight) {
+			pre.classList.add('code-wrapper', 'rjs-code-wrapper');
+
+			// Emulate some of the reveal.js setup code.
+			// See options here: https://revealjs.com/code/#manual-highlighting
+
+			const scriptReplacementMatches = elem.querySelectorAll(':scope > script[type="text/template"], :scope > textarea[data-template-text]');
+			if (scriptReplacementMatches.length === 1) {
+				elem.innerText = scriptReplacementMatches[0].innerHTML;
+			}
+
+			if (elem.hasAttribute('data-noescape')) {
+				elem.innerText = elem.innerHTML;
+			}
+
+			if (elem.hasAttribute('data-trim')) {
+				elem.innerHTML = elem.innerHTML.replace(/^\s*[\n]/g, '').trimEnd();
+			}
+
+			highlightPlugin.highlightBlock(elem);
+		}
+	}
+};
+
 const showCloseButton = () => {
 	webviewApi.postMessage({
 		type: 'showCloseBtn',
@@ -163,11 +216,19 @@ const toggleCloseButton = () => {
 	});
 };
 
-const initializeDeck = async (settings: PresentationSettings) => {
-	const deck = new Reveal({
+const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLElement) => {
+	const deck = new Reveal(deckContent, {
 		// Make [first slide](#1) link to the first slide
 		hashOneBasedIndex: true,
+
+		// Do not add RevealHighlight as a plugin (breaks Joplin's search.)
 		plugins: [ RevealSearch ],
+
+		// Don't re-highlight Joplin's highlighted output
+		highlight: {
+			highlightOnLoad: false,
+			escapeHTML: true,
+		} as any,
 
 		showNotes: settings.showSpeakerNotes,
 	});
@@ -207,7 +268,9 @@ const initializeDeck = async (settings: PresentationSettings) => {
 	});
 
 	await deck.initialize();
+	await initializeCodeHighlighting(deckContent);
 
+	// Show after the other shortcuts
 	deck.registerKeyboardShortcut('Shift + i', 'Show OpenSource licenses');
 };
 
@@ -230,6 +293,6 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 			document.body.classList.add('allowSlidesOverflow');
 		}
 
-		void initializeDeck(result.settings);
+		void initializeDeck(result.settings, revealElements);
 	}
 });

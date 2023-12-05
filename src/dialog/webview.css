@@ -44,6 +44,25 @@ body.allowSlidesOverflow .slides > section {
 	color: var(--joplin-color2);
 }
 
+/* Fix a conflict between RevealJS and Joplin styles */
+.rjs-code-wrapper > code > table.hljs-ln tr > td {
+	font: var(--r-code-font);
+	background-color: unset;
+	border: unset;
+	color: unset;
+}
+.rjs-code-wrapper > code > table.hljs-ln tr {
+	background-color: unset;
+	border: unset;
+}
+.rjs-code-wrapper > code > table.hljs-ln {
+	border: unset;
+	background-color: unset;
+}
+
+
+
+
 @keyframes fade-in {
 	0% { opacity: 0; }
 	100% { opacity: 1; }

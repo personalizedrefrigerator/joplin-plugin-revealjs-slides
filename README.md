@@ -111,6 +111,20 @@ Press <kbd>?</kbd> to see a list of additional shortcuts.
 
 </section>
 
+---
+
+# Animating code blocks
+
+Code blocks with highlighted line numbers need to be specified in HTML. See [the upstream reveal.js documentation](https://revealjs.com/code/#manual-highlighting) for details.
+
+Example:
+<pre><code data-trim data-line-numbers="1|3|4">
+// This
+// is
+// a test
+// of code blocks.
+</code></pre>
+
 ````
 
 </details>
