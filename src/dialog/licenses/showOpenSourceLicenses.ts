@@ -1,9 +1,16 @@
 import localization from "../../localization";
 import getOpenSourceLicenseText from "./getOpenSourceLicenseText";
 
+let visibleDialog: HTMLDialogElement|null = null;
 const showOpenSourceLicenses = () => {
 	const dialog = document.createElement('dialog');
 	dialog.classList.add('license-text-dialog');
+
+	if (visibleDialog && visibleDialog.parentElement) {
+		visibleDialog.close();
+		visibleDialog = null;
+	}
+	visibleDialog = dialog;
 
 	const header = document.createElement('h2');
 	header.innerText = 'Slides Plugin: OpenSource Licenses';
@@ -32,7 +39,7 @@ const showOpenSourceLicenses = () => {
 	};
 
 	dialog.addEventListener('keydown', event => {
-		if (event.code === 'Escape') {
+		if (event.code === 'Escape' || event.code === 'Space') {
 			dismissDialog();
 
 			// Avoid default action
@@ -42,6 +49,10 @@ const showOpenSourceLicenses = () => {
 
 	dialog.addEventListener('close', () => {
 		dialog.remove();
+
+		if (visibleDialog === dialog) {
+			visibleDialog = null;
+		}
 	});
 
 	dialog.replaceChildren(header, licenseTextDisplay, closeButton);

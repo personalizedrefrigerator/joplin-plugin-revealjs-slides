@@ -28,7 +28,7 @@ const getOpenSourceLicenseText = () => {
 		'',
 		'This plugin is licensed under the MIT license. Internally, it uses reveal.js to render slideshows.',
 		'',
-		'NOTE: This plugin is not affiliated with Reveal.js.',
+		'This plugin is not affiliated with Reveal.js.',
 		'',
 		'== Reveal.js license (MIT license) ==',
 		'',

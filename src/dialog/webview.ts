@@ -163,7 +163,7 @@ const toggleCloseButton = () => {
 	});
 };
 
-const initializeDeck = (settings: PresentationSettings) => {
+const initializeDeck = async (settings: PresentationSettings) => {
 	const deck = new Reveal({
 		// Make [first slide](#1) link to the first slide
 		hashOneBasedIndex: true,
@@ -198,14 +198,6 @@ const initializeDeck = (settings: PresentationSettings) => {
 		window.print();
 	});
 
-	deck.addKeyBinding({
-		keyCode: 73,
-		key: 'i',
-		description: 'OpenSource licenses'
-	}, () => {
-		showOpenSourceLicenses();
-	});
-
 	deck.on('slidechanged', () => {
 		if (deck.isLastSlide()) {
 			showCloseButton();
@@ -214,8 +206,16 @@ const initializeDeck = (settings: PresentationSettings) => {
 		}
 	});
 
-	void deck.initialize();
+	await deck.initialize();
+
+	deck.registerKeyboardShortcut('Shift + i', 'Show OpenSource licenses');
 };
+
+document.addEventListener('keydown', (event) => {
+	if (event.code === 'KeyI' && event.shiftKey) {
+		showOpenSourceLicenses();
+	}
+});
 
 // Load initial data
 const loadedMessage: InitialDataRequest = {
