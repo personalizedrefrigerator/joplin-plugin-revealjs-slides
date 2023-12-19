@@ -1,4 +1,7 @@
 
+# 0.6.1
+ - Update `reveal.js` to [v5.0.3](https://github.com/hakimel/reveal.js/releases/tag/5.0.3)
+
 # 0.6.0
  - Support highlighting code blocks with `reveal.js`'s highlight plugin. This adds support for line numbers and animated code block transitions.
 

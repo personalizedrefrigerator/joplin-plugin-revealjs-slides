@@ -1167,10 +1167,10 @@ reusify@^1.0.4:
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-reveal.js@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-5.0.2.tgz#fb183ce2a8ba74ba2e10f191e59247b4553b690b"
-  integrity sha512-G5dhsr/2wormdrYPtZBfRamvnPrHc/8TtYVH3EpIzfMyKSiTprFwn61nFZbcmeK4iKKdLq2MMiiMNqlRmkBU4A==
+reveal.js@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-5.0.3.tgz#446d2fb84fe68d6f60cb14f32c671f76bc83b424"
+  integrity sha512-OR3mXl2E0GviJbi2p21VWD/j6CQbEQj2WU6jaS1RZRzah9CHmPpJR32uvUh7EtckMLOZfuFYGjYA5zImcgwOoA==
 
 run-parallel@^1.1.9:
   version "1.2.0"
