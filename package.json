@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "katex": "^0.16.9",
-    "reveal.js": "^5.0.3"
+    "reveal.js": "^5.0.4"
   }
 }
