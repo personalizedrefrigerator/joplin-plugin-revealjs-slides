@@ -5,9 +5,9 @@ import type MarkdownIt = require("markdown-it");
 export default (context: { contentScriptId: string }) => {
 	return {
 		plugin: (markdownIt: MarkdownIt, _options: any) => {
-			const originalRender = markdownIt.render;
-			markdownIt.render = (...args: any) => {
-				let result = originalRender.apply(markdownIt, args);
+			const originalRender = markdownIt.renderer.render;
+			markdownIt.renderer.render = (...args: any) => {
+				let result = originalRender.apply(markdownIt.renderer, args);
 
 				// Append content that sends the rendered markdown to the plugin's content script.
 				const postRenderedMd = `

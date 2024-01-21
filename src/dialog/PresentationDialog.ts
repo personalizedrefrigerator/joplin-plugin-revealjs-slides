@@ -3,6 +3,7 @@ import { ButtonSpec, DialogResult } from 'api/types';
 import { pluginPrefix } from '../constants';
 import localization from '../localization';
 import { PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../types';
+import isMobile from '../util/isMobile';
 
 const dialogs = joplin.views.dialogs;
 export type SaveOptionType = 'saveAsCopy' | 'overwrite';
@@ -92,6 +93,11 @@ export default class PresentationDialog {
 
 		this.isFullscreen = fullscreen;
 
+		// Global CSS not supported on mobile.
+		if (await isMobile()) {
+			return;
+		}
+
 		const installationDir = await joplin.plugins.installationDir();
 
 		const cssFile = fullscreen ? 'dialogFullscreen.css' : 'dialogNonfullscreen.css';
@@ -106,8 +112,8 @@ export default class PresentationDialog {
 		this.currentButtons = buttons;
 
 		// No buttons? Allow fullscreen.
-		await this.setFullscreen(buttons.length === 0);
 		await dialogs.setButtons(this.handle, buttons);
+		await this.setFullscreen(buttons.length === 0);
 	}
 
 	public showExitButton() {

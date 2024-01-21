@@ -3,12 +3,16 @@ import { ContentScriptType, MenuItemLocation, SettingItemType, ToolbarButtonLoca
 import localization from './localization';
 import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
+import isMobile from './util/isMobile';
 
 // Returns true if the CodeMirror editor is active.
-const isMarkdownEditor = async () => {
-	return await joplin.commands.execute('editor.execCommand', {
-		name: 'revealJSIntegration--isCodeMirrorActive',
-	}) === 'active';
+const isRichTextEditor = async () => {
+	const mobile = await isMobile();
+	if (mobile) {
+		// No rich text editor on mobile
+		return false;
+	}
+	return await joplin.commands.execute('editor.execCommand', { name: 'revealJSIntegration--isCodeMirrorActive' }) !== 'active';
 };
 
 
@@ -99,10 +103,10 @@ joplin.plugins.register({
 
 		let renderedContent = '';
 		const startSlideshow = async () => {
-			const wasMarkdownEditor = await isMarkdownEditor();
+			const wasRichTextEditor = await isRichTextEditor();
 
 			// We need to switch to the markdown editor to trigger a re-render
-			if (!wasMarkdownEditor) {
+			if (wasRichTextEditor) {
 				// Switch to the markdown editor.
 				await Promise.all([
 					joplin.commands.execute('toggleEditors'),
@@ -115,7 +119,7 @@ joplin.plugins.register({
 			presentationDialog.present(renderedContent);
 
 			// Try to switch back to the original editor
-			if (!wasMarkdownEditor) {
+			if (wasRichTextEditor) {
 				await joplin.commands.execute('toggleEditors');
 			}
 		};
