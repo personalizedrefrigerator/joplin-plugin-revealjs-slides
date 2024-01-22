@@ -1,4 +1,8 @@
 
+# 0.7.0
+ - Update `reveal.js` to [v5.0.4](https://github.com/hakimel/reveal.js/releases/tag/5.0.4)
+ - Partial mobile support (users may need to switch to the viewer and back to the editor for correct rendering).
+
 # 0.6.1
  - Update `reveal.js` to [v5.0.3](https://github.com/hakimel/reveal.js/releases/tag/5.0.3)
 
