@@ -103,12 +103,12 @@ joplin.plugins.register({
 
 		let getHtmlCallbacks: (()=>Promise<void>)[] = [];
 		let renderedContent: string = '';
-		const getRenderedHtml = async (tryCount: number = 0) => {
+		const getRenderedHtml = async (tryCount: number = 0, timeout: number = 1500): Promise<string> => {
 			for (const callback of getHtmlCallbacks) {
 				callback();
 			}
 
-			const success = await awaitNextHtmlResponse(1500);
+			const success = await awaitNextHtmlResponse(timeout);
 
 			// If we weren't able to connect to a markdown-it script, there are a few things that could
 			// be happening:
@@ -122,33 +122,39 @@ joplin.plugins.register({
 					return '';
 				}
 
-				const tryToSwitchViews = confirm(localization.switchViewsToShowMarkdownViewer);
+				if (await isMobile()) {
+					// On mobile, we can't auto-switch to the note viewer to start the presentation.
+					alert(localization.switchViewsToShowNoteViewer);
+					return getRenderedHtml(tryCount + 1, 15000);
+				} else {
+					const tryToSwitchViews = confirm(localization.switchViewsToShowMarkdownViewer);
 
-				const togglePanes = async () => {
-					// May not work on mobile.
-					try {
-						await joplin.commands.execute('toggleVisiblePanes');
-					} catch (error) {
-						console.error(error);
-					}
-				};
-
-				if (tryToSwitchViews) {
-					togglePanes();
-				}
-
-				return new Promise<string>((resolve) => {
-					setTimeout(async () => {
-						const result = getRenderedHtml(tryCount + 1);
-						// Switch back (requires multiple toggles as there are multiple
-						// panes).
-						if (tryToSwitchViews) {
-							togglePanes();
-							togglePanes();
+					const togglePanes = async () => {
+						// May not work on mobile.
+						try {
+							await joplin.commands.execute('toggleVisiblePanes');
+						} catch (error) {
+							console.error(error);
 						}
-						resolve(result);
-					}, 500);
-				});
+					};
+
+					if (tryToSwitchViews) {
+						togglePanes();
+					}
+
+					return new Promise<string>((resolve) => {
+						setTimeout(async () => {
+							const result = getRenderedHtml(tryCount + 1);
+							// Switch back (requires multiple toggles as there are multiple
+							// panes).
+							if (tryToSwitchViews) {
+								togglePanes();
+								togglePanes();
+							}
+							resolve(result);
+						}, 500);
+					});
+				}
 			}
 			return renderedContent;
 		};
@@ -211,10 +217,14 @@ joplin.plugins.register({
 		await joplin.contentScripts.onMessage(markdownItContentScriptId, async (message: any) => {
 			if (message.type === 'waitForHtmlRequest') {
 				return await new Promise<void>(resolve => {
-					getHtmlCallbacks.push(async () => {
-						getHtmlCallbacks = [];
+					if (!onHtmlResponse) {
+						getHtmlCallbacks.push(async () => {
+							getHtmlCallbacks = [];
+							resolve();
+						});
+					} else {
 						resolve();
-					});
+					}
 				});
 			} else {
 				renderedContent = message.html;

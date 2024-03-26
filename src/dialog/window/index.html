@@ -34,16 +34,10 @@
 				z-index: 10;
 			}
 
-			.button-container > button {
-				border: 1px solid gray;
-				border-radius: 4px;
-				padding: 8px;
-
-				font-size: 1.2em;
-				background-color: white;
-				color: black;
-
-				cursor: pointer;
+			@media print {
+				.button-container {
+					display: none;
+				}
 			}
 
 			/* Ensure that logs are visible */

@@ -10,6 +10,7 @@ interface AppLocalization {
 
 	printPreviewShownMessage: { start: string; actionLink: string; };
 
+	switchViewsToShowNoteViewer: string;
 	switchViewsToShowMarkdownViewer: string;
 	unableToGetHtml: string;
 
@@ -33,6 +34,7 @@ const defaultStrings: AppLocalization = {
 		actionLink: 'print directly from this page.',
 	},
 
+	switchViewsToShowNoteViewer: 'Please open the note viewer for the current note.',
 	unableToGetHtml: 'Unable to get the HTML to present.',
 	switchViewsToShowMarkdownViewer: [
 		'The slides plugin was unable to get the rendered content of the current note. Showing the markdown viewer may help.',
