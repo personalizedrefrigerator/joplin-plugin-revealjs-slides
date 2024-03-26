@@ -1,12 +1,7 @@
-import type MarkdownIt = require("markdown-it");
 
-//declare const webviewApi: any;
-
-export default (context: { contentScriptId: string }) => {
+export default () => {
 	return {
-		plugin: (_markdownIt: MarkdownIt, _options: any) => {
-			console.log(context.contentScriptId);
-		},
+		plugin: () => {},
 		assets: () => [{ name: 'getRenderedMarkdown.js' }],
 	}
 }

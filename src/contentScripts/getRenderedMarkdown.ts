@@ -1,5 +1,7 @@
 declare const webviewApi: any;
 
+const contentScriptId = 'personalizedrefrigerator-revealjs-slides-plugin-markdownItPlugin';
+
 const sendNoteContent = () => {
 	const assetsContainer = document.querySelector('#joplin-container-pluginAssetsContainer');
 
@@ -25,7 +27,7 @@ const sendNoteContent = () => {
 		html += mainHtmlElement.innerHTML;
 
 		try {
-			webviewApi.postMessage('personalizedrefrigerator-revealjs-slides-plugin-markdownItPlugin', { type: 'updateHtml', html });
+			webviewApi.postMessage(contentScriptId, { type: 'updateHtml', html });
 		} catch(e) {
 			// Do nothing, webviewApi is unavailable in the rich text editor
 			// (so avoid logging).
@@ -35,7 +37,7 @@ const sendNoteContent = () => {
 
 (async () => {
 	while (true) {
-		await webviewApi.postMessage('personalizedrefrigerator-revealjs-slides-plugin-markdownItPlugin', { type: 'waitForHtmlRequest' });
+		await webviewApi.postMessage(contentScriptId, { type: 'waitForHtmlRequest' });
 		sendNoteContent();
 	}
 })();

@@ -36,7 +36,7 @@ import 'katex/dist/katex.min.css';
 import 'reveal.js/plugin/highlight/zenburn.css';
 
 import showOpenSourceLicenses from './licenses/showOpenSourceLicenses';
-import createPopupDialog from './util/createPopupDialog';
+import openPrintPreview from './util/openPrintPreview';
 
 // Prevent navigation away from the current window (e.g. by improperly sanitized links) or by
 // some unknown reveal.js functionality.
@@ -280,29 +280,8 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 		keyCode: 80,
 		key: 'p',
 		description: localization.print,
-	}, async () => {
-		const descriptionElement = document.createElement('div');
-		descriptionElement.appendChild(
-			document.createTextNode('A print preview dialog has been opened. It\'s also possible to ')
-		);
-
-		// Allow printing directly from this page -- the print preview dialog may not work on
-		// all systems (e.g. mobile).
-		const directPrintLink = document.createElement('a');
-		directPrintLink.innerText = 'print directly from this page.';
-		descriptionElement.appendChild(directPrintLink);
-		directPrintLink.href = '#';
-		directPrintLink.onclick = (event) => {
-			event.preventDefault();
-			window.print();
-		};
-	
-		void createPopupDialog(
-			'print-preview-notice',
-			'Printing...',
-			descriptionElement,
-		);
-		await webviewApi.postMessage({ type: 'print' });
+	}, () => {
+		void openPrintPreview();
 	});
 
 	deck.on('slidechanged', () => {

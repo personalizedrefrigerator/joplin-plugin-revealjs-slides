@@ -16,7 +16,6 @@
   "devDependencies": {
     "@types/codemirror": "5.60.8",
     "@types/fs-extra": "^11.0.1",
-    "@types/markdown-it": "^12.2.3",
     "@types/node": "^20.3.2",
     "@types/reveal.js": "^5.0.2",
     "chalk": "^4.1.0",

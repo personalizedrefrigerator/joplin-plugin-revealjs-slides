@@ -6,6 +6,7 @@ interface DialogOptions {
 }
 
 const visibleDialogs: Map<string, HTMLDialogElement> = new Map();
+
 const createPopupDialog = (id: string, headerText: string, content: HTMLElement, options?: DialogOptions) => {
 	const dialog = document.createElement('dialog');
 	dialog.classList.add('popup-dialog', ...(options?.classNames ?? []));
