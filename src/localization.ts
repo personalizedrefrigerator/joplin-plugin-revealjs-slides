@@ -8,6 +8,9 @@ interface AppLocalization {
 	printPreview: string;
 	close: string;
 
+	switchViewsToShowMarkdownViewer: string;
+	unableToGetHtml: string;
+
 	settingsPaneDescription: string;
 	showSlidesOverflowSetting: string;
 	hideToolbarButtonSetting: string;
@@ -22,6 +25,12 @@ const defaultStrings: AppLocalization = {
 	print: 'Print',
 	printPreview: 'Print preview',
 	close: 'Close',
+
+	unableToGetHtml: 'Unable to get the HTML to present.',
+	switchViewsToShowMarkdownViewer: [
+		'The slides plugin was unable to get the rendered content of the current note. Showing the markdown viewer may help.',
+		'Switch views to show the markdown viewer?'
+	].join('\n'),
 
 	settingsPaneDescription: 'Settings for RevealJS Integration. ' +
 		'If a presentation is ongoing, it may need to be closed and re-opened ' +
