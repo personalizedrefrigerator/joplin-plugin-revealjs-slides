@@ -15,10 +15,10 @@ a {
 }
 
 :root body {
-	--r-background-color: var(--joplin-background-color);
-	--r-main-color: var(--joplin-color);
-	--r-heading-color: var(--joplin-color);
-	--r-link-color: var(--joplin-url-color);
+	--r-background-color: var(--joplin-background-color, white);
+	--r-main-color: var(--joplin-color, black);
+	--r-heading-color: var(--joplin-color, black);
+	--r-link-color: var(--joplin-url-color, blue);
 	--r-link-color-dark: #068de9;
 	--r-link-color-hover: #8dcffc;
 	--r-selection-background-color: rgba(66, 175, 250, 0.75);
@@ -29,14 +29,16 @@ a {
 	text-transform: none;
 }
 
-body.allowSlidesOverflow .slides > section {
-	overflow-y: auto;
+@media screen {
+	body.allowSlidesOverflow .slides > section {
+		overflow-y: auto;
 
-	/* Seems to be necessary to prevent scrollbars on slides with fragments.
-	   Note that this is likely required due to reveal.js manually setting the
-	   height of slides. */
-	padding-bottom: 25px;
-	max-height: 100%;
+		/* Seems to be necessary to prevent scrollbars on slides with fragments.
+		Note that this is likely required due to reveal.js manually setting the
+		height of slides. */
+		padding-bottom: 25px;
+		max-height: 100%;
+	}
 }
 
 :root .reveal .speaker-notes {
@@ -61,20 +63,18 @@ body.allowSlidesOverflow .slides > section {
 }
 
 
-
-
 @keyframes fade-in {
 	0% { opacity: 0; }
 	100% { opacity: 1; }
 }
 
-.license-text-dialog {
+.popup-dialog {
 	border-radius: 4px;
 	border: none;
 	box-shadow: 0px 1px 4px rgba(100, 100, 100, 0.5);
 
-	color: var(--joplin-color3);
-	background-color: var(--joplin-background-color3);
+	color: var(--joplin-color3, black);
+	background-color: var(--joplin-background-color3, white);
 
 	opacity: 1;
 	animation: 0.4s ease fade-in;
@@ -82,17 +82,29 @@ body.allowSlidesOverflow .slides > section {
 	transition: 0.3s ease opacity;
 }
 
-.license-text-dialog.hiding {
+.popup-dialog.hiding {
 	opacity: 0;
 }
 
-.license-text-dialog::backdrop {
+.popup-dialog::backdrop {
 	backdrop-filter: blur(12px);
 	transition: 0.3s ease backdrop-filter;
 }
 
-.license-text-dialog.hiding::backdrop {
+.popup-dialog.hiding::backdrop {
 	backdrop-filter: blur(0px);
+}
+
+.popup-dialog > .close {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+@media print {
+	.popup-dialog {
+		display: none;
+	}
 }
 
 .license-text-dialog > .license {
@@ -103,8 +115,36 @@ body.allowSlidesOverflow .slides > section {
 	overflow-y: auto;
 }
 
-.license-text-dialog > .close {
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
+
+/* E.g. print, exit */
+.action-button {
+	border: 1px solid gray;
+	border-radius: 4px;
+	padding: 8px;
+
+	font-size: 1.2em;
+	background-color: var(--joplin-background-color2, white);
+	color: var(--joplin-color2, black);
+
+	cursor: pointer;
+}
+
+@media print {
+	.print-button {
+		display: none;
+	}
+}
+
+.print-button {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+}
+
+@media screen {
+	/* In print preview mode, show a slight shadow to mark the different pages. */
+	.reveal .slides .pdf-page {
+		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.6);
+	}
 }

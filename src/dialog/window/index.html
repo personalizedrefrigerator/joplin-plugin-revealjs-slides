@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html class="new-window-editor">
+	<head>
+		<meta charset="utf-8"/>
+		<script>
+			// Silences a warning:
+			var exports = {};
+		</script>
+		<script src="./window.js"></script>
+		<style>
+			:root, body {
+				font-family: sans-serif;
+				padding: 0;
+				margin: 0;
+			}
+
+			:root::-webkit-scrollbar {
+				width: 5px;
+				height: 5px;
+			}
+
+			:root::-webkit-scrollbar-thumb {
+				background-color: #666;
+				border-radius: 5px;
+			}
+
+			.button-container {
+				display: flex;
+				flex-direction: row;
+				justify-content: end;
+				position: fixed;
+				bottom: 0;
+				right: 0;
+				z-index: 10;
+			}
+
+			.button-container > button {
+				border: 1px solid gray;
+				border-radius: 4px;
+				padding: 8px;
+
+				font-size: 1.2em;
+				background-color: white;
+				color: black;
+
+				cursor: pointer;
+			}
+
+			/* Ensure that logs are visible */
+			#log-container {
+				position: absolute;
+				top: 0;
+				z-index: 10;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="log-container"></div>
+		<div class="button-container"></div>
+	</body>
+</html>

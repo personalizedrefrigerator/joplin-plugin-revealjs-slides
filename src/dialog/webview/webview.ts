@@ -14,8 +14,14 @@ Document.prototype.createElement = function(name: string) {
 Window.prototype.open = () => null;
 window.open = () => null;
 
-import localization from '../localization';
-import { InitialDataRequest, PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../types';
+declare global {
+	interface Window {
+		jopIsNewOriginWindow?: boolean;
+	}
+}
+
+import localization from '../../localization';
+import { InitialDataRequest, PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../../types';
 
 import Reveal from 'reveal.js';
 const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
@@ -30,6 +36,7 @@ import 'katex/dist/katex.min.css';
 import 'reveal.js/plugin/highlight/zenburn.css';
 
 import showOpenSourceLicenses from './licenses/showOpenSourceLicenses';
+import createPopupDialog from './util/createPopupDialog';
 
 // Prevent navigation away from the current window (e.g. by improperly sanitized links) or by
 // some unknown reveal.js functionality.
@@ -89,7 +96,7 @@ const hrToSections = (container: HTMLElement) => {
 	container.replaceChildren(...slides);
 };
 
-const rewriteLinks = (container: HTMLElement) => {
+const rewriteLinks = (container: HTMLElement, settings: PresentationSettings) => {
 	const links: NodeListOf<HTMLElement> = container.querySelectorAll('*[href]');
 	for (const link of links) {
 		// Allow stylesheet links
@@ -100,8 +107,11 @@ const rewriteLinks = (container: HTMLElement) => {
 		const href = link.getAttribute('href');
 		const isResourceLink = link.hasAttribute('data-resource-id');
 
-		if (href && (!href.startsWith('#') || isResourceLink)) {
-			link.removeAttribute('href');
+		if (href && (!href.match(/^#.+/) || isResourceLink)) {
+			// We need to preserve the href attribute when printing to PDF.
+			if (!settings.printView) {
+				link.removeAttribute('href');
+			}
 			link.removeAttribute('onclick');
 			
 			// Ensure that the link can still be focused, even though we removed its href
@@ -114,7 +124,8 @@ const rewriteLinks = (container: HTMLElement) => {
 				targetHref = ':/' + link.getAttribute('data-resource-id');
 			}
 
-			link.onclick = () => {
+			link.onclick = (event) => {
+				event.preventDefault();
 				webviewApi.postMessage({
 					type: 'openLink',
 					href: targetHref,
@@ -124,7 +135,14 @@ const rewriteLinks = (container: HTMLElement) => {
 	}
 };
 
-const initializeRevealElements = (presentationHTML: string) => {
+const removeObjects = (container: HTMLElement) => {
+	// Object embeds prevent printing.
+	for (const obj of container.querySelectorAll('object')) {
+		obj.remove();
+	}
+};
+
+const initializeRevealElements = (presentationHTML: string, settings: PresentationSettings) => {
 	const revealContainer = document.createElement('div');
 	revealContainer.classList.add('reveal');
 	const slidesContainer = document.createElement('div');
@@ -136,12 +154,17 @@ const initializeRevealElements = (presentationHTML: string) => {
 	// Convert <hr/> elements into <section> elements so users can separate
 	// slides with "---"s in markdown
 	hrToSections(slidesContainer);
-	rewriteLinks(slidesContainer);
+	rewriteLinks(slidesContainer, settings);
+	if (settings.printView) {
+		removeObjects(slidesContainer);
+	}
 
 	// Add an additional, empty slide
-	const lastSlide = document.createElement('section');
-	lastSlide.innerText = localization.endOfDeck;
-	slidesContainer.appendChild(lastSlide);
+	if (!settings.printView) {
+		const lastSlide = document.createElement('section');
+		lastSlide.innerText = localization.endOfDeck;
+		slidesContainer.appendChild(lastSlide);
+	}
 
 	return revealContainer;
 };
@@ -231,6 +254,8 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 		} as any,
 
 		showNotes: settings.showSpeakerNotes,
+
+		...(settings.printView ? { view: 'print' } : undefined),
 	});
 
 	deck.addKeyBinding({
@@ -254,9 +279,30 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 	deck.addKeyBinding({
 		keyCode: 80,
 		key: 'p',
-		description: localization.print
-	}, () => {
-		window.print();
+		description: localization.print,
+	}, async () => {
+		const descriptionElement = document.createElement('div');
+		descriptionElement.appendChild(
+			document.createTextNode('A print preview dialog has been opened. It\'s also possible to ')
+		);
+
+		// Allow printing directly from this page -- the print preview dialog may not work on
+		// all systems (e.g. mobile).
+		const directPrintLink = document.createElement('a');
+		directPrintLink.innerText = 'print directly from this page.';
+		descriptionElement.appendChild(directPrintLink);
+		directPrintLink.href = '#';
+		directPrintLink.onclick = (event) => {
+			event.preventDefault();
+			window.print();
+		};
+	
+		void createPopupDialog(
+			'print-preview-notice',
+			'Printing...',
+			descriptionElement,
+		);
+		await webviewApi.postMessage({ type: 'print' });
 	});
 
 	deck.on('slidechanged', () => {
@@ -272,6 +318,21 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 
 	// Show after the other shortcuts
 	deck.registerKeyboardShortcut('Shift + i', 'Show OpenSource licenses');
+	
+	if (settings.printView) {
+		document.title = 'Print preview';
+
+		const printButton = document.createElement('button');
+		printButton.classList.add('print-button', 'action-button');
+		printButton.innerText = localization.print;
+
+		printButton.onclick = () => {
+			window.print();
+		};
+
+		document.body.appendChild(printButton);
+		showCloseButton();
+	}
 };
 
 document.addEventListener('keydown', (event) => {
@@ -286,7 +347,7 @@ const loadedMessage: InitialDataRequest = {
 };
 webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 	if (result?.type === 'initialDataResponse') {
-		const revealElements = initializeRevealElements(result.initialData ?? 'no initial data');
+		const revealElements = initializeRevealElements(result.initialData ?? 'no initial data', result.settings);
 		document.body.appendChild(revealElements);
 
 		if (result.settings.scrollsOverflow) {

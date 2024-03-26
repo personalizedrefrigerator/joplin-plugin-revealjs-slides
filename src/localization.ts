@@ -5,6 +5,7 @@ interface AppLocalization {
 	endOfDeck: string;
 	showExitButton: string;
 	print: string;
+	printPreview: string;
 	close: string;
 
 	settingsPaneDescription: string;
@@ -19,6 +20,7 @@ const defaultStrings: AppLocalization = {
 	endOfDeck: 'End of deck',
 	showExitButton: 'Show exit button',
 	print: 'Print',
+	printPreview: 'Print preview',
 	close: 'Close',
 
 	settingsPaneDescription: 'Settings for RevealJS Integration. ' +

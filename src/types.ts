@@ -15,18 +15,23 @@ export interface InitialDataRequest {
 	type: 'getInitialData',
 }
 
+export interface PrintRequest {
+	type: 'print',
+}
+
 export interface OpenLinkRequest {
 	type: 'openLink',
 	href: string,
 }
 
 export type WebViewMessage =
-	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest;
+	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest | PrintRequest;
 
 
 export interface PresentationSettings {
 	scrollsOverflow: boolean;
 	showSpeakerNotes: boolean;
+	printView: boolean;
 }
 	
 export interface InitialDataResponse {
