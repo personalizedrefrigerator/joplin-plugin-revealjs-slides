@@ -1,4 +1,4 @@
-# 0.8.0
+# 0.8.0 and 0.8.1
  - Update `reveal.js` to [v5.0.5](https://github.com/hakimel/reveal.js/releases/tag/5.0.5)
  - Improve printing to PDF (can be activated by pressing `p` in a slideshow)
  - Improve compatibility with the rich text editor
