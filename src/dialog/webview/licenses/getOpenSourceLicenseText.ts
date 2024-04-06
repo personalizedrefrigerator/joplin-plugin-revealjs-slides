@@ -64,7 +64,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		'',
 		'== Reveal.js license (MIT license) ==',
 		'',
-		mitLicense('Copyright (C) 2011-2023 Hakim El Hattab, http://hakim.se, and reveal.js contributors'),
+		mitLicense('Copyright (C) 2011-2024 Hakim El Hattab, http://hakim.se, and reveal.js contributors'),
 		'',
 		'',
 		'== Highlight.js license (BSD 3-clause) ==',
@@ -73,8 +73,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		'',
 		'== This plugin\'s license (MIT license) ==',
 		'',
-		mitLicense('Copyright ⓒ 2022-2023 Henry Heino'),
+		mitLicense('Copyright ⓒ 2022-2024 Henry Heino'),
 		'',
+		'Source code for this plugin can be found on its GitHub repository: https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides',
 	].join('\n');
 
 	return licenseText;
