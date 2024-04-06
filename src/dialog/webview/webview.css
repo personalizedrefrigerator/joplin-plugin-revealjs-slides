@@ -10,6 +10,19 @@ of the source of KaTeX source.
 	display: none !important;
 }
 
+/* Don't format pre blocks like code blocks. */
+pre.mermaid {
+	box-shadow: none;
+}
+
+pre.mermaid > svg {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+/* Anchor elements can act as links even if they don't have an href= attribute.
+   Style them as such. */
 a {
 	cursor: pointer;
 }
