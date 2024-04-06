@@ -120,8 +120,12 @@ function readManifest(manifestPath) {
 function createPluginArchive(sourceDir, destPath) {
 	const distFiles = glob.sync(`${sourceDir}/**/*`, { nodir: true, windowsPathsNoEscape: true })
 		.map(f => f.substr(sourceDir.length + 1))
+		// ====<CHANGED>====
 		// Exclude most font files
-		.filter(path => !path.endsWith('.eot') && !path.endsWith('.ttf'));
+		.filter(path => !path.endsWith('.eot') && !path.endsWith('.ttf'))
+		// Remove unnecessary .scss and .map files
+		.filter(path => !path.endsWith('.scss') && !path.endsWith('.css.map'));
+		// ====</CHANGED>====
 
 	if (!distFiles.length) throw new Error('Plugin archive was not created because the "dist" directory is empty');
 	fs.removeSync(destPath);

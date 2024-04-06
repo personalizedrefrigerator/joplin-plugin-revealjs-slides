@@ -1,0 +1,99 @@
+
+body.theme__dark {
+	//
+	// reveal.js theme
+	//
+	--r-background-color: #222;
+	--r-main-color: white;
+	--r-heading-color: white;
+	--r-link-color: #aaccff;
+	--r-link-color-dark: #068de9;
+	--r-link-color-hover: #8dcffc;
+	--r-selection-background-color: rgba(66, 175, 250, 0.75);
+	--r-selection-color: #fff;
+
+	&, .reveal-viewport {
+		background: radial-gradient(#232225, #222222)
+	}
+
+	code {
+		background-color: #333;
+		color: white;
+	}
+
+	kbd {
+		background-color: #222;
+		color: white;
+		border-color: #555;
+		border-bottom: 3px solid #666;
+		border-radius: 4px;
+	}
+
+	//
+	// Highlight.js theme -- based on
+	// the theme at reveal.js/plugin/highlight/monokai.css
+	//
+	.hljs {
+		&, & > code {
+			background: #272727;
+			color: #ffe;
+		}
+
+		.hljs-tag,
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-literal,
+		.hljs-strong,
+		.hljs-name {
+			color: #fe2577;
+		}
+
+		.hljs-code {
+			color: #77c0ff;
+		}
+
+		.hljs-addition,
+		.hljs-built_in,
+		.hljs-builtin-name,
+		.hljs-bullet,
+		.hljs-emphasis,
+		.hljs-section,
+		.hljs-selector-attr,
+		.hljs-attr,
+		.hljs-attribute,
+		.hljs-selector-pseudo,
+		.hljs-string,
+		.hljs-subst,
+		.hljs-template-tag,
+		.hljs-template-variable,
+		.hljs-title,
+		.hljs-type,
+		.hljs-variable {
+			color: #9bb55d;
+		}
+
+		.hljs-comment,
+		.hljs-quote,
+		.hljs-deletion,
+		.hljs-meta {
+			color: #aabcde;
+		}
+
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-literal,
+		.hljs-doctag,
+		.hljs-title,
+		.hljs-section,
+		.hljs-type,
+		.hljs-selector-id {
+			font-weight: bold;
+		}
+
+		.hljs-symbol,
+		.hljs-bullet,
+		.hljs-link {
+			color: #fee;
+		}
+	}
+}

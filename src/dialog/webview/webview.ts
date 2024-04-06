@@ -21,7 +21,7 @@ declare global {
 }
 
 import localization from '../../localization';
-import { InitialDataRequest, PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../../types';
+import { InitialDataRequest, PresentationSettings, PresentationTheme, WebViewMessage, WebViewMessageResponse } from '../../types';
 
 import Reveal from 'reveal.js';
 const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
@@ -142,6 +142,21 @@ const removeObjects = (container: HTMLElement) => {
 	}
 };
 
+const loadTheme = (container: HTMLElement, settings: PresentationSettings) => {
+	const themeOverride = container.querySelector<HTMLElement>('rjs-theme');
+
+	let theme = settings.theme;
+	if (themeOverride) {
+		themeOverride.style.display = 'none';
+		const themeName = (themeOverride.textContent ?? '').trim();
+		if (Object.values(PresentationTheme).includes(themeName as PresentationTheme)) {
+			theme = themeName as PresentationTheme;
+		}
+	}
+
+	document.body.classList.add(`theme__${theme}`);
+};
+
 const initializeRevealElements = (presentationHTML: string, settings: PresentationSettings) => {
 	const revealContainer = document.createElement('div');
 	revealContainer.classList.add('reveal');
@@ -155,6 +170,7 @@ const initializeRevealElements = (presentationHTML: string, settings: Presentati
 	// slides with "---"s in markdown
 	hrToSections(slidesContainer);
 	rewriteLinks(slidesContainer, settings);
+	loadTheme(slidesContainer, settings);
 	if (settings.printView) {
 		removeObjects(slidesContainer);
 	}

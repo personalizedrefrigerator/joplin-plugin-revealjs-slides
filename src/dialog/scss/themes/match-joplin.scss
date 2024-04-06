@@ -1,0 +1,11 @@
+
+body.theme__match-joplin {
+	--r-background-color: var(--joplin-background-color, white);
+	--r-main-color: var(--joplin-color, black);
+	--r-heading-color: var(--joplin-color, black);
+	--r-link-color: var(--joplin-url-color, blue);
+	--r-link-color-dark: #068de9;
+	--r-link-color-hover: #8dcffc;
+	--r-selection-background-color: rgba(66, 175, 250, 0.75);
+	--r-selection-color: #fff;
+}

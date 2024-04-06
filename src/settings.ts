@@ -1,17 +1,19 @@
 import joplin from "api";
 import localization from "./localization";
-import { SettingItemType } from "api/types";
+import { SettingItemType, SettingStorage } from "api/types";
 import type PresentationDialog from "./dialog/PresentationDialog";
-import { PresentationSettings } from "./types";
+import { PresentationSettings, PresentationTheme } from "./types";
 
 const showSlidesOverflowKey = 'show-slides-overflow-y';
 const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
 const hideToolbarButton = 'hide-toolbar-button';
+const presentationThemeKey = 'presentation-theme-key';
 
 export const getSettings = async (): Promise<PresentationSettings> => {
 	return {
 		scrollsOverflow: await joplin.settings.value(showSlidesOverflowKey),
 		showSpeakerNotes: await joplin.settings.value(showSpeakerNotesKey),
+		theme: await joplin.settings.value(presentationThemeKey) || PresentationTheme.MatchJoplin,
 		printView: false,
 	};
 };
@@ -19,8 +21,7 @@ export const getSettings = async (): Promise<PresentationSettings> => {
 export const registerAndApplySettings = async (presentationDialog: PresentationDialog) => {
 	const applySettings = async () => {
 		const settings = await getSettings();
-		presentationDialog.setScrollsOverflow(settings.scrollsOverflow);
-		presentationDialog.setShowSpeakerNotes(settings.showSpeakerNotes)
+		presentationDialog.setSettings(settings);
 	};
 
 	const sectionName = 'revealjs-integration';
@@ -49,6 +50,25 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 
 			type: SettingItemType.Bool,
 			value: false,
+		},
+		[presentationThemeKey]: {
+			public: true,
+			section: sectionName,
+
+			label: localization.presentationTheme,
+
+			type: SettingItemType.String,
+			isEnum: true,
+			storage: SettingStorage.File,
+			value: PresentationTheme.MatchJoplin,
+			options: {
+				[PresentationTheme.MatchJoplin]: localization.theme__matchJoplin,
+				[PresentationTheme.Dark]: localization.theme__dark,
+				[PresentationTheme.Light]: localization.theme__light,
+				[PresentationTheme.BlackOnWhite]: localization.theme__blackOnWhite,
+				// [PresentationTheme.Serif]: localization.theme__serif,
+				// [PresentationTheme.Solarized]: localization.theme__solarized,
+			},
 		},
 		[hideToolbarButton]: {
 			public: true,

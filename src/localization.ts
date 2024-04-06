@@ -21,6 +21,14 @@ interface AppLocalization {
 	showSlidesOverflowSetting: string;
 	hideToolbarButtonSetting: string;
 	showSpeakerNotesSetting: string;
+
+	presentationTheme: string;
+	theme__matchJoplin: string;
+	theme__dark: string;
+	theme__light: string;
+	theme__blackOnWhite: string;
+	theme__serif: string;
+	theme__solarized: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -37,7 +45,7 @@ const defaultStrings: AppLocalization = {
 		actionLink: 'print directly from this page.',
 	},
 	exportPresentationSettings: 'Presentation export settings',
-	exportPresentationAsHtml: 'Export as presentation HTML',
+	exportPresentationAsHtml: 'Export presentation as HTML',
 
 	switchViewsToShowNoteViewer: 'Please open the note viewer for the current note.',
 	unableToGetHtml: 'Unable to get the HTML to present.',
@@ -52,6 +60,14 @@ const defaultStrings: AppLocalization = {
 	hideToolbarButtonSetting: 'Hide slideshow button in editor toolbar (requires restart)',
 	showSlidesOverflowSetting: 'Allow scrolling large slides',
 	showSpeakerNotesSetting: 'Show speaker notes (if any)',
+
+	presentationTheme: 'Default Theme',
+	theme__matchJoplin: 'Match Joplin',
+	theme__dark: 'Dark',
+	theme__light: 'Light',
+	theme__blackOnWhite: 'Black on white',
+	theme__serif: 'Serif',
+	theme__solarized: 'Solarized',
 };
 
 const localizations: Record<string, AppLocalization> = {

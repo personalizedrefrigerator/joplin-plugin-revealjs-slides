@@ -1,4 +1,9 @@
 
+@use './themes/match-joplin.scss';
+@use './themes/dark.scss';
+@use './themes/light.scss';
+@use './themes/black-on-white.scss';
+
 /*
 Hide elements added by Joplin or other plugins that shouldn't be visible within
 the rendered slides.
@@ -25,17 +30,6 @@ of the source of KaTeX source.
    Style them as such. */
 a {
 	cursor: pointer;
-}
-
-:root body {
-	--r-background-color: var(--joplin-background-color, white);
-	--r-main-color: var(--joplin-color, black);
-	--r-heading-color: var(--joplin-color, black);
-	--r-link-color: var(--joplin-url-color, blue);
-	--r-link-color-dark: #068de9;
-	--r-link-color-hover: #8dcffc;
-	--r-selection-background-color: rgba(66, 175, 250, 0.75);
-	--r-selection-color: #fff;
 }
 
 .katex {

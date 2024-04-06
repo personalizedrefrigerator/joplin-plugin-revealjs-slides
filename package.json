@@ -2,7 +2,8 @@
   "name": "joplin-plugin-revealjs-slides",
   "version": "0.9.1",
   "scripts": {
-    "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && webpack --env joplin-plugin-config=createArchive",
+    "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && npm run buildStyles && webpack --env joplin-plugin-config=createArchive",
+    "buildStyles": "sass src/dialog/scss/:dist/dialog/css/",
     "prepare": "npm run dist",
     "update": "npm install -g generator-joplin && yo joplin --update"
   },
@@ -27,15 +28,14 @@
     "css-loader": "6.8.1",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.0",
+    "katex": "^0.16.9",
+    "reveal.js": "^5.0.5",
+    "sass": "^1.74.1",
     "style-loader": "^3.3.3",
     "tar": "^6.2.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.2",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "katex": "^0.16.9",
-    "reveal.js": "^5.0.5"
-  },
-  "dependencies": {
+    "webpack-cli": "^5.1.4"
   }
 }

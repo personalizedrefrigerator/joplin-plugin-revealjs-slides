@@ -1,4 +1,19 @@
 
+
+export enum PresentationTheme {
+	MatchJoplin = 'match-joplin',
+	Dark = 'dark',
+	Light = 'light',
+	BlackOnWhite = 'black-on-white',
+}
+
+export interface PresentationSettings {
+	scrollsOverflow: boolean;
+	showSpeakerNotes: boolean;
+	theme: PresentationTheme;
+	printView: boolean;
+}
+
 export interface ShowCloseButtonRequest {
 	type: 'showCloseBtn',
 }
@@ -27,13 +42,6 @@ export interface OpenLinkRequest {
 export type WebViewMessage =
 	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest | PrintRequest;
 
-
-export interface PresentationSettings {
-	scrollsOverflow: boolean;
-	showSpeakerNotes: boolean;
-	printView: boolean;
-}
-	
 export interface InitialDataResponse {
 	type: 'initialDataResponse';
 

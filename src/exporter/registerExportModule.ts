@@ -47,7 +47,7 @@ const registerHtmlExportModule = async () => {
 			const scriptPath = join(installationDir, 'dialog', 'webview', 'webview.js');
 			const presentationScript = await fs().readFile(scriptPath, 'utf8');
 
-			const stylePath = join(installationDir, 'dialog', 'webview', 'webview.css');
+			const stylePath = join(installationDir, 'dialog', 'css', 'webview.css');
 			const styleCss = await fs().readFile(stylePath, 'utf8');
 
 			presentationScriptJs = presentationScript;

@@ -2,6 +2,7 @@ import { ButtonSpec, DialogResult } from 'api/types';
 import localization from '../localization';
 import {
 	PresentationSettings,
+	PresentationTheme,
 	WebViewMessage,
 	WebViewMessageResponse,
 } from '../types';
@@ -24,6 +25,7 @@ export default abstract class AbstractWebView {
 	private presentationSettings: PresentationSettings = {
 		scrollsOverflow: true,
 		showSpeakerNotes: false,
+		theme: PresentationTheme.MatchJoplin,
 		printView: false,
 	};
 
@@ -74,18 +76,6 @@ export default abstract class AbstractWebView {
 		}
 	}
 
-	/**
-	 * Sets whether slides bigger than the screen are scrolled or clipped.
-	 * Because clipping is the reveal.js default, an option is provided.
-	 */
-	public setScrollsOverflow(scrollsOverflow: boolean) {
-		this.presentationSettings.scrollsOverflow = scrollsOverflow;
-	}
-
-	public setShowSpeakerNotes(showSpeakerNotes: boolean) {
-		this.presentationSettings.showSpeakerNotes = showSpeakerNotes;
-	}
-
 	/** Resets the dialog prior to use. This can be called multiple times. */
 	protected async initializeDialog() {
 		// Sometimes, the dialog doesn't load properly.
@@ -94,7 +84,7 @@ export default abstract class AbstractWebView {
 
 		// Script path is from the root of the plugin directory
 		await this.addScript('./dialog/webview/webview.js');
-		await this.addScript('./dialog/webview/webview.css');
+		await this.addScript('./dialog/css/webview.css');
 
 		await this.setFullscreen(false);
 	}

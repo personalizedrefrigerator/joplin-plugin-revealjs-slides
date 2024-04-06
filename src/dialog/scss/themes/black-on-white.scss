@@ -1,0 +1,130 @@
+
+body.theme__black-on-white {
+	//
+	// reveal.js theme
+	//
+	--r-background-color: white;
+	--r-main-color: black;
+	--r-heading-color: black;
+	--r-link-color: black;
+	--r-link-color-dark: black;
+	--r-link-color-hover: black;
+	--r-selection-background-color: black;
+	--r-selection-color: white;
+
+	a {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+
+		&:hover, &:active {
+			text-decoration-thickness: 2px;
+		}
+	}
+
+	code {
+		background-color: white;
+		border: 1px solid black;
+		color: black;
+		font-family: 'Courier New', Courier, monospace;
+	}
+
+	kbd {
+		background-color: black;
+		color: white;
+		border-bottom: 3px solid black;
+		border-radius: 4px;
+	}
+
+	span.resource-icon {
+		background-color: black;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		border-bottom: 1px solid black;
+		text-transform: none;
+	}
+
+	pre {
+		box-shadow: none;
+	}
+
+	//
+	// Highlight.js theme -- based on
+	// the theme at reveal.js/plugin/highlight/monokai.css
+	//
+	.hljs {
+		&, & > code {
+			background: white;
+			color: black;
+			border: none;
+			box-shadow: none;
+		}
+
+		.hljs-tag,
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-literal,
+		.hljs-strong,
+		.hljs-name {
+			color: black;
+		}
+
+		.hljs-code {
+			color: black;
+		}
+
+		.hljs-class,
+		.hljs-title {
+			color: black;
+		}
+
+		.hljs-addition,
+		.hljs-built_in,
+		.hljs-builtin-name,
+		.hljs-bullet,
+		.hljs-emphasis,
+		.hljs-section,
+		.hljs-selector-attr,
+		.hljs-attr,
+		.hljs-attribute,
+		.hljs-selector-pseudo,
+		.hljs-string,
+		.hljs-subst,
+		.hljs-template-tag,
+		.hljs-template-variable,
+		.hljs-title,
+		.hljs-type,
+		.hljs-variable {
+			color: black;
+		}
+
+		.hljs-comment,
+		.hljs-quote,
+		.hljs-deletion,
+		.hljs-meta {
+			color: black;
+		}
+
+		.hljs-number {
+			color: black;
+			font-style: italic;
+		}
+
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-literal,
+		.hljs-doctag,
+		.hljs-title,
+		.hljs-section,
+		.hljs-type,
+		.hljs-selector-id {
+			font-weight: bold;
+		}
+
+		.hljs-symbol,
+		.hljs-bullet,
+		.hljs-link {
+			color: black;
+		}
+	}
+}
