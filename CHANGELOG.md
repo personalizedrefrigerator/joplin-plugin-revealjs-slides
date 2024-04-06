@@ -1,3 +1,6 @@
+# 0.9.1
+ - Fix links and code blocks in exported HTML.
+
 # 0.9.0
  - Support exporting presentations as HTML.
 
