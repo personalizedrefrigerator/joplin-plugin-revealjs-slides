@@ -88,8 +88,11 @@ A setting exists to show speaker notes (when available).
 
 ---
 
+<section>
+
 # Keyboard shortcuts
 
+</section>
 <section>
 
 Press <kbd>f</kbd> to enter fullscreen and <kbd>esc</kbd> to exit fullscreen.
@@ -125,11 +128,18 @@ Example:
 // of code blocks.
 </code></pre>
 
+---
+
+# More
+
+For additional features, see the [reveal.js documentation](https://revealjs.com/backgrounds/).
+
 ````
 
 </details>
 
 ## Installing
+
 Search for "reveal.js" under the plugins tab in Joplin's settings.
 ![screenshot shows "reveal.js" in the search bar of the "plugins" tab of Joplin's settings.](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/5f1a0c20-3d72-47a5-b214-18861cb6f493)
 
