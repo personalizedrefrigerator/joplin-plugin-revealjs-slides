@@ -1,5 +1,5 @@
 # `joplin-plugin-revealjs-slides`
-[On GitHub](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides)
+[On GitHub](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides) | [On the plugin website](https://joplinapp.org/plugins/plugin/io.github.personalizedrefrigerator.revealjs-integration/)
 
 A Joplin plugin for presenting notes. Internally, this uses the [reveal.js](https://revealjs.com/) library.
 
