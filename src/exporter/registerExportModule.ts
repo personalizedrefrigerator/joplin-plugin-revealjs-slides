@@ -1,7 +1,7 @@
 import joplin from "api";
 import { FileSystemItem } from "api/types";
 import * as FsExtraType from "fs-extra";
-import { join } from "path";
+import { dirname, join } from "path";
 import { getSettings } from "../settings";
 
 const registerHtmlExportModule = async () => {
@@ -27,7 +27,8 @@ const registerHtmlExportModule = async () => {
 		}
 	}
 
-	let presentationScriptHtml = '';
+	let presentationScriptJs = '';
+	let presentationSetupHtml = '';
 	await joplin.interop.registerExportModule({
 		description: 'Export presentation as HTML',
 		// Use .presentation.html to distinguish this exporter from the HTML exporter.
@@ -47,14 +48,17 @@ const registerHtmlExportModule = async () => {
 			const stylePath = join(installationDir, 'dialog', 'webview', 'webview.css');
 			const styleCss = await fs().readFile(stylePath, 'utf8');
 
-			presentationScriptHtml = `
+			presentationScriptJs = presentationScript;
+
+			presentationSetupHtml = `
 				<script>${presentationSetupScript}</script>
-				<script>${presentationScript}</script>
+				<script src="./pluginAssets/presentation.js" defer></script>
 				<style>
 					${styleCss}
 
-					/* The note title and header. */
-					.exported-note {
+					/* The note title and header -- don't hide until the presentation loads.
+					   Defering hiding may help with Mermaid rendering. */
+					body.loaded-exported-presentation .exported-note {
 						display: none;
 					}
 				</style>
@@ -82,9 +86,20 @@ const registerHtmlExportModule = async () => {
 					const isExportedHtmlFile = filePath.endsWith('.html') && !filePath.endsWith('.presentation.html');
 					if (isExportedHtmlFile) {
 						const fileContent = await fs().readFile(filePath, 'utf8');
-						const outputHtml = fileContent + settingsHtml + presentationScriptHtml;
+
+						// Add the presentation HTML and CSS to the beginning of the document --
+						// this allows Joplin's CSS to have higher precedence than the existing Reveal.js scripts.
+						const outputHtml = fileContent.replace(/<\/head>/i, settingsHtml + presentationSetupHtml + '\n</head>');
+
 						await fs().writeFile(filePath, outputHtml, 'utf8');
 						await fs().move(filePath, filePath.replace(/\.html$/, '.presentation.html'));
+
+						const assetsDirectory = join(dirname(filePath), 'pluginAssets');
+						const slideshowScriptPath = join(assetsDirectory, 'presentation.js');
+						if (!(await fs().pathExists(slideshowScriptPath))) {
+							await fs().mkdirp(assetsDirectory);
+							await fs().writeFile(slideshowScriptPath, presentationScriptJs, 'utf8');
+						}
 					}
 				}
 			}
