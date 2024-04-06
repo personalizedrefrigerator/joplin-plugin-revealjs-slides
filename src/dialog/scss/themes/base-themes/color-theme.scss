@@ -1,0 +1,127 @@
+@use 'sass:color';
+
+@mixin color-theme($bg-color, $fg-color) {
+	//
+	// reveal.js theme
+	//
+	--r-background-color: #{$bg-color};
+	--r-main-color: #{$fg-color};
+	--r-heading-color: #{$fg-color};
+	$base-link-color: $fg-color;
+	--r-link-color: #{$base-link-color};
+	--r-link-color-dark: #{color.scale($base-link-color, $alpha: -10%)};
+	--r-link-color-hover: #{color.scale($base-link-color, $alpha: -15%)};
+	--r-selection-background-color: rgba(66, 175, 250, 0.75);
+	--r-selection-color: #fff;
+
+	&, .reveal-viewport {
+		background: linear-gradient($bg-color, color.adjust($bg-color, $hue: +6deg, $saturation: -14%));
+	}
+
+	span.resource-icon {
+		background-color: $base-link-color;
+	}
+
+	a {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+
+		&:hover, &:active {
+			text-decoration-thickness: 2px;
+		}
+	}
+
+	$code-background: color.invert(color.adjust($bg-color, $saturation: -14%), $weight: 3%);
+	code {
+		background-color: $bg-color;
+		color: $fg-color;
+	}
+
+	kbd {
+		background-color: #222;
+		color: white;
+		border-color: #555;
+		border-bottom: 3px solid #666;
+		border-radius: 4px;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		text-transform: none;
+	}
+
+	//
+	// Highlight.js theme -- based on
+	// the theme at reveal.js/plugin/highlight/monokai.css
+	//
+	.hljs {
+		&, & > code {
+			background: $code-background;
+			color: $fg-color;
+		}
+
+		$code-lightness: color.lightness(color.invert($fg-color, $weight: 20%));
+		$base-hl-code-color: hsl(color.hue($bg-color), 70%, $code-lightness);
+
+		.hljs-tag,
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-literal,
+		.hljs-strong,
+		.hljs-name {
+			color: $base-hl-code-color;
+		}
+
+		.hljs-code {
+			color: color.adjust($base-hl-code-color, $hue: +30deg);
+		}
+
+		.hljs-addition,
+		.hljs-built_in,
+		.hljs-builtin-name,
+		.hljs-bullet,
+		.hljs-emphasis,
+		.hljs-section,
+		.hljs-selector-attr,
+		.hljs-attr,
+		.hljs-attribute,
+		.hljs-selector-pseudo,
+		.hljs-string,
+		.hljs-subst,
+		.hljs-template-tag,
+		.hljs-template-variable,
+		.hljs-title,
+		.hljs-type,
+		.hljs-variable {
+			color: color.adjust($base-hl-code-color, $hue: -30deg, $saturation: +10%);
+		}
+
+		.hljs-comment,
+		.hljs-quote,
+		.hljs-deletion,
+		.hljs-meta {
+			color: color.adjust($base-hl-code-color, $hue: -60deg, $saturation: -10%);
+		}
+
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-literal,
+		.hljs-doctag,
+		.hljs-title,
+		.hljs-section,
+		.hljs-type,
+		.hljs-selector-id {
+			font-weight: bold;
+		}
+
+		.hljs-number {
+			color: color.adjust($base-hl-code-color, $hue: -10deg, $saturation: -10%);
+			font-style: italic;
+		}
+
+		.hljs-symbol,
+		.hljs-bullet,
+		.hljs-link {
+			color: color.adjust($base-hl-code-color, $hue: +60deg);
+		}
+	}
+}

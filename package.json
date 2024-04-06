@@ -3,7 +3,7 @@
   "version": "0.9.1",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && npm run buildStyles && webpack --env joplin-plugin-config=createArchive",
-    "buildStyles": "sass src/dialog/scss/:dist/dialog/css/",
+    "buildStyles": "sass src/dialog/scss/webview.scss:dist/dialog/css/webview.css",
     "prepare": "npm run dist",
     "update": "npm install -g generator-joplin && yo joplin --update"
   },

@@ -13,7 +13,11 @@ body.theme__dark {
 	--r-selection-color: #fff;
 
 	&, .reveal-viewport {
-		background: radial-gradient(#232225, #222222)
+		background: radial-gradient(#232225, #222222);
+	}
+
+	span.resource-icon {
+		background-color: var(--r-link-color);
 	}
 
 	code {

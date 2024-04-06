@@ -27,8 +27,7 @@ interface AppLocalization {
 	theme__dark: string;
 	theme__light: string;
 	theme__blackOnWhite: string;
-	theme__serif: string;
-	theme__solarized: string;
+	theme__darkBlue: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -66,8 +65,7 @@ const defaultStrings: AppLocalization = {
 	theme__dark: 'Dark',
 	theme__light: 'Light',
 	theme__blackOnWhite: 'Black on white',
-	theme__serif: 'Serif',
-	theme__solarized: 'Solarized',
+	theme__darkBlue: 'Dark blue',
 };
 
 const localizations: Record<string, AppLocalization> = {

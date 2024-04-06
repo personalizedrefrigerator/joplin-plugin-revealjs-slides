@@ -1,0 +1,9 @@
+@use './base-themes/color-theme.scss';
+
+body.theme__light-blue {
+	@include color-theme.color-theme(rgb(225, 250, 255), #000005);
+
+	&, .reveal-viewport {
+		background: radial-gradient(rgb(225, 250, 255), white);
+	}
+}

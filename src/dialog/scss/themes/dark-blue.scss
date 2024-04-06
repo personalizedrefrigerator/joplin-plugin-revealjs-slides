@@ -1,0 +1,5 @@
+@use './base-themes/color-theme.scss';
+
+body.theme__dark-blue {
+	@include color-theme.color-theme(rgb(17, 17, 119), #faffff);
+}

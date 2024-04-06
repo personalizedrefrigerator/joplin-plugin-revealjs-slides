@@ -5,6 +5,8 @@ export enum PresentationTheme {
 	Dark = 'dark',
 	Light = 'light',
 	BlackOnWhite = 'black-on-white',
+	DarkBlue = 'dark-blue',
+	LightBlue = 'light-blue',
 }
 
 export interface PresentationSettings {
