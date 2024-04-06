@@ -3,6 +3,8 @@ import { FileSystemItem } from "api/types";
 import * as FsExtraType from "fs-extra";
 import { dirname, join } from "path";
 import { getSettings } from "../settings";
+import getOpenSourceLicenseText from "../dialog/webview/licenses/getOpenSourceLicenseText";
+import localization from "../localization";
 
 const registerHtmlExportModule = async () => {
 	let fs_: (typeof FsExtraType)|null = null;
@@ -30,7 +32,7 @@ const registerHtmlExportModule = async () => {
 	let presentationScriptJs = '';
 	let presentationSetupHtml = '';
 	await joplin.interop.registerExportModule({
-		description: 'Export presentation as HTML',
+		description: localization.exportPresentationAsHtml,
 		// Use .presentation.html to distinguish this exporter from the HTML exporter.
 		format: 'presentation.html',
 		target: FileSystemItem.Directory,
@@ -92,13 +94,16 @@ const registerHtmlExportModule = async () => {
 						const outputHtml = fileContent.replace(/<\/head>/i, settingsHtml + presentationSetupHtml + '\n</head>');
 
 						await fs().writeFile(filePath, outputHtml, 'utf8');
-						await fs().move(filePath, filePath.replace(/\.html$/, '.presentation.html'));
+						const targetFile = filePath.replace(/\.html$/, '.presentation.html');
+						await fs().move(filePath, targetFile, { overwrite: true });
 
 						const assetsDirectory = join(dirname(filePath), 'pluginAssets');
 						const slideshowScriptPath = join(assetsDirectory, 'presentation.js');
+						const slideshowScriptLicensePath = join(assetsDirectory, 'presentation.LICENSE.txt');
 						if (!(await fs().pathExists(slideshowScriptPath))) {
 							await fs().mkdirp(assetsDirectory);
 							await fs().writeFile(slideshowScriptPath, presentationScriptJs, 'utf8');
+							await fs().writeFile(slideshowScriptLicensePath, getOpenSourceLicenseText());
 						}
 					}
 				}
