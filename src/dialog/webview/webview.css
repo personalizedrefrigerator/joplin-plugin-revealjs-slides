@@ -144,7 +144,12 @@ a {
 
 @media screen {
 	/* In print preview mode, show a slight shadow to mark the different pages. */
-	.reveal .slides .pdf-page {
+	:root .reveal .slides .pdf-page {
 		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.6);
+		margin-bottom: 30px;
+	}
+
+	html.reveal-print > body .reveal {
+		overflow: visible !important;
 	}
 }

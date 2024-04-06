@@ -1,3 +1,6 @@
+# 0.9.0
+ - Support exporting presentations as HTML.
+
 # 0.8.2
  - Update `reveal.js` to [v5.0.5](https://github.com/hakimel/reveal.js/releases/tag/5.0.5)
  - Improve printing to PDF (can be activated by pressing `p` in a slideshow)

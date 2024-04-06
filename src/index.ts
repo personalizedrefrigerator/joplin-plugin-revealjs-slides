@@ -1,9 +1,11 @@
 import joplin from 'api';
-import { ContentScriptType, MenuItemLocation, SettingItemType, ToolbarButtonLocation } from 'api/types';
+import { ContentScriptType, MenuItemLocation, ToolbarButtonLocation } from 'api/types';
 import localization from './localization';
 import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
 import isMobile from './util/isMobile';
+import registerExportModule from './exporter/registerExportModule';
+import { registerAndApplySettings } from './settings';
 
 // Returns true if the CodeMirror editor is active.
 const isRichTextEditor = async () => {
@@ -15,64 +17,6 @@ const isRichTextEditor = async () => {
 	return await joplin.commands.execute('editor.execCommand', { name: 'revealJSIntegration--isCodeMirrorActive' }) !== 'active';
 };
 
-
-// Based on code in my other plugin: joplin-plugin-freehand-drawing
-const registerAndApplySettings = async (presentationDialog: PresentationDialog) => {
-	// Joplin adds a prefix to the setting in settings.json for us.
-	const showSlidesOverflowKey = 'show-slides-overflow-y';
-	const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
-	const hideToolbarButton = 'hide-toolbar-button';
-
-	const applySettings = async () => {
-		const scrollsOverflow = await joplin.settings.value(showSlidesOverflowKey);
-		presentationDialog.setScrollsOverflow(scrollsOverflow);
-
-		const showSpeakerNotes = await joplin.settings.value(showSpeakerNotesKey);
-		presentationDialog.setShowSpeakerNotes(showSpeakerNotes)
-	};
-
-	const sectionName = 'revealjs-integration';
-	await joplin.settings.registerSection(sectionName, {
-		label: 'RevealJS Integration',
-		iconName: 'fas fa-play',
-		description: localization.settingsPaneDescription,
-	});
-
-	// Editor fullscreen setting
-	await joplin.settings.registerSettings({
-		[showSlidesOverflowKey]: {
-			public: true,
-			section: sectionName,
-
-			label: localization.showSlidesOverflowSetting,
-
-			type: SettingItemType.Bool,
-			value: true,
-		},
-		[showSpeakerNotesKey]: {
-			public: true,
-			section: sectionName,
-
-			label: localization.showSpeakerNotesSetting,
-
-			type: SettingItemType.Bool,
-			value: false,
-		},
-		[hideToolbarButton]: {
-			public: true,
-			section: sectionName,
-			label: localization.hideToolbarButtonSetting,
-			type: SettingItemType.Bool,
-			value: false,
-		},
-	});
-
-	await joplin.settings.onChange(_event => {
-		void applySettings();
-	});
-
-	await applySettings();
-}
 
 joplin.plugins.register({
 	onStart: async function() {
@@ -239,5 +183,7 @@ joplin.plugins.register({
 			codeMirrorContentScriptId,
 			'./contentScripts/codeMirror.js'
 		);
+
+		await registerExportModule();
 	},
 });

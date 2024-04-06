@@ -10,6 +10,9 @@ interface AppLocalization {
 
 	printPreviewShownMessage: { start: string; actionLink: string; };
 
+	exportPresentationAsHtml: string;
+	exportPresentationSettings: string;
+
 	switchViewsToShowNoteViewer: string;
 	switchViewsToShowMarkdownViewer: string;
 	unableToGetHtml: string;
@@ -33,6 +36,8 @@ const defaultStrings: AppLocalization = {
 		start: 'A print preview dialog has been opened. It\'s also possible to ',
 		actionLink: 'print directly from this page.',
 	},
+	exportPresentationSettings: 'Presentation export settings',
+	exportPresentationAsHtml: 'Export as presentation HTML',
 
 	switchViewsToShowNoteViewer: 'Please open the note viewer for the current note.',
 	unableToGetHtml: 'Unable to get the HTML to present.',
