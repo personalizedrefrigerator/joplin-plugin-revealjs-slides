@@ -141,6 +141,39 @@ Search for "reveal.js" under the plugins tab in Joplin's settings.
 - Press <kbd>q</kbd> or navigate to the last slide to show the `Exit` button.
 - Press <kbd>?</kbd> to see a list of additional shortcuts.
 
+## Custom theme
+
+It's possible to customize the theme for a slideshow with [CSS](https://developer.mozilla.org/en-US/docs/Learn/CSS) by adding a `<style>` block to the top of a note. To do this:
+1. Make sure that the **markdown editor** is active. In markdown mode, the toggle button near the top of the screen should look like this (the "markdown" side should be highlighted): <img alt="screenshot: Toggle editor button labeled near the top right of the screen" src="https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/c6ba5374-92df-40eb-b4d6-89264f107f80" width="200"/>
+
+2. At the top of the note, add the following:
+   ```html
+   <style>
+	   :root > body {
+		   --r-main-color: white;
+		   --r-heading-color: white;
+		   --r-background-color: darkgray;
+		   --r-link-color: lightblue;
+	   }
+   </style>
+   ```
+3. Adjust the colors in the `<style>` block to customize the theme.
+4. Start the presentation.
+
+**Note**: Other editable theme variables are [listed here](https://revealjs.com/themes/#custom-properties).
+
+## Exporting
+
+### HTML: For a web browser
+
+To export a presentation to an HTML directory, right-click on a note, select export, then select "PRESENTATION.HTML - Export presentation as HTML":
+<img src="https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/assets/46334387/cf6d8c8d-1eba-41f0-8d87-6533a1c9a955" alt="screenshot" width="459"/>
+
+A file dialog will then appear. Use this dialog to select an output directory.
+
+The slides plugin will create a `presentation` subfolder within that directory, then a subfolder for the current note's notebook, then a `.presentation.html` file for the current note. Opening that file in a web browser allows viewing the presentation outside of Joplin. Note that this file uses resources in other parts of the `presentation/` directory, so publishing or sharing just the `.presentation.html` file is not sufficient.
+
+**Note**: Exported presentations use a light theme by default. See the [Custom theme](#custom-theme) section above for how to customize the presentation and export theme.
 
 ## Notes
  * **Avoid running a presentation with untrusted markdown input.**
