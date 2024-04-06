@@ -1,3 +1,6 @@
+# 0.10.0
+ - Allow changing the default theme in settings or with an `<rjs-theme>theme-name-here</rjs-theme>` tag.
+
 # 0.9.1
  - Fix links and code blocks in exported HTML.
 

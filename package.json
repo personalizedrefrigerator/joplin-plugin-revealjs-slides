@@ -1,6 +1,6 @@
 {
   "name": "joplin-plugin-revealjs-slides",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && npm run buildStyles && webpack --env joplin-plugin-config=createArchive",
     "buildStyles": "sass src/dialog/scss/webview.scss:dist/dialog/css/webview.css",
