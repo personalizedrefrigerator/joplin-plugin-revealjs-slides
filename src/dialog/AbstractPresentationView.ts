@@ -21,7 +21,7 @@ export type OnMessageHandler = (message: WebViewMessage) => Promise<WebViewMessa
  * An abstract base class that allows opening the presentation dialog
  * in either a Joplin dialog or a new window.
  */
-export default abstract class AbstractWebView {
+export default abstract class AbstractPresentationView {
 	private visible: boolean = false;
 	protected canFullscreen: boolean = true;
 	private currentButtons: ButtonSpec[] = [];

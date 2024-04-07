@@ -1,6 +1,7 @@
 
 interface AppLocalization {
 	startSlideshow: string;
+	startSlideshowInNewWinow: string;
 	exit: string;
 	endOfDeck: string;
 	showExitButton: string;
@@ -37,6 +38,7 @@ interface AppLocalization {
 
 const defaultStrings: AppLocalization = {
 	startSlideshow: 'Start slideshow',
+	startSlideshowInNewWinow: 'Start slideshow (new window)',
 	exit: 'Exit',
 	endOfDeck: 'End of deck',
 	showExitButton: 'Show exit button',

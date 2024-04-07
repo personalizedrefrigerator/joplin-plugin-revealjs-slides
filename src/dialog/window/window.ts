@@ -1,4 +1,4 @@
-import type { ButtonRecord } from '../AbstractWebView';
+import type { ButtonRecord } from '../AbstractPresentationView';
 
 declare global {
 	interface Window {

@@ -5,7 +5,9 @@ import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
 import isMobile from './util/isMobile';
 import registerExportModule from './exporter/registerExportModule';
-import { registerAndApplySettings, remembersSlideshowPosition } from './settings';
+import { getSettings, registerAndApplySettings, remembersSlideshowPosition } from './settings';
+import AbstractPresentationView from './dialog/AbstractPresentationView';
+import PresentationWindow from './dialog/PresentationWindow';
 
 // Returns true if the CodeMirror editor is active.
 const isRichTextEditor = async () => {
@@ -17,7 +19,7 @@ const isRichTextEditor = async () => {
 	return await joplin.commands.execute('editor.execCommand', { name: 'revealJSIntegration--isCodeMirrorActive' }) !== 'active';
 };
 
-const registerSlideTracker = async (presentationDialog: PresentationDialog) => {
+const registerSlideTracker = async (presentationDialog: AbstractPresentationView) => {
 	const ModelTypeNote = 1;
 	const slideHashKey = 'rjs-last-slide-hash';
 
@@ -40,7 +42,6 @@ const registerSlideTracker = async (presentationDialog: PresentationDialog) => {
 joplin.plugins.register({
 	onStart: async function() {
 		const presentationDialog = await PresentationDialog.getInstance();
-		const toolbuttonCommand = `${pluginPrefix}start-slideshow`;
 
 		await registerAndApplySettings(presentationDialog);
 		await registerSlideTracker(presentationDialog);
@@ -123,7 +124,7 @@ joplin.plugins.register({
 			return renderedContent;
 		};
 
-		const startSlideshow = async () => {
+		const startSlideshow = async (newWindow: boolean) => {
 			const wasRichTextEditor = await isRichTextEditor();
 
 			// We need to switch to the markdown editor to trigger a re-render
@@ -137,8 +138,15 @@ joplin.plugins.register({
 				]);
 			}
 
+			let dialog: AbstractPresentationView = presentationDialog;
+			if (newWindow) {
+				dialog = new PresentationWindow();
+				dialog.setSettings(await getSettings());
+				await registerSlideTracker(dialog);
+			}
+
 			const selectedNote = await joplin.workspace.selectedNote();
-			presentationDialog.present(await getRenderedHtml(), selectedNote?.id);
+			dialog.present(await getRenderedHtml(), selectedNote?.id);
 
 			// Try to switch back to the original editor
 			if (wasRichTextEditor) {
@@ -146,8 +154,9 @@ joplin.plugins.register({
 			}
 		};
 
+		const sameWindowToolbuttonCommand = `${pluginPrefix}start-slideshow`;
 		await joplin.commands.register({
-			name: toolbuttonCommand,
+			name: sameWindowToolbuttonCommand,
 			label: localization.startSlideshow,
 			iconName: 'fas fa-play',
 			execute: async () => {
@@ -158,20 +167,31 @@ joplin.plugins.register({
 					return;
 				}
 	
-				// Force a re-render by switching to the plain text editor
-				startSlideshow();
+				void startSlideshow(false);
+			},
+		});
+
+		const newWindowToolbuttonCommand = `${pluginPrefix}start-slideshow--new-window`;
+		await joplin.commands.register({
+			name: newWindowToolbuttonCommand,
+			label: localization.startSlideshowInNewWinow,
+			iconName: 'fas fa-play',
+			execute: async () => {
+				void startSlideshow(true);
 			},
 		});
 
 		if (!(await joplin.settings.value('hide-toolbar-button'))) {
 			await joplin.views.toolbarButtons.create(
-				toolbuttonCommand, toolbuttonCommand, ToolbarButtonLocation.EditorToolbar,
+				sameWindowToolbuttonCommand, sameWindowToolbuttonCommand, ToolbarButtonLocation.EditorToolbar,
 			);
 		}
 
 		// Also add to the View menu so that users can associate a keybinding with it.
 		const startPresentationButtonId = `${pluginPrefix}startPresentation`;
-		await joplin.views.menuItems.create(startPresentationButtonId, toolbuttonCommand, MenuItemLocation.View);
+		await joplin.views.menuItems.create(startPresentationButtonId, sameWindowToolbuttonCommand, MenuItemLocation.View);
+		const startPresentationNewWindowButtonId = `${pluginPrefix}startPresentationNewWindow`;
+		await joplin.views.menuItems.create(startPresentationNewWindowButtonId, newWindowToolbuttonCommand, MenuItemLocation.View);
 
 		const markdownItContentScriptId = `${pluginPrefix}markdownItPlugin`;
 		await joplin.contentScripts.register(

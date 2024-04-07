@@ -2,14 +2,14 @@ import joplin from 'api';
 import { ButtonSpec, DialogResult } from 'api/types';
 import { pluginPrefix } from '../constants';
 import isMobile from '../util/isMobile';
-import AbstractWebView, { OnMessageHandler } from './AbstractWebView';
+import AbstractPresentationView, { OnMessageHandler } from './AbstractPresentationView';
 import { PresentationSettings, WebViewMessage } from '../types';
 import PresentationWindow from './PresentationWindow';
 
 const dialogs = joplin.views.dialogs;
 export type SaveOptionType = 'saveAsCopy' | 'overwrite';
 
-export default class PresentationDialog extends AbstractWebView {
+export default class PresentationDialog extends AbstractPresentationView {
 	private static instance: PresentationDialog;
 	private handle: string;
 	private isFullscreen: boolean = false;

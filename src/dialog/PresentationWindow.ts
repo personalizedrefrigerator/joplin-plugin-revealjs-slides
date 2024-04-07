@@ -1,10 +1,10 @@
 import { DialogResult } from 'api/types';
 import { PresentationSettings, WebViewMessage } from '../types';
-import AbstractWebView, { ButtonRecord, OnMessageHandler } from './AbstractWebView';
+import AbstractPresentationView, { ButtonRecord, OnMessageHandler } from './AbstractPresentationView';
 import { posix as posixPath, resolve } from 'path';
 import joplin from 'api';
 
-export default class PresentationWindow extends AbstractWebView {
+export default class PresentationWindow extends AbstractPresentationView {
 	private scriptPaths: string[] = [];
 	private win: Window | undefined = undefined;
 	private eventListener: any;
