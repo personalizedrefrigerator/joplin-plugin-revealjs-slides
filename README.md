@@ -195,7 +195,8 @@ The slides plugin will create a `presentation` subfolder within that directory, 
 
 ## Known issues
  * Starting a presentation while the rich text editor is open **may clear your undo history!** The plugin briefly switches to the markdown editor before running the presentation. This switch may cause issues.
- * Does not support HTML notes
+ * Does not support HTML notes.
+ * If the note viewer is hidden, the presentation dialog **will not update.**
 
 ## Disclaimer
 
