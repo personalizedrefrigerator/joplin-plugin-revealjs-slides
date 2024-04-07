@@ -22,13 +22,17 @@ interface AppLocalization {
 	hideToolbarButtonSetting: string;
 	showSpeakerNotesSetting: string;
 	rememberSlideshowPositionSetting: string;
+	rememberSlideshowPositionSetting__description: string;
 
 	presentationTheme: string;
+	presentationTheme__description: string;
 	theme__matchJoplin: string;
 	theme__dark: string;
 	theme__light: string;
 	theme__blackOnWhite: string;
 	theme__darkBlue: string;
+	theme__lightBlue: string;
+	theme__darkRed: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -61,13 +65,19 @@ const defaultStrings: AppLocalization = {
 	showSlidesOverflowSetting: 'Allow scrolling large slides',
 	showSpeakerNotesSetting: 'Show speaker notes (if any)',
 	rememberSlideshowPositionSetting: 'Remember position in slideshow',
+	rememberSlideshowPositionSetting__description:
+		'For each note, saves the last open slide and navigates to it when starting a slideshow. This position syncs across devices.',
 
 	presentationTheme: 'Default Theme',
+	presentationTheme__description: 'The default theme to be used for displaying, exporting, and printing presentations. '
+		+ 'Note that "Match Joplin" only applies to presentations started from within Joplin. Printing and exporting will use a light theme.',
 	theme__matchJoplin: 'Match Joplin',
 	theme__dark: 'Dark',
 	theme__light: 'Light',
 	theme__blackOnWhite: 'Black on white',
 	theme__darkBlue: 'Dark blue',
+	theme__lightBlue: 'Light blue',
+	theme__darkRed: 'Dark red',
 };
 
 const localizations: Record<string, AppLocalization> = {

@@ -38,6 +38,38 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 
 	// Editor fullscreen setting
 	await joplin.settings.registerSettings({
+		[presentationThemeKey]: {
+			public: true,
+			section: sectionName,
+
+			label: localization.presentationTheme,
+			description: localization.presentationTheme__description,
+
+			type: SettingItemType.String,
+			isEnum: true,
+			storage: SettingStorage.File,
+			value: PresentationTheme.MatchJoplin,
+			options: {
+				[PresentationTheme.MatchJoplin]: localization.theme__matchJoplin,
+				[PresentationTheme.Dark]: localization.theme__dark,
+				[PresentationTheme.Light]: localization.theme__light,
+				[PresentationTheme.BlackOnWhite]: localization.theme__blackOnWhite,
+				[PresentationTheme.LightBlue]: localization.theme__lightBlue,
+				[PresentationTheme.DarkBlue]: localization.theme__darkBlue,
+				[PresentationTheme.DarkRed]: localization.theme__darkRed,
+				// [PresentationTheme.Serif]: localization.theme__serif,
+				// [PresentationTheme.Solarized]: localization.theme__solarized,
+			},
+		},
+		[rememberSlideshowPositionKey]: {
+			public: true,
+			section: sectionName,
+			label: localization.rememberSlideshowPositionSetting,
+			description: localization.rememberSlideshowPositionSetting__description,
+			type: SettingItemType.Bool,
+			storage: SettingStorage.File,
+			value: true,
+		},
 		[showSlidesOverflowKey]: {
 			public: true,
 			section: sectionName,
@@ -56,40 +88,13 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 			type: SettingItemType.Bool,
 			value: false,
 		},
-		[presentationThemeKey]: {
-			public: true,
-			section: sectionName,
-
-			label: localization.presentationTheme,
-
-			type: SettingItemType.String,
-			isEnum: true,
-			storage: SettingStorage.File,
-			value: PresentationTheme.MatchJoplin,
-			options: {
-				[PresentationTheme.MatchJoplin]: localization.theme__matchJoplin,
-				[PresentationTheme.Dark]: localization.theme__dark,
-				[PresentationTheme.Light]: localization.theme__light,
-				[PresentationTheme.BlackOnWhite]: localization.theme__blackOnWhite,
-				[PresentationTheme.DarkBlue]: localization.theme__darkBlue,
-				// [PresentationTheme.Serif]: localization.theme__serif,
-				// [PresentationTheme.Solarized]: localization.theme__solarized,
-			},
-		},
 		[hideToolbarButton]: {
 			public: true,
+			advanced: true,
 			section: sectionName,
 			label: localization.hideToolbarButtonSetting,
 			type: SettingItemType.Bool,
 			value: false,
-		},
-		[rememberSlideshowPositionKey]: {
-			public: true,
-			section: sectionName,
-			label: localization.rememberSlideshowPositionSetting,
-			type: SettingItemType.Bool,
-			storage: SettingStorage.File,
-			value: true,
 		},
 	});
 
