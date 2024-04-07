@@ -2,7 +2,7 @@
 	"manifest_version": 1,
 	"id": "io.github.personalizedrefrigerator.revealjs-integration",
 	"app_min_version": "2.12",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"name": "RevealJS Integration",
 	"description": "Turn notes into slideshows with reveal.js!",
 	"author": "Henry Heino",
@@ -14,6 +14,14 @@
 		{
 			"src": "images/screenshot-light.png",
 			"label": "Screenshot: A Joplin plugin window showing a slideshow. The current slide states that KaTeX, highlight.js, and Mermaid are supported."
+		},
+		{
+			"src": "images/screenshot-multiple-windows.png",
+			"label": "Screenshot: Multiple slideshow windows shown at once."
+		},
+		{
+			"src": "images/screenshot-exporting-presentations.png",
+			"label": "Screenshot: Shows multiple presentations running at once, some in web browsers. The presentation has a heading of 'Exported!' and shows the export section of a right-click menu for a note, with the PRESENTATION.HTML option highlighted."
 		},
 		{
 			"src": "images/screenshot-dark.png",

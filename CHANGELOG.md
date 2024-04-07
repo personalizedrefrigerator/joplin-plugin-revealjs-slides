@@ -1,3 +1,7 @@
+# 0.11.0
+ - Support opening presentations in new windows.
+ - Save/restore the last position in a presentation.
+
 # 0.10.0
  - Allow changing the default theme in settings or with an `<rjs-theme>theme-name-here</rjs-theme>` tag.
 
