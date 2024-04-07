@@ -1,0 +1,9 @@
+@use './base-themes/color-theme.scss';
+
+body.theme__dark-red {
+	@include color-theme.color-theme(rgb(119, 17, 17), #fffafa);
+
+	&, .reveal-viewport {
+		background: radial-gradient(rgb(119, 17, 17), rgb(90, 6, 6));
+	}
+}
