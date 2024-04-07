@@ -2,8 +2,8 @@ import joplin from 'api';
 import { ButtonSpec, DialogResult } from 'api/types';
 import { pluginPrefix } from '../constants';
 import isMobile from '../util/isMobile';
-import AbstractWebView from './AbstractWebView';
-import { PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../types';
+import AbstractWebView, { OnMessageHandler } from './AbstractWebView';
+import { PresentationSettings, WebViewMessage } from '../types';
 import PresentationWindow from './PresentationWindow';
 
 const dialogs = joplin.views.dialogs;
@@ -79,9 +79,7 @@ export default class PresentationDialog extends AbstractWebView {
 		joplin.views.panels.postMessage(this.handle, message);
 	}
 
-	protected override onMessage(
-		onMessageHandler: (message: WebViewMessage) => WebViewMessageResponse,
-	): void {
+	protected override onMessage(onMessageHandler: OnMessageHandler): void {
 		joplin.views.panels.onMessage(this.handle, onMessageHandler);
 	}
 
@@ -89,9 +87,9 @@ export default class PresentationDialog extends AbstractWebView {
 		return dialogs.open(this.handle);
 	}
 	
-	protected override async showNewDialogWithSettings(markup: string, settings: PresentationSettings): Promise<void> {
+	protected override async showNewDialogWithSettings(markup: string, settings: PresentationSettings, noteId: string|undefined): Promise<void> {
 		const dialog = new PresentationWindow();
 		dialog.setSettings(settings);
-		return dialog.present(markup);
+		return dialog.present(markup, noteId);
 	}
 }

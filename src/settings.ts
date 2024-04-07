@@ -8,6 +8,7 @@ const showSlidesOverflowKey = 'show-slides-overflow-y';
 const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
 const hideToolbarButton = 'hide-toolbar-button';
 const presentationThemeKey = 'presentation-theme-key';
+const rememberSlideshowPositionKey = 'remember-slideshow-position';
 
 export const getSettings = async (): Promise<PresentationSettings> => {
 	return {
@@ -16,6 +17,10 @@ export const getSettings = async (): Promise<PresentationSettings> => {
 		theme: await joplin.settings.value(presentationThemeKey) || PresentationTheme.MatchJoplin,
 		printView: false,
 	};
+};
+
+export const remembersSlideshowPosition = async (): Promise<boolean> => {
+	return await joplin.settings.value(rememberSlideshowPositionKey) || false;
 };
 
 export const registerAndApplySettings = async (presentationDialog: PresentationDialog) => {
@@ -77,6 +82,14 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 			label: localization.hideToolbarButtonSetting,
 			type: SettingItemType.Bool,
 			value: false,
+		},
+		[rememberSlideshowPositionKey]: {
+			public: true,
+			section: sectionName,
+			label: localization.rememberSlideshowPositionSetting,
+			type: SettingItemType.Bool,
+			storage: SettingStorage.File,
+			value: true,
 		},
 	});
 

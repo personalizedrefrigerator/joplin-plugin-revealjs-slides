@@ -21,6 +21,7 @@ interface AppLocalization {
 	showSlidesOverflowSetting: string;
 	hideToolbarButtonSetting: string;
 	showSpeakerNotesSetting: string;
+	rememberSlideshowPositionSetting: string;
 
 	presentationTheme: string;
 	theme__matchJoplin: string;
@@ -59,6 +60,7 @@ const defaultStrings: AppLocalization = {
 	hideToolbarButtonSetting: 'Hide slideshow button in editor toolbar (requires restart)',
 	showSlidesOverflowSetting: 'Allow scrolling large slides',
 	showSpeakerNotesSetting: 'Show speaker notes (if any)',
+	rememberSlideshowPositionSetting: 'Remember position in slideshow',
 
 	presentationTheme: 'Default Theme',
 	theme__matchJoplin: 'Match Joplin',

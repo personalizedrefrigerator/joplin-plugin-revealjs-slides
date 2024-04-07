@@ -42,14 +42,20 @@ export interface OpenLinkRequest {
 	href: string,
 }
 
+export interface SlideChangedMessage {
+	type: 'slideChanged',
+	slideHash: string,
+}
+
 export type WebViewMessage =
-	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest | PrintRequest;
+	ShowCloseButtonRequest | HideCloseButtonRequest | ToggleCloseButtonRequest | InitialDataRequest | OpenLinkRequest | PrintRequest | SlideChangedMessage;
 
 export interface InitialDataResponse {
 	type: 'initialDataResponse';
 
 	settings: PresentationSettings;
 	initialData: string|undefined;
+	initialSlideHash: string|undefined;
 }
 
 export type WebViewMessageResponse =

@@ -1,6 +1,6 @@
 import { DialogResult } from 'api/types';
-import { PresentationSettings, WebViewMessage, WebViewMessageResponse } from '../types';
-import AbstractWebView, { ButtonRecord } from './AbstractWebView';
+import { PresentationSettings, WebViewMessage } from '../types';
+import AbstractWebView, { ButtonRecord, OnMessageHandler } from './AbstractWebView';
 import { posix as posixPath, resolve } from 'path';
 import joplin from 'api';
 
@@ -42,7 +42,7 @@ export default class PresentationWindow extends AbstractWebView {
 	}
 
 	protected override onMessage(
-		onMessageHandler: (message: WebViewMessage) => WebViewMessageResponse,
+		onMessageHandler: OnMessageHandler,
 	): void {
 		if (!this.win) {
 			this.eventListener = onMessageHandler;
@@ -54,8 +54,7 @@ export default class PresentationWindow extends AbstractWebView {
 
 				const id = event.data.id;
 				if (id) {
-					const response = onMessageHandler(event.data.message);
-					console.log(event.data.message, response);
+					const response = await onMessageHandler(event.data.message);
 					this.win?.postMessage({ responseId: id, response });
 				} else if (event.data.kind === 'dialogResult') {
 					this.onCloseListener(event.data.result);
@@ -92,9 +91,9 @@ export default class PresentationWindow extends AbstractWebView {
 		// Do nothing
 	}
 	
-	protected override async showNewDialogWithSettings(markup: string, settings: PresentationSettings): Promise<void> {
+	protected override async showNewDialogWithSettings(markup: string, settings: PresentationSettings, noteId: string|undefined): Promise<void> {
 		const dialog = new PresentationWindow();
 		dialog.setSettings(settings);
-		return dialog.present(markup);
+		return dialog.present(markup, noteId);
 	}
 }

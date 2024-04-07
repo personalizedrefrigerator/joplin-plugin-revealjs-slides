@@ -5,7 +5,7 @@ import PresentationDialog from './dialog/PresentationDialog';
 import { pluginPrefix } from './constants';
 import isMobile from './util/isMobile';
 import registerExportModule from './exporter/registerExportModule';
-import { registerAndApplySettings } from './settings';
+import { registerAndApplySettings, remembersSlideshowPosition } from './settings';
 
 // Returns true if the CodeMirror editor is active.
 const isRichTextEditor = async () => {
@@ -17,6 +17,25 @@ const isRichTextEditor = async () => {
 	return await joplin.commands.execute('editor.execCommand', { name: 'revealJSIntegration--isCodeMirrorActive' }) !== 'active';
 };
 
+const registerSlideTracker = async (presentationDialog: PresentationDialog) => {
+	const ModelTypeNote = 1;
+	const slideHashKey = 'rjs-last-slide-hash';
+
+	presentationDialog.setSlideChangeListener(async (slideHash, noteId) => {
+		if (!noteId) return;
+
+		if (await remembersSlideshowPosition()) {
+			await joplin.data.userDataSet(ModelTypeNote, noteId, slideHashKey, slideHash);
+		}
+	});
+	presentationDialog.setGetSlideHashCallback(async (noteId: string) => {
+		if (!(await remembersSlideshowPosition())) {
+			return '';
+		}
+		return await joplin.data.userDataGet(ModelTypeNote, noteId, slideHashKey);
+	});
+}
+
 
 joplin.plugins.register({
 	onStart: async function() {
@@ -24,6 +43,7 @@ joplin.plugins.register({
 		const toolbuttonCommand = `${pluginPrefix}start-slideshow`;
 
 		await registerAndApplySettings(presentationDialog);
+		await registerSlideTracker(presentationDialog);
 
 		let onHtmlResponse: (()=>void)|null = null;
 		const awaitNextHtmlResponse = (timeout: number) => {
@@ -117,7 +137,8 @@ joplin.plugins.register({
 				]);
 			}
 
-			presentationDialog.present(await getRenderedHtml());
+			const selectedNote = await joplin.workspace.selectedNote();
+			presentationDialog.present(await getRenderedHtml(), selectedNote?.id);
 
 			// Try to switch back to the original editor
 			if (wasRichTextEditor) {

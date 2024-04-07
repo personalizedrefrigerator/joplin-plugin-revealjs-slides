@@ -306,6 +306,10 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 		} else {
 			hideCloseButton();
 		}
+		webviewApi.postMessage({
+			type: 'slideChanged',
+			slideHash: deck.getSlidePath(),
+		});
 	});
 
 	await deck.initialize();
@@ -340,7 +344,7 @@ document.addEventListener('keydown', (event) => {
 const loadedMessage: InitialDataRequest = {
 	type: 'getInitialData',
 };
-webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
+webviewApi.postMessage(loadedMessage).then(async (result: WebViewMessageResponse) => {
 	if (result?.type === 'initialDataResponse') {
 		const revealElements = initializeRevealElements(result.initialData ?? 'no initial data', result.settings);
 		document.body.appendChild(revealElements);
@@ -349,6 +353,9 @@ webviewApi.postMessage(loadedMessage).then((result: WebViewMessageResponse) => {
 			document.body.classList.add('allowSlidesOverflow');
 		}
 
-		void initializeDeck(result.settings, revealElements);
+		if (result.initialSlideHash) {
+			location.hash = result.initialSlideHash;
+		}
+		await initializeDeck(result.settings, revealElements);
 	}
 });
