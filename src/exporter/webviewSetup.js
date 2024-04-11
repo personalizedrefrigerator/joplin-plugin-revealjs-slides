@@ -12,6 +12,7 @@ const loadPromise = new Promise(resolve => {
 
 loadPromise.then(() => {
 	document.body.classList.add('loaded-exported-presentation');
+	window.onbeforeunload = ()=>{};
 });
 
 // Cache a copy of window.open -- the main webview code may attempt to remove/override
