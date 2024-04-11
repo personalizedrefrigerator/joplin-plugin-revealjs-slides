@@ -135,6 +135,38 @@ const rewriteLinks = (container: HTMLElement, settings: PresentationSettings) =>
 	}
 };
 
+// Allows using Joplin image resources as backgrounds by referencing them with IDs.
+// For example,
+//   <img src=":/joplinimageidhere" id="some-id"/>
+//   <section data-background-image="some-id">
+//      ...
+//   </section>
+const fixBackgroundUrls = (container: HTMLElement) => {
+	const backgroundAttr = 'data-background-image';
+	const sectionsWithBackgrounds = container.querySelectorAll<HTMLElement>(`section[${backgroundAttr}]`);
+
+	for (const section of sectionsWithBackgrounds) {
+		const currentBackgroundSrc = section.getAttribute(backgroundAttr);
+		if (!currentBackgroundSrc) continue;
+
+		const selectorMatch = currentBackgroundSrc.match(/^(id|title)\((.*)\)$/);
+		if (selectorMatch) {
+			const field = selectorMatch[1]; // id|title
+			const query = selectorMatch[2];
+
+			const target = container.querySelector(`*[${field}=${JSON.stringify(query)}]`);
+			const src = target?.getAttribute('src');
+			if (target && src) {
+				section.setAttribute(backgroundAttr, src);
+
+				if (!target.hasAttribute('no-hide')) {
+					target.classList.add('-used-as-background');
+				}
+			}
+		}
+	}
+};
+
 const removeObjects = (container: HTMLElement) => {
 	// Object embeds prevent printing.
 	for (const obj of container.querySelectorAll('object')) {
@@ -170,6 +202,7 @@ const initializeRevealElements = (presentationHTML: string, settings: Presentati
 	// slides with "---"s in markdown
 	hrToSections(slidesContainer);
 	rewriteLinks(slidesContainer, settings);
+	fixBackgroundUrls(slidesContainer);
 	loadTheme(slidesContainer, settings);
 	if (settings.printView) {
 		removeObjects(slidesContainer);

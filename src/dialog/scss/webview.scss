@@ -29,6 +29,12 @@ of the source of KaTeX source.
 	display: block;
 }
 
+// Images and other resources that have been referenced using
+// id(...).
+.-used-as-background {
+	display: none;
+}
+
 /* Anchor elements can act as links even if they don't have an href= attribute.
    Style them as such. */
 a {
