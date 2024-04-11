@@ -1,3 +1,7 @@
+# 0.12.0
+ - Support overriding default RevealJS config values (see `examples/config.md`).
+ - Support using Joplin resources as slide backgrounds (see `examples/background-image.md`).
+
 # 0.11.0
  - Support opening presentations in new windows.
  - Save/restore the last position in a presentation.
