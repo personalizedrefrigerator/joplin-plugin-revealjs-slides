@@ -37,6 +37,7 @@ import 'reveal.js/plugin/highlight/zenburn.css';
 
 import showOpenSourceLicenses from './licenses/showOpenSourceLicenses';
 import openPrintPreview from './util/openPrintPreview';
+import loadConfigOverrides from './util/loadConfigOverrides';
 
 // Prevent navigation away from the current window (e.g. by improperly sanitized links) or by
 // some unknown reveal.js functionality.
@@ -305,6 +306,8 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 		showNotes: settings.showSpeakerNotes,
 
 		...(settings.printView ? { view: 'print' } : undefined),
+
+		...loadConfigOverrides(deckContent),
 	});
 
 	deck.addKeyBinding({
