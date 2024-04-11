@@ -136,6 +136,11 @@ For additional features, see the [reveal.js documentation](https://revealjs.com/
 
 ````
 
+> [!NOTE]
+>
+> Other examples can be found [on this plugin's GitHub repository](https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides/tree/main/examples).
+>
+
 </details>
 
 ## Installing
