@@ -38,6 +38,7 @@ import 'reveal.js/plugin/highlight/zenburn.css';
 import showOpenSourceLicenses from './licenses/showOpenSourceLicenses';
 import openPrintPreview from './util/openPrintPreview';
 import loadConfigOverrides from './util/loadConfigOverrides';
+import fixBackgroundUrl from './util/fixBackgroundUrl';
 
 // Prevent navigation away from the current window (e.g. by improperly sanitized links) or by
 // some unknown reveal.js functionality.
@@ -150,20 +151,9 @@ const fixBackgroundUrls = (container: HTMLElement) => {
 		const currentBackgroundSrc = section.getAttribute(backgroundAttr);
 		if (!currentBackgroundSrc) continue;
 
-		const selectorMatch = currentBackgroundSrc.match(/^(id|title)\((.*)\)$/);
-		if (selectorMatch) {
-			const field = selectorMatch[1]; // id|title
-			const query = selectorMatch[2];
-
-			const target = container.querySelector(`*[${field}=${JSON.stringify(query)}]`);
-			const src = target?.getAttribute('src');
-			if (target && src) {
-				section.setAttribute(backgroundAttr, src);
-
-				if (!target.hasAttribute('no-hide')) {
-					target.classList.add('-used-as-background');
-				}
-			}
+		const newUrl = fixBackgroundUrl(container, currentBackgroundSrc);
+		if (newUrl !== currentBackgroundSrc) {
+			section.setAttribute(backgroundAttr, newUrl);
 		}
 	}
 };
@@ -290,6 +280,8 @@ const toggleCloseButton = () => {
 };
 
 const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLElement) => {
+	const configOverrides = loadConfigOverrides(deckContent);
+
 	const deck = new Reveal(deckContent, {
 		// Make [first slide](#1) link to the first slide
 		hashOneBasedIndex: true,
@@ -307,7 +299,7 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 
 		...(settings.printView ? { view: 'print' } : undefined),
 
-		...loadConfigOverrides(deckContent),
+		...configOverrides,
 	});
 
 	deck.addKeyBinding({

@@ -1,6 +1,8 @@
 
 // All options can be found at https://revealjs.com/config/
 
+import fixBackgroundUrl from "./fixBackgroundUrl";
+
 type ConfigNumberOverrides = {
 	width?: number;
 	height?: number;
@@ -9,6 +11,8 @@ type ConfigNumberOverrides = {
 	maxScale?: number;
 	autoAnimateDuration?: number,
 	autoSlide?: number;
+	parallaxBackgroundHorizontal?: number;
+	parallaxBackgroundVertical?: number;
 };
 
 enum TransitionStyle {
@@ -28,6 +32,13 @@ enum NavigationMode {
 	Linear = 'linear',
 	Grid = 'grid',
 }
+enum BackgroundRepeat {
+	Repeat = 'repeat',
+	RepeatX = 'repeat-x',
+	RepeatY = 'repeat-y',
+	NoRepeat = 'no-repeat',
+	Initial = 'initial',
+}
 type ConfigStringOverrides = {
 	backgroundTransition?: TransitionStyle;
 	transition?: TransitionStyle;
@@ -35,6 +46,10 @@ type ConfigStringOverrides = {
 	transitionSpeed?: TransitionSpeed;
 	navigationMode?: NavigationMode;
 	autoAnimateMatcher?: '*',
+
+	parallaxBackgroundImage?: string,
+	parallaxBackgroundSize?: string,
+	parallaxBackgroundRepeat?: BackgroundRepeat,
 };
 
 type ConfigBooleanOverrides = {
@@ -80,12 +95,13 @@ const loadConfigOverrides = (deckContent: HTMLElement): ConfigOverrides => {
 	const loadPropertyStringValue = (
 		name: keyof ConfigStringOverrides,
 		elementNameSuffix: string,
-		validValues: string[],
+		validValues: string[]|null,
+		mapValue: (value: string) => string = (s=>s),
 	) => {
 		const element = selectConfigElement(elementNameSuffix ?? name);
 		if (element) {
-			const content = element.textContent;
-			if (content && validValues.includes(content)) {
+			const content = mapValue(element.textContent ?? '');
+			if (content && (validValues === null || validValues.includes(content))) {
 				stringOverrides[name] = content as any;
 				element.remove();
 			}
@@ -118,6 +134,8 @@ const loadConfigOverrides = (deckContent: HTMLElement): ConfigOverrides => {
 	loadPropertyNumberValue('maxScale', 'max-scale');
 	loadPropertyNumberValue('autoAnimateDuration', 'auto-animate-duration');
 	loadPropertyNumberValue('autoSlide', 'auto-slide');
+	loadPropertyNumberValue('parallaxBackgroundHorizontal', 'parallax-background-horizontal');
+	loadPropertyNumberValue('parallaxBackgroundVertical', 'parallax-background-vertical');
 
 	loadPropertyStringValue(
 		'backgroundTransition',
@@ -151,6 +169,22 @@ const loadConfigOverrides = (deckContent: HTMLElement): ConfigOverrides => {
 		// (given APIs exposed to Joplin plugin dialogs), only allow '*' as a custom
 		// matcher.
 		['*'],
+	);
+	loadPropertyStringValue(
+		'parallaxBackgroundImage',
+		'parallax-background-image',
+		null,
+		(imageUrl) => fixBackgroundUrl(deckContent, imageUrl),
+	);
+	loadPropertyStringValue(
+		'parallaxBackgroundSize',
+		'parallax-background-size',
+		null,
+	);
+	loadPropertyStringValue(
+		'parallaxBackgroundRepeat',
+		'parallax-background-repeat',
+		Object.values(BackgroundRepeat),
 	);
 
 	loadPropertyBooleanValue('center');
