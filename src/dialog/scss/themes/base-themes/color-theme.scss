@@ -1,5 +1,43 @@
 @use 'sass:color';
 
+@mixin table-theme($bg-color, $fg-color) {
+	$alpha-bg: color.adjust($bg-color, $alpha: -0.2);
+	$table-background: color.invert(color.adjust($alpha-bg, $saturation: -8%), $weight: 2%);
+	$table-header-background: color.invert(color.adjust($alpha-bg, $saturation: -8%, $hue: 6deg), $weight: 10%);
+	$table-background-odd: color.invert(color.adjust($alpha-bg, $saturation: -8%, $hue: 6deg), $weight: 8%);
+	$table-border: color.invert(color.adjust($fg-color, $saturation: -60%, $hue: 5deg), $weight: 43%);
+
+	table {
+		background-color: $table-background;
+		border: 1px solid $table-border;
+
+		td, th {
+			color: $fg-color;
+			border: 1px solid $table-border;
+		}
+		td {
+			border: 1px solid $table-border;
+		}
+		th {
+			background-color: $table-header-background;
+			border-bottom-width: 2px;
+			font-weight: bold;
+		}
+
+		tr {
+			background-color: $table-background;
+
+			&:nth-child(even) {
+				background-color: $table-background-odd;
+			}
+
+			&:hover {
+				background-color: color.invert($table-background, $weight: 10%);
+			}
+		}
+	}
+}
+
 @mixin color-theme($bg-color, $fg-color) {
 	//
 	// reveal.js theme
@@ -45,9 +83,7 @@
 		border-radius: 4px;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
-		text-transform: none;
-	}
+	@include table-theme($bg-color, $fg-color);
 
 	//
 	// Highlight.js theme -- based on

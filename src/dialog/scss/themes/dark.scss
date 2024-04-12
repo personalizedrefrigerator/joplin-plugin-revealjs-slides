@@ -1,3 +1,4 @@
+@use './base-themes/color-theme.scss';
 
 body.theme__dark {
 	//
@@ -11,6 +12,8 @@ body.theme__dark {
 	--r-link-color-hover: #8dcffc;
 	--r-selection-background-color: rgba(66, 175, 250, 0.75);
 	--r-selection-color: #fff;
+
+	@include color-theme.table-theme(#222, #fff);
 
 	&, .reveal-viewport {
 		background: radial-gradient(#232225, #222222);

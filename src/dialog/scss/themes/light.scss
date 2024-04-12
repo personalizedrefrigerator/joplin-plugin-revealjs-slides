@@ -1,3 +1,4 @@
+@use './base-themes/color-theme.scss';
 
 body.theme__light {
 	//
@@ -11,6 +12,8 @@ body.theme__light {
 	--r-link-color-hover: #255393;
 	--r-selection-background-color: rgba(38, 105, 150, 0.75);
 	--r-selection-color: #222;
+
+	@include color-theme.table-theme(#fff, black);
 
 	code {
 		background-color: #eee;
