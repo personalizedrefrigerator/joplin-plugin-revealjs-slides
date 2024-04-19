@@ -1,3 +1,7 @@
+# 0.13.0
+ - Upgrade Reveal.JS to 1.13.0
+ - Support the `parallax-background-image` config option.
+
 # 0.12.0
  - Support overriding default RevealJS config values (see `examples/config.md`).
  - Support using Joplin resources as slide backgrounds (see `examples/background-image.md`).
