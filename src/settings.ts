@@ -1,12 +1,13 @@
 import joplin from "api";
 import localization from "./localization";
-import { SettingItemType, SettingStorage } from "api/types";
+import { SettingItemType, SettingStorage, ToolbarButtonLocation } from "api/types";
 import type PresentationDialog from "./dialog/PresentationDialog";
 import { PresentationSettings, PresentationTheme } from "./types";
 
 const showSlidesOverflowKey = 'show-slides-overflow-y';
 const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
 const hideToolbarButton = 'hide-toolbar-button';
+const toolbarButtonLocationKey = 'toolbar-button-location';
 const presentationThemeKey = 'presentation-theme-key';
 const rememberSlideshowPositionKey = 'remember-slideshow-position';
 
@@ -96,6 +97,19 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 			type: SettingItemType.Bool,
 			value: false,
 		},
+		[toolbarButtonLocationKey]: {
+			public: true,
+			advanced: true,
+			section: sectionName,
+			label: localization.toolbarButtonLocationSetting,
+			value: ToolbarButtonLocation.NoteToolbar,
+			type: SettingItemType.String,
+			isEnum: true,
+			options: {
+				[ToolbarButtonLocation.EditorToolbar]: localization.toolbarButtonLocationSetting__editor,
+				[ToolbarButtonLocation.NoteToolbar]: localization.toolbarButtonLocationSetting__note,
+			},
+		}
 	});
 
 	await joplin.settings.onChange(_event => {

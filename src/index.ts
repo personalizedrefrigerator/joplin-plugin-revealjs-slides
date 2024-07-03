@@ -182,8 +182,12 @@ joplin.plugins.register({
 		});
 
 		if (!(await joplin.settings.value('hide-toolbar-button'))) {
+			const location =
+				await joplin.settings.value('toolbar-button-location') === ToolbarButtonLocation.EditorToolbar ? ToolbarButtonLocation.EditorToolbar : ToolbarButtonLocation.NoteToolbar;
 			await joplin.views.toolbarButtons.create(
-				sameWindowToolbuttonCommand, sameWindowToolbuttonCommand, ToolbarButtonLocation.EditorToolbar,
+				sameWindowToolbuttonCommand,
+				sameWindowToolbuttonCommand,
+				location,
 			);
 		}
 

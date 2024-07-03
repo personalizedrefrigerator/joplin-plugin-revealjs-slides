@@ -21,6 +21,9 @@ interface AppLocalization {
 	settingsPaneDescription: string;
 	showSlidesOverflowSetting: string;
 	hideToolbarButtonSetting: string;
+	toolbarButtonLocationSetting__note: string;
+	toolbarButtonLocationSetting__editor: string;
+	toolbarButtonLocationSetting: string;
 	showSpeakerNotesSetting: string;
 	rememberSlideshowPositionSetting: string;
 	rememberSlideshowPositionSetting__description: string;
@@ -63,7 +66,10 @@ const defaultStrings: AppLocalization = {
 	settingsPaneDescription: 'Settings for RevealJS Integration. ' +
 		'If a presentation is ongoing, it may need to be closed and re-opened ' +
 		'for these settings to take effect.',
-	hideToolbarButtonSetting: 'Hide slideshow button in editor toolbar (requires restart)',
+	hideToolbarButtonSetting: 'Hide slideshow button (requires restart)',
+	toolbarButtonLocationSetting: 'Slideshow button location (requires restart)',
+	toolbarButtonLocationSetting__note: 'Note toolbar',
+	toolbarButtonLocationSetting__editor: 'Editor toolbar',
 	showSlidesOverflowSetting: 'Allow scrolling large slides',
 	showSpeakerNotesSetting: 'Show speaker notes (if any)',
 	rememberSlideshowPositionSetting: 'Remember position in slideshow',
