@@ -3,7 +3,7 @@
  - Default the "start slideshow" button location to the toolbar.
 
 # 0.13.0
- - Upgrade Reveal.JS to 1.13.0
+ - Upgrade Reveal.JS to 5.1.0
  - Support the `parallax-background-image` config option.
 
 # 0.12.0
