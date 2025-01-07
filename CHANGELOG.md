@@ -1,3 +1,7 @@
+# 0.15.0
+- New setting: "Show slide numbers".
+- New theme: Graph paper.
+
 # 0.14.0
  - Allow changing the "start slideshow" button location.
  - Default the "start slideshow" button location to the toolbar.
