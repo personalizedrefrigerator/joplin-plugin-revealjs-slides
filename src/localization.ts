@@ -37,6 +37,11 @@ interface AppLocalization {
 	theme__darkBlue: string;
 	theme__lightBlue: string;
 	theme__darkRed: string;
+
+	showSlideNumbers: string;
+	slideNumbers__none: string;
+	slideNumbers__current: string;
+	slideNumbers__currentAndTotal: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -86,6 +91,12 @@ const defaultStrings: AppLocalization = {
 	theme__darkBlue: 'Dark blue',
 	theme__lightBlue: 'Light blue',
 	theme__darkRed: 'Dark red',
+
+
+	showSlideNumbers: 'Show slide numbers',
+	slideNumbers__none: 'No',
+	slideNumbers__current: 'Current slide number',
+	slideNumbers__currentAndTotal: 'Current and total',
 };
 
 const localizations: Record<string, AppLocalization> = {

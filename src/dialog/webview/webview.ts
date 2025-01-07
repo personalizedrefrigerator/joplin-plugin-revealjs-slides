@@ -21,7 +21,7 @@ declare global {
 }
 
 import localization from '../../localization';
-import { InitialDataRequest, PresentationSettings, PresentationTheme, WebViewMessage, WebViewMessageResponse } from '../../types';
+import { InitialDataRequest, PresentationSettings, PresentationTheme, SlideNumbersMode, WebViewMessage, WebViewMessageResponse } from '../../types';
 
 import Reveal from 'reveal.js';
 const RevealSearch = require('reveal.js/plugin/search/search.esm.js').default;
@@ -298,6 +298,9 @@ const initializeDeck = async (settings: PresentationSettings, deckContent: HTMLE
 		showNotes: settings.showSpeakerNotes,
 
 		...(settings.printView ? { view: 'print' } : undefined),
+		...(settings.slideNumbers && settings.slideNumbers !== SlideNumbersMode.None ? {
+			slideNumber: settings.slideNumbers,
+		} : undefined),
 
 		...configOverrides,
 	});

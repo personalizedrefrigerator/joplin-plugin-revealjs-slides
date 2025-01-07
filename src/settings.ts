@@ -2,13 +2,14 @@ import joplin from "api";
 import localization from "./localization";
 import { SettingItemType, SettingStorage, ToolbarButtonLocation } from "api/types";
 import type PresentationDialog from "./dialog/PresentationDialog";
-import { PresentationSettings, PresentationTheme } from "./types";
+import { PresentationSettings, PresentationTheme, SlideNumbersMode } from "./types";
 
 const showSlidesOverflowKey = 'show-slides-overflow-y';
 const showSpeakerNotesKey = 'show-speaker-notes-on-slides';
 const hideToolbarButton = 'hide-toolbar-button';
 const toolbarButtonLocationKey = 'toolbar-button-location';
 const presentationThemeKey = 'presentation-theme-key';
+const showSlideNumbersKey = 'slide-numbers-mode';
 const rememberSlideshowPositionKey = 'remember-slideshow-position';
 
 export const getSettings = async (): Promise<PresentationSettings> => {
@@ -16,6 +17,7 @@ export const getSettings = async (): Promise<PresentationSettings> => {
 		scrollsOverflow: await joplin.settings.value(showSlidesOverflowKey),
 		showSpeakerNotes: await joplin.settings.value(showSpeakerNotesKey),
 		theme: await joplin.settings.value(presentationThemeKey) || PresentationTheme.MatchJoplin,
+		slideNumbers: await joplin.settings.value(showSlideNumbersKey),
 		printView: false,
 	};
 };
@@ -88,6 +90,22 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 
 			type: SettingItemType.Bool,
 			value: false,
+		},
+		[showSlideNumbersKey]: {
+			public: true,
+			section: sectionName,
+
+			label: localization.showSlideNumbers,
+
+			type: SettingItemType.String,
+			isEnum: true,
+			storage: SettingStorage.File,
+			value: SlideNumbersMode.None,
+			options: {
+				[SlideNumbersMode.None]: localization.slideNumbers__none,
+				[SlideNumbersMode.Current]: localization.slideNumbers__current,
+				[SlideNumbersMode.CurrentAndTotal]: localization.slideNumbers__currentAndTotal,
+			},
 		},
 		[hideToolbarButton]: {
 			public: true,

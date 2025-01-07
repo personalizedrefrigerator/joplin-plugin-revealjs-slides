@@ -1,4 +1,9 @@
 
+export enum SlideNumbersMode {
+	None = 'unset',
+	Current = 'c',
+	CurrentAndTotal = 'c/t',
+}
 
 export enum PresentationTheme {
 	MatchJoplin = 'match-joplin',
@@ -13,6 +18,7 @@ export enum PresentationTheme {
 export interface PresentationSettings {
 	scrollsOverflow: boolean;
 	showSpeakerNotes: boolean;
+	slideNumbers: SlideNumbersMode;
 	theme: PresentationTheme;
 	printView: boolean;
 }

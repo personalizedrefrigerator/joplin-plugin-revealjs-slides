@@ -3,6 +3,7 @@ import localization from '../localization';
 import {
 	PresentationSettings,
 	PresentationTheme,
+	SlideNumbersMode,
 	WebViewMessage,
 	WebViewMessageResponse,
 } from '../types';
@@ -32,6 +33,7 @@ export default abstract class AbstractPresentationView {
 		scrollsOverflow: true,
 		showSpeakerNotes: false,
 		theme: PresentationTheme.MatchJoplin,
+		slideNumbers: SlideNumbersMode.None,
 		printView: false,
 	};
 
