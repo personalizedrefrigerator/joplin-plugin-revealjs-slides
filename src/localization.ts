@@ -34,6 +34,7 @@ interface AppLocalization {
 	theme__dark: string;
 	theme__light: string;
 	theme__blackOnWhite: string;
+	theme__graphPaper: string;
 	theme__darkBlue: string;
 	theme__lightBlue: string;
 	theme__darkRed: string;
@@ -88,6 +89,7 @@ const defaultStrings: AppLocalization = {
 	theme__dark: 'Dark',
 	theme__light: 'Light',
 	theme__blackOnWhite: 'Black on white',
+	theme__graphPaper: 'Graph paper',
 	theme__darkBlue: 'Dark blue',
 	theme__lightBlue: 'Light blue',
 	theme__darkRed: 'Dark red',

@@ -1,0 +1,21 @@
+@use './base-themes/color-theme.scss';
+
+body.theme__graph-paper {
+	@include color-theme.color-theme(rgb(255, 255, 253), #000000);
+	@include color-theme.hljs-theme(rgb(250, 255, 230), #130);
+
+	.hljs {
+		&, & > code {
+			background: rgb(255, 253, 250);
+		}
+	}
+
+	&, .reveal-viewport {
+		--grid-color: #f6f6f6;
+		--grid-background: white;
+		background: linear-gradient(var(--grid-color) 1px, transparent 2px, transparent),
+					linear-gradient(90deg, var(--grid-color) 1px, var(--grid-background) 2px, var(--grid-background));
+		background-attachment: local;
+		background-size: 50px 50px;
+	}
+}

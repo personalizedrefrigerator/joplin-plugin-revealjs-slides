@@ -57,6 +57,7 @@ export const registerAndApplySettings = async (presentationDialog: PresentationD
 				[PresentationTheme.Dark]: localization.theme__dark,
 				[PresentationTheme.Light]: localization.theme__light,
 				[PresentationTheme.BlackOnWhite]: localization.theme__blackOnWhite,
+				[PresentationTheme.GraphPaper]: localization.theme__graphPaper,
 				[PresentationTheme.LightBlue]: localization.theme__lightBlue,
 				[PresentationTheme.DarkBlue]: localization.theme__darkBlue,
 				[PresentationTheme.DarkRed]: localization.theme__darkRed,

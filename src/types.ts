@@ -10,6 +10,7 @@ export enum PresentationTheme {
 	Dark = 'dark',
 	Light = 'light',
 	BlackOnWhite = 'black-on-white',
+	GraphPaper = 'graph-paper',
 	DarkBlue = 'dark-blue',
 	LightBlue = 'light-blue',
 	DarkRed = 'dark-red',

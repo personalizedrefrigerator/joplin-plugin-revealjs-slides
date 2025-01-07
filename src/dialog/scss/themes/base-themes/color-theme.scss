@@ -38,52 +38,7 @@
 	}
 }
 
-@mixin color-theme($bg-color, $fg-color) {
-	//
-	// reveal.js theme
-	//
-	--r-background-color: #{$bg-color};
-	--r-main-color: #{$fg-color};
-	--r-heading-color: #{$fg-color};
-	$base-link-color: $fg-color;
-	--r-link-color: #{$base-link-color};
-	--r-link-color-dark: #{color.scale($base-link-color, $alpha: -10%)};
-	--r-link-color-hover: #{color.scale($base-link-color, $alpha: -15%)};
-	--r-selection-background-color: rgba(66, 175, 250, 0.75);
-	--r-selection-color: #fff;
-
-	&, .reveal-viewport {
-		background: linear-gradient($bg-color, color.adjust($bg-color, $hue: +6deg, $saturation: -14%));
-	}
-
-	span.resource-icon {
-		background-color: $base-link-color;
-	}
-
-	a {
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-
-		&:hover, &:active {
-			text-decoration-thickness: 2px;
-		}
-	}
-
-	$code-background: color.invert(color.adjust($bg-color, $saturation: -14%), $weight: 3%);
-	code {
-		background-color: $bg-color;
-		color: $fg-color;
-	}
-
-	kbd {
-		background-color: #222;
-		color: white;
-		border-color: #555;
-		border-bottom: 3px solid #666;
-		border-radius: 4px;
-	}
-
-	@include table-theme($bg-color, $fg-color);
+@mixin hljs-theme($bg-color, $fg-color) {
 
 	//
 	// Highlight.js theme -- based on
@@ -91,7 +46,6 @@
 	//
 	.hljs {
 		&, & > code {
-			background: $code-background;
 			color: $fg-color;
 		}
 
@@ -160,4 +114,60 @@
 			color: color.adjust($base-hl-code-color, $hue: +60deg);
 		}
 	}
+}
+
+@mixin color-theme($bg-color, $fg-color) {
+	//
+	// reveal.js theme
+	//
+	--r-background-color: #{$bg-color};
+	--r-main-color: #{$fg-color};
+	--r-heading-color: #{$fg-color};
+	$base-link-color: $fg-color;
+	--r-link-color: #{$base-link-color};
+	--r-link-color-dark: #{color.scale($base-link-color, $alpha: -10%)};
+	--r-link-color-hover: #{color.scale($base-link-color, $alpha: -15%)};
+	--r-selection-background-color: rgba(66, 175, 250, 0.75);
+	--r-selection-color: #fff;
+
+	&, .reveal-viewport {
+		background: linear-gradient($bg-color, color.adjust($bg-color, $hue: +6deg, $saturation: -14%));
+	}
+
+	span.resource-icon {
+		background-color: $base-link-color;
+	}
+
+	a {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+
+		&:hover, &:active {
+			text-decoration-thickness: 2px;
+		}
+	}
+
+	$code-background: color.invert(color.adjust($bg-color, $saturation: -14%), $weight: 3%);
+	code {
+		background-color: $bg-color;
+		color: $fg-color;
+	}
+
+	kbd {
+		background-color: #222;
+		color: white;
+		border-color: #555;
+		border-bottom: 3px solid #666;
+		border-radius: 4px;
+	}
+
+	@include table-theme($bg-color, $fg-color);
+	@include hljs-theme($bg-color, $fg-color);
+
+	.hljs {
+		&, & > code {
+			background: $code-background;
+		}
+	}
+
 }
