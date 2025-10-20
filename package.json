@@ -1,41 +1,39 @@
 {
   "name": "joplin-plugin-revealjs-slides",
   "version": "0.15.0",
-  "scripts": {
-    "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && npm run buildStyles && webpack --env joplin-plugin-config=createArchive",
+	"scripts": {
+		"dist": "npm run buildStyles && node build.mts build",
     "buildStyles": "sass src/dialog/scss/webview.scss:dist/dialog/css/webview.css",
-    "prepare": "npm run dist",
-    "update": "npm install -g generator-joplin && yo joplin --update"
-  },
+		"tsc": "tsc",
+		"prepare": "npm run dist",
+		"update": "npm install -g generator-joplin && yo joplin --update"
+	},
   "repository": {
     "type": "git",
     "url": "https://github.com/personalizedrefrigerator/joplin-plugin-revealjs-slides.git"
   },
-  "license": "MIT",
-  "keywords": [
-    "joplin-plugin"
-  ],
-  "files": [
-    "publish"
-  ],
-  "devDependencies": {
-    "@types/codemirror": "5.60.8",
-    "@types/fs-extra": "^11.0.1",
-    "@types/node": "^20.3.2",
-    "@types/reveal.js": "^5.0.2",
-    "chalk": "^4.1.0",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "6.8.1",
-    "fs-extra": "^11.1.1",
-    "glob": "^10.3.0",
-    "katex": "^0.16.11",
-    "reveal.js": "^5.1.0",
-    "sass": "^1.74.1",
-    "style-loader": "^3.3.3",
-    "tar": "^6.2.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.3.2",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4"
-  }
+	"license": "MIT",
+	"keywords": [
+		"joplin-plugin"
+	],
+	"files": [
+		"publish"
+	],
+	"devDependencies": {
+		"@types/codemirror": "5.60.8",
+		"@types/fs-extra": "^11.0.1",
+		"@types/node": "^24.9.0",
+		"glob": "^10.3.10",
+		"tar": "7.5.1",
+		"typescript": "^5.2.2",
+		"esbuild": "0.25.11",
+		"reveal.js": "^5.1.0",
+		"katex": "^0.16.11",
+		"@types/bezier-js": "4.1.0"
+	},
+	"dependencies": {
+		"@js-draw/material-icons": "1.30.0",
+		"js-draw": "1.30.0",
+		"sass": "^1.74.1"
+	}
 }

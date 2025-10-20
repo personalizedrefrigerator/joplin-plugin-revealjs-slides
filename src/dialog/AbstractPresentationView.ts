@@ -92,6 +92,7 @@ export default abstract class AbstractPresentationView {
 
 		// Script path is from the root of the plugin directory
 		await this.addScript('./dialog/webview/webview.js');
+		await this.addScript('./dialog/webview/webview.css');
 		await this.addScript('./dialog/css/webview.css');
 
 		await this.setFullscreen(false);
